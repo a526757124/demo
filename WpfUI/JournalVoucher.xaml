@@ -1,0 +1,85 @@
+﻿<Page x:Class="WpfUI.JournalVoucher"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d"
+	Title="JournalVoucher" Width="623" Height="411">
+
+    <Grid Background="#FFF9F3F3" OpacityMask="#FFD82828" Margin="0,0,42,67">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Path Data="M20,40 L19.5,319.5 479.5,319.5 479.5,39.5 462.87351,39.518092 z" Fill="#FFF4F4F5" HorizontalAlignment="Left" Margin="19.5,39.5,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="540.5" />
+        <Path Data="M20,80 L319.5,79.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1.5" Margin="20,79.5,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="300.5"/>
+        <Path Data="M540.5,119 L19.5,119.5 20,160 540.5,159" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="42" Margin="20,119.5,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="520.5"/>
+        <Path Data="M20,200 L539.5,199.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1.5" Margin="20,199.5,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="520.5"/>
+        <Path Data="M20,240 L539.5,239.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1.5" Margin="20,239.5,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="520.5"/>
+        <Path Data="M20,280 L319.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1.5" Margin="20,279.5,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="300.5"/>
+        <Path Data="M120,40 L119.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="240.5" Margin="119.5,40,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M320,40 L319.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="240.5" Margin="319.5,40,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M320,60 L459.5,59.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1.5" Margin="320,59.5,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="220"/>
+        <Path Data="M320,80 L459.5,79.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1.5" Margin="320,79.5,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="220"/>
+        <Path Data="M460,40 L459.5,59.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="21.5" Margin="0,39.5,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1" />
+        <Path Data="M320,280 L459.5,279.5" Fill="#FFEA8139" HorizontalAlignment="Left" Height="1.5" Margin="320,279.5,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="221" />
+        <Path Data="M460,60 L459.5,279.5" Fill="#FFEE4C3C" HorizontalAlignment="Left" Height="220.5" Margin="0,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1"  />
+        <Path Data="M340,60 L339.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="339.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M360,60 L359.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="359.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M380,60 L379.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="379.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M400,60 L399.5,274.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="399.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M330,60 L329.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="329.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M350,60 L349.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="349.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M370,60 L369.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="369.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M390,60 L389.5,279.5" Fill="#FFD82828" HorizontalAlignment="Left" Height="220.5" Margin="389.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M410,60 L409.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="409.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M420,60 L419.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="419.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M420,40 L419.5,59.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="20.5" Margin="429.5,39,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M440,60 L439.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="439.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M460,60 L459.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="459.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M480,60 L479.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="479.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M500,60 L499.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="499.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M430,60 L429.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="429.5,60,0,0" Stretch="Fill" Stroke="Red" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M450,60 L449.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="449.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M470,60 L469.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="469.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M490,60 L489.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="489.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M520,60 L519.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="519.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M510,60 L509.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="509.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M530,60 L529.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="529.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M540,60 L539.5,279.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220.5" Margin="539.5,60,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M540,60 L539.5,39.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="21.5" Margin="539.5,39.5,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <Path Data="M20,320 L539.5,319.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="1.5" Margin="20,319.5,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="520.5"/>
+        <Path Data="M540,280 L539.5,319.5" Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="40.5" Margin="539.5,280,0,0" Stretch="Fill" Stroke="Black" VerticalAlignment="Top" Width="1.5"/>
+        <TextBlock HorizontalAlignment="Left" Margin="41.853,52.163,0,0" TextWrapping="Wrap" Text="摘  要" VerticalAlignment="Top" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Margin="175,52,0,0" TextWrapping="Wrap" Text="会 计 科 目" VerticalAlignment="Top" FontSize="16"/>
+        <TextBlock HorizontalAlignment="Left" Margin="349.5,41,0,0" TextWrapping="Wrap" Text="借方金额" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="456.5,41,0,0" TextWrapping="Wrap" Text="贷方金额" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="41.853,288.163,0,0" TextWrapping="Wrap" Text="合 计：" VerticalAlignment="Top" FontSize="16"/>
+        <!-- 借方金额-->
+        <TextBlock HorizontalAlignment="Left" Margin="321.853,66.163,0,0" TextWrapping="Wrap" Text="亿" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="331.853,66.163,0,0" TextWrapping="Wrap" Text="千" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="341.853,66.163,0,0" TextWrapping="Wrap" Text="百" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="351.853,66.163,0,0" TextWrapping="Wrap" Text="十" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="361.853,66.163,0,0" TextWrapping="Wrap" Text="万" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="371.853,66.163,0,0" TextWrapping="Wrap" Text="千" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="381.853,66.163,0,0" TextWrapping="Wrap" Text="百" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="391.853,66.163,0,0" TextWrapping="Wrap" Text="十" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="401.853,66.163,0,0" TextWrapping="Wrap" Text="元" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="411.853,66.163,0,0" TextWrapping="Wrap" Text="角" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="421.853,66.163,0,0" TextWrapping="Wrap" Text="分" VerticalAlignment="Top" FontSize="8"/>
+        <!-- 贷方金额-->
+
+        <TextBlock HorizontalAlignment="Left" Margin="431.853,66.163,0,0" TextWrapping="Wrap" Text="亿" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="441.853,66.163,0,0" TextWrapping="Wrap" Text="千" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="451.853,66.163,0,0" TextWrapping="Wrap" Text="百" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="461.853,66.163,0,0" TextWrapping="Wrap" Text="十" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="471.853,66.163,0,0" TextWrapping="Wrap" Text="万" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="481.853,66.163,0,0" TextWrapping="Wrap" Text="千" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="491.853,66.163,0,0" TextWrapping="Wrap" Text="百" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="501.853,66.163,0,0" TextWrapping="Wrap" Text="十" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="511.853,66.163,0,0" TextWrapping="Wrap" Text="元" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="521.853,66.163,0,0" TextWrapping="Wrap" Text="角" VerticalAlignment="Top" FontSize="8"/>
+        <TextBlock HorizontalAlignment="Left" Margin="531.853,66.163,0,0" TextWrapping="Wrap" Text="分" VerticalAlignment="Top" FontSize="8"/>
+
+    </Grid>
+</Page>

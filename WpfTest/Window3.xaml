@@ -1,0 +1,203 @@
+﻿<wnd:WindowBase x:Class="WpfTest.Window3"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Window3" Height="600" Width="800" WindowStartupLocation="CenterScreen"
+        xmlns:wnd="clr-namespace:Eniux.Wpf.Controls.WindowCore;assembly=Eniux.Wpf.Controls"
+        xmlns:local="clr-namespace:WpfTest"
+        xmlns:btns="clr-namespace:Eniux.Wpf.Controls.Buttons;assembly=Eniux.Wpf.Controls"
+        xmlns:core="clr-namespace:Eniux.Wpf.Controls.Core.Core;assembly=Eniux.Wpf.Controls.Core"
+        xmlns:assembly="clr-namespace:System;assembly=mscorlib" >
+    <Window.Resources>
+        <MenuItem x:Key="extendMenuItems" Header="主题管理">
+            
+        </MenuItem>
+        <ObjectDataProvider x:Key="sexEnum" MethodName="GetValues"  ObjectType="{x:Type assembly:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type Type="local:SexOpt"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </Window.Resources>
+    <Grid>
+        <TabControl  BorderThickness="0,1,0,0" Margin="0,0,0,50" >
+            <TabItem  Header="DataGrid样式">
+                <DataGrid  x:Name="dataGrid" ItemsSource="{Binding}" AutoGenerateColumns="False" IsReadOnly="False" >
+                    <DataGrid.Columns>
+                        <DataGridTextColumn  Header="Name" Width="80" Binding="{Binding Name}" />
+                        <DataGridTextColumn  Header="Age" Width="50" Binding="{Binding Age}"/>
+                        <DataGridComboBoxColumn Width="80" Header="Sex"  SelectedItemBinding="{Binding Sex}"  ItemsSource="{Binding Source={StaticResource sexEnum}}"/>
+                        <DataGridCheckBoxColumn Header="Pass Exam?" Width="100"  Binding="{Binding Pass}"/>
+                        <DataGridHyperlinkColumn Header="Email" Width="150" CanUserSort="False"    Binding="{Binding Email}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Button样式">
+                <WrapPanel ItemHeight="200">
+                    <Expander Header="向下" IsExpanded="True" ExpandDirection="Down" >
+                        <StackPanel>
+                            <Button Margin="4" Content="Button样式(B&amp;)" />
+                            <RadioButton Margin="4" Content="RadioButon样式" />
+                            <CheckBox Margin="4" Content="CheckBox样式" />
+                            <RepeatButton Margin="4" Content="RepeatButton样式" />
+                            <ToggleButton Margin="4" Content="ToggleButton样式"/>
+                        </StackPanel>
+                    </Expander>
+                    <Expander Header="向上" IsExpanded="True" ExpandDirection="Up" >
+                        <StackPanel>
+                            <Button Margin="4" Content="Button样式" />
+                            <RadioButton Margin="4" Content="RadioButon样式" />
+                            <CheckBox Margin="4" Content="CheckBox样式" />
+                            <RepeatButton Margin="4" Content="RepeatButton样式"/>
+                            <ToggleButton Margin="4" Content="ToggleButton样式" />
+                        </StackPanel>
+                    </Expander>
+                    <Expander Header="向左" IsExpanded="True" ExpandDirection="Left">
+                        <StackPanel>
+                            <Button Margin="4" Content="Button样式" />
+                            <RadioButton Margin="4" Content="RadioButon样式" />
+                            <CheckBox Margin="4" Content="CheckBox样式" />
+                            <RepeatButton Margin="4" Content="RepeatButton样式"/>
+                            <ToggleButton Margin="4" Content="ToggleButton样式" />
+                        </StackPanel>
+                    </Expander>
+                    <Expander Header="向右" IsExpanded="True" ExpandDirection="Right" >
+                        <StackPanel>
+                            <Button Margin="4" Content="Button样式" />
+                            <RadioButton Margin="4" Content="RadioButon样式" />
+                            <CheckBox Margin="4" Content="CheckBox样式" />
+                            <RepeatButton Margin="4" Content="RepeatButton样式" />
+                            <ToggleButton Margin="4" Content="ToggleButton样式" />
+                        </StackPanel>
+                    </Expander>
+                </WrapPanel>
+            </TabItem>
+            <TabItem Header="对话框样式">
+                <Button SnapsToDevicePixels="True"  Content="测试对话框" Height="30" HorizontalAlignment="Center"  VerticalAlignment="Center" Click="Button_Click"/>
+            </TabItem>
+            <TabItem Header="ToolBar样式">
+                <Grid>
+                    <ToolBar VerticalAlignment="Top"  >
+                        <btns:SplitButton Header="是到是打发时间" Background="Transparent" BorderBrush="Transparent" >
+                            <btns:SplitButtonItem Header="搓酥滴粉释放时"/>
+                            <btns:SplitButtonItem Header="搓酥滴粉释放时"/>
+                            <btns:SplitButtonItem Header="搓酥滴粉释放时"/>
+                        </btns:SplitButton>
+                        <btns:DropDownButton Header="僵尸粉灰色空间" Background="Transparent" BorderBrush="Transparent" >
+                            <btns:DropDownButtonItem Header="搓酥滴粉释放时"/>
+                            <btns:DropDownButtonItem Header="搓酥滴粉释放时"/>
+                            <btns:DropDownButtonItem Header="搓酥滴粉释放时"/>
+                        </btns:DropDownButton>
+                        <Button Margin="4" Content="Button样式"  Style="{DynamicResource Button_Default}"/>
+                        <RadioButton Margin="4" Content="RadioButon样式"  Style="{DynamicResource RadioButton_Default}"/>
+                        <CheckBox Margin="4" Content="CheckBox样式" Style="{DynamicResource CheckBox_Default}"/>
+                        <RepeatButton Margin="4" Content="RepeatButton样式" Style="{DynamicResource RepeatButton_Default}"/>
+                        <ToggleButton Margin="4" Content="ToggleButton样式" Style="{DynamicResource ToggleButton_Default}"/>
+                        <Button Margin="4" Content="Button样式"  Style="{DynamicResource Button_Default}"/>
+                        <RadioButton Margin="4" Content="RadioButon样式"  Style="{DynamicResource RadioButton_Default}"/>
+                        <CheckBox Margin="4" Content="CheckBox样式" Style="{DynamicResource CheckBox_Default}"/>
+                        <RepeatButton Margin="4" Content="RepeatButton样式" Style="{DynamicResource RepeatButton_Default}"/>
+                        <ToggleButton Margin="4" Content="ToggleButton样式" Style="{DynamicResource ToggleButton_Default}"/>
+                        <Button Margin="4" Content="Button样式"  Style="{DynamicResource Button_Default}"/>
+                        <RadioButton Margin="4" Content="RadioButon样式"  Style="{DynamicResource RadioButton_Default}"/>
+                        <CheckBox Margin="4" Content="CheckBox样式" Style="{DynamicResource CheckBox_Default}"/>
+                        <RepeatButton Margin="4" Content="RepeatButton样式" Style="{DynamicResource RepeatButton_Default}"/>
+                        <ToggleButton Margin="4" Content="ToggleButton样式" Style="{DynamicResource ToggleButton_Default}"/>
+                    </ToolBar>
+                </Grid>
+            </TabItem>
+            <TabItem Header="ListView样式">
+                <ListView Style="{DynamicResource ListView_Default}" ItemContainerStyle="{DynamicResource Row_Default}" ItemsSource="{Binding}" SelectionMode="Single"  x:Name="gridview"    core:AttachListView.CanUserSortColumns="True">
+                    <ListView.View>
+                        <GridView ColumnHeaderContainerStyle="{DynamicResource GridViewColumnHeader_Default}" >
+                            <GridViewColumn  Header="Name" Width="80" core:AttachListView.CanUserSort="False">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn  Header="Age" Width="50" core:AttachListView.SortExpression="Age">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Age}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn  Header="Pass Exam?" Width="100" core:AttachListView.SortExpression="Pass">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Pass}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+
+                            <GridViewColumn  Header="Email" Width="150" core:AttachListView.SortExpression="Email">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Email}"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+            <TabItem Header="ListView样式">
+                <ListView Height="200" Width="200" ItemContainerStyle="{DynamicResource ListViewItem_Default}">
+                    <ListViewItem Content="释放时"/>
+                    <ListViewItem Content="释放时"/>
+                    <ListViewItem Content="释放时"/>
+                    <ListViewItem Content="释放时"/>
+                </ListView>
+            </TabItem>
+            <TabItem Header="其他">
+                <WrapPanel ItemHeight="100" ItemWidth="300">
+                    <ComboBox >
+                        <ComboBoxItem Content="发生地方"></ComboBoxItem>
+                        <ComboBoxItem Content="发生地方"></ComboBoxItem>
+                        <ComboBoxItem Content="发生地方"></ComboBoxItem>
+                        <ComboBoxItem Content="发生地方"></ComboBoxItem>
+                    </ComboBox>
+                    <ListBox >
+                        <ListBoxItem Content="啊大时代"/>
+                        <ListBoxItem Content="啊大时代"/>
+                        <ListBoxItem Content="啊大时代"/>
+                        <ListBoxItem Content="啊大时代"/>
+                    </ListBox>
+                    <TreeView>
+                        <TreeViewItem Header="成为">
+                            <TreeViewItem Header="成为">
+                                <TreeViewItem Header="成为">
+
+                                </TreeViewItem>
+                                <TreeViewItem Header="成为">
+
+                                </TreeViewItem>
+                                <TreeViewItem Header="成为">
+
+                                </TreeViewItem>
+                            </TreeViewItem>
+                        </TreeViewItem>
+                        <TreeViewItem Header="成为">
+
+                        </TreeViewItem>
+                        <TreeViewItem Header="成为">
+                            <TreeViewItem Header="成为">
+
+                            </TreeViewItem>
+                        </TreeViewItem>
+                    </TreeView>
+                    <Slider></Slider>
+                    <ProgressBar  IsIndeterminate="True"/>
+                    <TextBox />
+                </WrapPanel>
+            </TabItem>
+            <TabItem Header="主题管理">
+                <Button Width="80" Height="29" Content="管理主题" Click="Button_Click_1"/>
+            </TabItem>
+        </TabControl>
+
+
+    </Grid>
+</wnd:WindowBase>

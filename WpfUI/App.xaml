@@ -1,0 +1,21 @@
+﻿<Application x:Class="WpfUI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="windows.xaml"/>
+                <ResourceDictionary Source="button.xaml"/>
+                <ResourceDictionary Source="menu.xaml"/>
+                <ResourceDictionary Source="imageResources.xaml"/>
+                <ResourceDictionary Source="statusBar.xaml"/>
+                <ResourceDictionary Source="tab.xaml"/>
+                <ResourceDictionary Source="tabitem.xaml"/>
+                <ResourceDictionary Source="TabHeaderStyle.xaml"/>
+                <ResourceDictionary Source="TabControlStyle.xaml"/>
+                <ResourceDictionary Source="SysButtonStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

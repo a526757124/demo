@@ -1,0 +1,17 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <LinearGradientBrush x:Key="FadeBrush">
+        <GradientStop Color="Red" Offset="0"/>
+        <GradientStop Color="Gray" Offset="1"/>
+    </LinearGradientBrush>
+    <ImageBrush x:Key="imgWinBGBrush" ImageSource="image/bg.png" Stretch="Uniform"/>
+    <ImageBrush x:Key="imgJZBrush" ImageSource="image/fullbox_netspeed.png" Stretch="Uniform"/>
+    <ImageBrush x:Key="imgCZBrush" ImageSource="image/fullbox_function_exam.png" Stretch="Uniform"/>
+    <ImageBrush x:Key="imgJieZBrush" ImageSource="image/fullbox_desk_clear.png" Stretch="Uniform"/>
+    <ImageBrush x:Key="imgBBBrush" ImageSource="image/fullbox_real_protect.png" Stretch="Uniform"/>
+    <ImageBrush x:Key="imgSZBrush" ImageSource="image/fullbox_strap_accelerate.png" Stretch="Uniform"/>
+    <ImageBrush x:Key="imgLogBrush" ImageSource="image/fullbox_reg_clean.png" Stretch="Uniform"/>
+    <ImageBrush x:Key="imgTitleBrush" ImageSource="image/fullbox_time_protect.png" Stretch="Uniform"/>
+    <ImageBrush x:Key="imgStatusBarBrush" ImageSource="image/60007.bmp" Stretch="Uniform"/>
+    <ImageBrush x:Key="imgIcoPZJBrush" ImageSource="image/ico/20150106124300514_easyicon_net_16.png" Stretch="Uniform"/>
+</ResourceDictionary>

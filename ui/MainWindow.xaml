@@ -1,0 +1,82 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" x:Name="window" mc:Ignorable="d" x:Class="ui.MainWindow"
+        Title="MainWindow" Height="620" Width="870" Style="{DynamicResource NoResize_window}" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+	<Window.Background>
+		<ImageBrush ImageSource="pack://siteoforigin:,,,/bg.png" Stretch="Uniform"/>
+	</Window.Background>
+    <Grid>
+    	<StatusBar Height="31.5" VerticalAlignment="Bottom" Style="{DynamicResource StatusBarStyle}" Margin="0">
+    		<StatusBar.Background>
+    			<ImageBrush ImageSource="60007.bmp"/>
+    		</StatusBar.Background>
+    		<StatusBarItem Content="主程序版本:1.0.0" Margin="7,0,0,0"/>
+    	</StatusBar>
+    	<TabControl Margin="0,0,0,31.5" Background="{x:Null}" Style="{DynamicResource TabControlStyle}">
+            <TabItem Header="记 账" Margin="10,22,0,0" Height="76.933" Width="69.044" Style="{DynamicResource TabItemStyle}" Foreground="White"
+                     Background="{StaticResource imgBrush}">
+                <!--<Grid>
+    				<Button x:Name="ksl" Content="开始撸" HorizontalAlignment="Left" Margin="126,185,0,194" Style="{DynamicResource klButton}" Width="223" Click="ksl_Click"/>
+    				<ListBox x:Name="list1" HorizontalAlignment="Right" Width="214" BorderThickness="1,0,0,0" Background="{x:Null}" BorderBrush="#FFC0C7D2" Style="{DynamicResource ListBoxStyle}" ItemContainerStyle="{DynamicResource ListBoxItemStyle1}" FontSize="13.333" FontFamily="Microsoft YaHei" Foreground="#FF585858">
+    					<ListBoxItem Content="上次体验得分:      很爽" Style="{DynamicResource ListBoxItemStyle}" FontSize="13.333" FontFamily="Microsoft YaHei" Height="30.837" IsEnabled="False" FontWeight="Bold" BorderThickness="0,0,0,1" BorderBrush="#4B00D6FF" Background="#72FFFFFF"/>
+    				</ListBox>
+    			</Grid>-->
+    		</TabItem>
+    		<TabItem Header="查 账" Margin="100,22,0,0" Height="76.933" Width="69.044" Style="{DynamicResource TabItemStyle}" Foreground="White">
+    			<TabItem.Background>
+    				<ImageBrush ImageSource="fullbox_function_exam.png" Stretch="Uniform"/>
+    			</TabItem.Background>
+    			<Grid/>
+    		</TabItem>
+    		<TabItem Header="结 账" Margin="190,22,0,0" Height="76.933" Width="69.044" Style="{DynamicResource TabItemStyle}" Foreground="White">
+    			<TabItem.Background>
+    				<ImageBrush ImageSource="fullbox_desk_clear.png" Stretch="Uniform"/>
+    			</TabItem.Background>
+    			<Grid/>
+    		</TabItem>
+    		<TabItem Header="报 表" Margin="280,22,0,0" Height="76.933" Width="69.044" Style="{DynamicResource TabItemStyle}" Foreground="White">
+    			<TabItem.Background>
+    				<ImageBrush ImageSource="fullbox_real_protect.png" Stretch="Uniform"/>
+    			</TabItem.Background>
+    			<Grid/>
+    		</TabItem>
+    		<TabItem Header="设 置" Margin="370,22,0,0" Height="76.933" Width="69.044" Style="{DynamicResource TabItemStyle}" Foreground="White">
+    			<TabItem.Background>
+    				<ImageBrush ImageSource="fullbox_strap_accelerate.png" Stretch="Uniform"/>
+    			</TabItem.Background>
+    			<Grid/>
+    		</TabItem>
+    		<TabItem Header="日 志" Margin="460,22,0,0" Height="76.933" Width="69.044" Style="{DynamicResource TabItemStyle}" Foreground="White">
+    			<TabItem.Background>
+    				<ImageBrush ImageSource="fullbox_reg_clean.png" Stretch="Uniform"/>
+    			</TabItem.Background>
+    			<Grid/>
+    		</TabItem>
+    	</TabControl>
+        
+    	<Button x:Name="x" Content="Button" HorizontalAlignment="Right" Height="24" Style="{DynamicResource xButtonStyle}" VerticalAlignment="Top" Width="39.75" Margin="0,1,0,0" Click="x_Click"/>
+    	<Button x:Name="__" Content="Button" HorizontalAlignment="Right" Height="24" Style="{DynamicResource -ButtonStyle}" VerticalAlignment="Top" Width="39.75" Margin="0,1,39.75,0" Click="___Click"/>
+    	<Button x:Name="menu"  HorizontalAlignment="Right" Height="24" VerticalAlignment="Top" Width="39.75" Margin="0,1,79.8,0" Click="menu_Click" Style="{DynamicResource meButtonStyle}"/>
+    	<Popup x:Name="menu1" StaysOpen="False" Margin="0" PlacementTarget="{Binding ElementName=menu}" AllowsTransparency="True">
+    		<Grid Height="78" Width="100" HorizontalAlignment="Left">
+    			<Border BorderThickness="0" CornerRadius="3" Background="White" Margin="3">
+    				<Border.Effect>
+    					<DropShadowEffect ShadowDepth="0" Color="#FFB6B6B6"/>
+    				</Border.Effect>
+    				<StackPanel Margin="0">
+    					<MenuItem Header="设置" FontSize="12" Style="{DynamicResource MenuItemStyle}" Height="23.5" FontFamily="Microsoft YaHei"/>
+    					<MenuItem Header="关于" FontSize="12" Style="{DynamicResource MenuItemStyle}" Height="23.5" FontFamily="Microsoft YaHei"/>
+    					<MenuItem Header="退出" FontSize="12" Style="{DynamicResource MenuItemStyle}" Height="23.5" FontFamily="Microsoft YaHei" Background="#00000000"/>
+    				</StackPanel>
+    			</Border>
+    		</Grid>
+    	</Popup>
+    	<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="撸大师 1.0" VerticalAlignment="Top" Height="19.08" Margin="29.978,2,0,0" Width="68.603" FontSize="13.333" Foreground="White" FontFamily="Microsoft YaHei"/>
+    	<Rectangle HorizontalAlignment="Left" Height="16" VerticalAlignment="Top" Width="17.667" StrokeThickness="0" Margin="4.995,3.33,0,0">
+    		<Rectangle.Fill>
+    			<ImageBrush ImageSource="fullbox_time_protect.png" Stretch="Uniform"/>
+    		</Rectangle.Fill>
+    	</Rectangle>
+    </Grid>
+</Window>

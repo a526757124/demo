@@ -1,0 +1,38 @@
+﻿<Application x:Class="WpfTest.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="Window3.xaml">
+    <Application.Resources>
+        <!--<ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/AllResource.xaml"/>-->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes.SkinResource;component/SkinResource.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/Button.xaml"/>
+                <!--<ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/BaseWindowRes.xaml"/>-->
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/ToggleButton.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/TextBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/CheckBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/RadioButton.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/ComboBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/ScrollViewer.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/ListBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/TreeView.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/Slider.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/TabControl.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/GroupBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/RepeatButton.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/SplitButton.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/DropDownButton.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/ProgressBar.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/Expander.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/DataGrid.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/ToolBar.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/ListView.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/RichTextBox.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/TextBlock.xaml"/>
+
+                <ResourceDictionary Source="pack://application:,,,/Eniux.Wpf.Controls.Themes;component/controlStyles/WindowBase.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

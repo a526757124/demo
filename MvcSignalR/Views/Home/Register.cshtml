@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "注册用户";
+}
+@*<div ng-app>
+        <input type="text" required />
+        <input type="text" ng-maxlength="20" />
+        Your name: <input type="text" ng-model="yourname" placeholder="World">
+        <hr>
+        Hello {{yourname || 'World'}}!
+    </div>*@
+<div ng-app="formExample">
+    <h3>注册用户</h3>
+    <form name="myForm" ng-controller="FormController" class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-1">
+                <label class="control-label">登录名：</label>
+            </div>
+            <div class="col-md-4">
+                <input ng-model="LoginName" class="form-control" type="text" />
+                {{LoginName}}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-1">
+                <label>用户名：</label>
+            </div>
+            <div class="col-md-4">
+                <input ng-model="Name" class="form-control" type="text" />
+                {{Name}}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-1">
+                <label>登录密码：</label>
+            </div>
+            <div class="col-md-4">
+                <input ng-model="PassWord" class="form-control"  type="password" />
+                {{PassWord}}
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-5">
+                <input type="submit" value="提 交" />
+            </div>
+        </div>
+        {{understand}}
+    </form>
+</div>
+<script>
+    angular.module('formExample', [])
+    .controller('FormController', ['$scope', function ($scope) {
+        $scope.LoginName = 'guest';
+        $scope.Name = "123";
+        $scope.PassWord = "123456";
+        $scope.understand = "abc";
+    }]);
+</script>

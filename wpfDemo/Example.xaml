@@ -1,0 +1,85 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="wpfDemo.Example"
+        Title="Example" Height="532" Width="705"
+    Loaded="Window_Loaded"
+    >
+    <Grid>
+        <telerik:RadGridView x:Name="RadGridView1"
+							 ItemsSource="{Binding RandomProducts}"
+							 Height="500" GroupRenderMode="Flat"
+							 Width="700"
+							 ColumnWidth="*"
+							 AutoGenerateColumns="False"
+							 HorizontalAlignment="Center"
+							 CanUserFreezeColumns="False"
+							 RowIndicatorVisibility="Collapsed" Drop="RadGridView1_Drop">
+            <telerik:RadGridView.Columns>
+                <telerik:GridViewDataColumn Header="ID"
+											DataMemberBinding="{Binding ID}"
+											Width="60" />
+                <telerik:GridViewDataColumn Header="Name"
+											DataMemberBinding="{Binding Name, Mode=TwoWay}"
+											Width="*">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Name}" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                    <telerik:GridViewDataColumn.CellEditTemplate>
+                        <DataTemplate>
+                            <TextBox Text="{Binding Name, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellEditTemplate>
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn Header="UnitPrice"
+											DataMemberBinding="{Binding UnitPrice, Mode=TwoWay}"
+											TextAlignment="Right">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding UnitPrice, StringFormat=c}" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                    <telerik:GridViewDataColumn.CellEditTemplate>
+                        <DataTemplate>
+                            <telerik:RadNumericUpDown  Maximum="10000"
+													   UpdateValueEvent="PropertyChanged"
+													   Value="{Binding UnitPrice, Mode=TwoWay, UpdateSourceTrigger=Explicit}" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellEditTemplate>
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn Header="Date"
+											DataMemberBinding="{Binding Date, Mode=TwoWay}">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Date, StringFormat=MM/dd/yyyy}" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                    <telerik:GridViewDataColumn.CellEditTemplate>
+                        <DataTemplate>
+                            <telerik:RadDatePicker SelectedDate="{Binding Date, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellEditTemplate>
+                </telerik:GridViewDataColumn>
+                <telerik:GridViewDataColumn Header="Discontinued"
+											DataMemberBinding="{Binding Discontinued, Mode=TwoWay}"
+											TextAlignment="Center">
+                    <telerik:GridViewDataColumn.CellTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding Discontinued}"
+									  IsEnabled="False" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellTemplate>
+                    <telerik:GridViewDataColumn.CellEditTemplate>
+                        <DataTemplate>
+                            <CheckBox  Margin="5, 0, 0, 0"
+									   VerticalAlignment="Center"
+									   IsChecked="{Binding Discontinued, Mode=TwoWay}" />
+                        </DataTemplate>
+                    </telerik:GridViewDataColumn.CellEditTemplate>
+                </telerik:GridViewDataColumn>
+            </telerik:RadGridView.Columns>
+        </telerik:RadGridView>
+    </Grid>
+</Window>
