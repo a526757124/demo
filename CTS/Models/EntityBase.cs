@@ -19,6 +19,7 @@ namespace CTS.Models
         {
             IsDeleted = false;
             CreatedTime = DateTime.Now;
+            Timestamp = DateTime.Now.AddMilliseconds(DateTime.Now.Millisecond);
         }
 
         #region 属性
@@ -26,7 +27,6 @@ namespace CTS.Models
         /// <summary>
         /// 获取或设置 实体唯一标识，主键
         /// </summary>
-        [Key]
         public TKey Id { get; set; }
         /// <summary>
         /// 获取或设置 备注
@@ -45,9 +45,7 @@ namespace CTS.Models
         /// <summary>
         /// 获取或设置 版本控制标识，用于处理并发
         /// </summary>
-        [ConcurrencyCheck]
-        [Timestamp]
-        public byte[] Timestamp { get; set; }
+        public DateTime Timestamp { get; set; }
 
         #endregion
 

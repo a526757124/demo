@@ -14,6 +14,7 @@ namespace EFMySql.Configuration
         {
             this.HasKey(p => p.Id);
             this.Property(p => p.Name).HasMaxLength(12).IsRequired().IsUnicode();
+            this.Property(p => p.Timestamp).IsConcurrencyToken();
         }
     }
 }

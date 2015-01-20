@@ -17,7 +17,7 @@ namespace EFMySql
             var context = new ContextEX();
             context.SubjectTypes.Add(new SubjectType()
             {
-                Name = "abc1"
+                Name = "abc1",
             });
             context.SaveChanges();
             

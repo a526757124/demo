@@ -1,12 +1,13 @@
 ﻿using CTS.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
 
 namespace CTS.Configuration
 {
-    public class CourierCompanyMap : EntityConfigurationBase<CourierCompany,int>
+    public class CourierCompanyMap : EntityConfigurationBase<CourierCompany, int>
     {
         public CourierCompanyMap()
         {

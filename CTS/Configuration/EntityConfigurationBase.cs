@@ -2,6 +2,7 @@
 using CTS.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity.ModelConfiguration;
 using System.Data.Entity.ModelConfiguration.Configuration;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace CTS.Configuration
         public EntityConfigurationBase()
         {
             this.HasKey(p => p.Id);
-            this.Property(p => p.Timestamp).IsRowVersion();
+            this.Property(p => p.Timestamp).IsConcurrencyToken();
             this.Property(p => p.IsDeleted).IsRequired();
             this.Property(p => p.Remark).HasMaxLength(500);
         }

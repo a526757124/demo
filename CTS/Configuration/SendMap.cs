@@ -1,6 +1,7 @@
 ﻿using CTS.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +11,8 @@ namespace CTS.Configuration
     {
         public SendMap()
         {
+           
+
             this.HasRequired(p => p.BelongCompany).WithOptional();
             this.Property(p => p.CourierNumber).IsRequired().HasMaxLength(100);
             this.Property(p => p.CustomerAddress).HasMaxLength(500);

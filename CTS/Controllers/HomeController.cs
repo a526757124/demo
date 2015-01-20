@@ -1,4 +1,5 @@
 ﻿using CTS.Context;
+using CTS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,18 @@ namespace CTS.Controllers
 
         public ActionResult Index()
         {
-            using (CTSContext context = new Context.CTSContext())
+            using (CTSContext context = new CTSContext())
             {
-                context.CourierCompanys.ToList();
+                var model = new CourierCompany()
+                {
+                    CourierName = "1",
+                    CourierCode = "2",
+                    ContactPhone = "3",
+                    ContactName = "a",
+                    ContactMobilePhone = "2",
+                };
+                context.CourierCompanys.Add(model);
+                context.SaveChanges();
             }
             return View();
         }

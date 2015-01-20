@@ -25,7 +25,7 @@ namespace CTS
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            Database.SetInitializer(new DropCreateDatabaseAlways<CTSContext>());  
+            //Database.SetInitializer(new DropCreateDatabaseAlways<CTSContext>());  
         }
     }
 }

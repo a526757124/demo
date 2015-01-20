@@ -66,9 +66,9 @@
     <Compile Include="Configuration\SubjectTypeMap.cs" />
     <Compile Include="ContextEX.cs" />
     <Compile Include="FrameworkEnum\BalanceDirectionEnum.cs" />
-    <Compile Include="Migrations\201501130756047_fist.cs" />
-    <Compile Include="Migrations\201501130756047_fist.Designer.cs">
-      <DependentUpon>201501130756047_fist.cs</DependentUpon>
+    <Compile Include="Migrations\201501200738243_1.cs" />
+    <Compile Include="Migrations\201501200738243_1.Designer.cs">
+      <DependentUpon>201501200738243_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\BaseModel.cs" />
@@ -86,8 +86,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201501130756047_fist.resx">
-      <DependentUpon>201501130756047_fist.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201501200738243_1.resx">
+      <DependentUpon>201501200738243_1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
