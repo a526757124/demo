@@ -1,0 +1,107 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<table id="receipt_dg" class="easyui-datagrid">
+    <thead>
+        <tr>
+            <th data-options="field:'CourierNumber',width:100">快递单号</th>
+            <th data-options="field:'BelongCompany',width:100">快递公司</th>
+            <th data-options="field:'CustomerName',width:80">客户名称</th>
+            <th data-options="field:'CustomerPhone',width:80">客户电话</th>
+            <th data-options="field:'CustomerAddress',width:200">客户地址</th>
+        </tr>
+    </thead>
+</table>
+<div id="receipt_tb">
+    <a href="#" id="receipt_tb_add" class="easyui-linkbutton" data-options="plain:true">录入</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true">修改</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true">删除</a>
+    <a href="#" class="easyui-linkbutton" data-options="plain:true">取件</a>
+</div>
+<div id="receipt_add" class="easyui-window" title="录入快递" style="width:600px;height:400px">
+    <form id="receipt_form" method="post">
+        <div>
+            <label for="name">快递单号:</label>
+            <input class="easyui-validatebox textbox" type="text" name="CourierNumber" data-options="required:true" />
+        </div>
+        <div>
+            <label for="BelongCompany">快递公司:</label>
+            <input class="easyui-validatebox" type="text" name="BelongCompany" />
+        </div>
+        <div>
+            <label for="CustomerName">客户名称:</label>
+            <input class="easyui-validatebox textbox" type="text" name="CustomerName" data-options="required:true" />
+        </div>
+        <div>
+            <label for="CustomerPhone">客户电话:</label>
+            <input class="easyui-validatebox numberbox" type="text" name="CustomerPhone" data-options="required:true" />
+        </div>
+        <div>
+            <label for="CustomerAddress">客户地址:</label>
+            <input class="easyui-validatebox textbox" type="text" name="CustomerAddress" />
+        </div>
+    </form>
+</div>
+
+
+<script>
+    $(function () {
+        $("#receipt_add").dialog({
+            modal: true,
+            closed: true,
+            buttons: [{
+                text: '保存继续录入',
+                handler: function () { }
+            }, {
+                text: '保存并关闭',
+                handler: function () {
+                    $.messager.progress();	// 显示进度条
+                    $('#receipt_form').form('submit', {
+                        url: '@Url.Action("Add")',
+                        onSubmit: function () {
+                            var isValid = $(this).form('validate');
+                            if (!isValid) {
+                                $.messager.progress('close');	// 如果表单是无效的则隐藏进度条
+                            }
+                            return isValid;
+                        },
+                        success: function (data) {
+                            $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                            if (data) {
+                                $.messager.alert('提示', data);
+                            } else {
+                                $('#receipt_add').dialog('close')
+
+                            }
+                        }
+                    });
+                }
+            }, {
+                text: '关闭',
+                handler: function () {
+                    $('#receipt_add').dialog('close')
+                }
+            }]
+        });
+        $("#receipt_dg").datagrid({
+            fit: true,
+            //fitColumns:true,
+            toolbar: '#receipt_tb',
+            pagination: true,
+            pageSize: 10,
+            loader: function (param, sucess) {
+                cashbag.services.post('@Url.Action("List")', {
+                    queryCond: {
+                        PageNo: param.page,
+                        PageSize: param.rows,
+                        QueryDto: { Id: 0 }
+                    }
+                }, sucess);
+            }
+        });
+        $("#receipt_tb_add").click(function () {
+            $('#receipt_add').dialog('open');
+        })
+
+    })
+</script>

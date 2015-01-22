@@ -59,6 +59,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MySql.Data.Entity.EF6.6.8.3\lib\net40\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -145,6 +148,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Context\CTSInitializer.cs" />
+    <Compile Include="Models\PagedParam.cs" />
+    <Compile Include="Areas\ReceiptManagement\Controllers\ReceiptController.cs" />
+    <Compile Include="Areas\ReceiptManagement\ReceiptManagementAreaRegistration.cs" />
     <Compile Include="Areas\SystemSettings\SystemSettingsAreaRegistration.cs" />
     <Compile Include="Configuration\CourierCompanyMap.cs" />
     <Compile Include="Configuration\CustomerMap.cs" />
@@ -166,6 +173,7 @@
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\EntityBase.cs" />
     <Compile Include="Models\Receipt.cs" />
+    <Compile Include="Models\ResultData.cs" />
     <Compile Include="Models\Send.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -604,6 +612,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Areas\ReceiptManagement\Views\Web.config" />
+    <Content Include="Areas\ReceiptManagement\Views\Receipt\Index.cshtml" />
+    <Content Include="Areas\ReceiptManagement\Views\_ViewStart.cshtml" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1732,6 +1744,7 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\services.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -1747,7 +1760,10 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\ReceiptManagement\Models\" />
+    <Folder Include="Areas\ReceiptManagement\Views\Shared\" />
     <Folder Include="Areas\SystemSettings\Controllers\" />
     <Folder Include="Areas\SystemSettings\Models\" />
     <Folder Include="Areas\SystemSettings\Views\Shared\" />

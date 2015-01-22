@@ -17,6 +17,7 @@ namespace CTS.Context
         public CTSContext()
             : base("name=MySqlConnectionString")
         {
+            Database.SetInitializer<CTSContext>(new CTSInitializer());
         }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CourierCompany> CourierCompanys { get; set; }

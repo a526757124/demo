@@ -595,7 +595,8 @@ ul.page-sidebar-menu > li > ul.sub-menu > li > a {
   display: block;
   margin: 0px 0px 0px 0px;
   padding: 5px 0px;
-  padding-left: 44px !important;
+  /*padding-left: 44px !important;*/
+  padding-left: 5px !important;
   text-decoration: none;
   font-size: 14px;
   font-weight: 300;

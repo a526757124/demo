@@ -1,48 +1,47 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-<div class="easyui-layout" fit="true">
-    <div data-options="region:'north'" style="height:50px"></div>
-    <div data-options="region:'south',split:true" style="height:50px;"></div>
-    <div data-options="region:'west',split:true"  style="width:200px;">
-        <ul class="nav nav-pills nav-stacked">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">Profile</a></li>
-            <li role="presentation"><a href="#">Messages</a></li>
-        </ul>
-        @*<div id="menu" class="easyui-accordion" fit="true">
-            <div title="系统设置" data-options="iconCls:'icon-save'" style="overflow:auto;padding:10px;">
-                <ul id="tt" class="easyui-tree">
+<body class="easyui-layout">
+    <div data-options="region:'north',split:true" style="height:100px;">
+
+    </div>
+    <div data-options="region:'south',split:true" style="height:50px;">
+    </div>
+    <div data-options="region:'west',title:'CTS导航',split:true" style="width: 200px; background: #e5eaee;">
+        <div id="meun" class="easyui-accordion" fit="true" style="background: #e5eaee;">
+            <div title="收件中心" style="padding: 10px; background: #e5eaee;">
+                <ul >
                     <li>
-                        <span>快递公司</span>
-                    <li>
-                        <span></span>
+                        <a href="#">收件管理</a>
                     </li>
                 </ul>
 
 
             </div>
-            <div title="客户管理" data-options="iconCls:'icon-reload',selected:true" style="padding:10px;">
-            </div>
-            <div title="快递收件" data-options="iconCls:'icon-reload',selected:true" style="padding:10px;">
-            </div>
-            <div title="快递发件" data-options="iconCls:'icon-reload',selected:true" style="padding:10px;">
-            </div>
-        </div>*@
-    </div>
-    <div data-options="region:'center',title:'',iconCls:'icon-ok'">
-        @*<div id="tt" class="easyui-tabs"  fit="true">
-            <div title="Tab1" style="padding:20px;display:none;">
-                tab1
-            </div>
-            <div title="Tab2" data-options="closable:true" style="overflow:auto;padding:20px;display:none;">
-                tab2
-            </div>
-            <div title="Tab3" data-options="iconCls:'icon-reload',closable:true" style="padding:20px;display:none;">
-                tab3
-            </div>
-        </div>*@
+            <div title="发件中心" style="padding: 10px; background: #e5eaee;">
 
+            </div>
+            <div title="客户中心" style="padding: 10px; background: #e5eaee;">
 
+            </div>
+            <div title="系统设置" style="padding: 10px; background: #e5eaee;">
+
+            </div>
+        </div>
     </div>
-</div>
+    <div data-options="region:'center',title:'欢迎使用CTS系统'" style="padding:0px;background:#eee;">
+        <div id="tab" class="easyui-tabs" fit="true">
+            <div title="主页" style="padding:20px;display:none;">
+                主页
+            </div>
+            <div title="收件管理" data-options="closable:true" cache="false" style="padding:1px;" href="@Url.Action("Index", "Receipt", new { area = "ReceiptManagement" })">
+            </div>
+        </div> 
+    </div>
+    <script>
+        $(function () {
+            
+        });
+
+    </script>
+</body> 
