@@ -17,7 +17,7 @@ namespace CTS.Context
                 ContactName = "赵女士",
                 ContactPhone = "028-65413548"
             });
-            base.Seed(context);
+            context.SaveChanges();
         }
     }
 }

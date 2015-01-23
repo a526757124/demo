@@ -5,7 +5,7 @@
     <thead>
         <tr>
             <th data-options="field:'CourierNumber',width:100">快递单号</th>
-            <th data-options="field:'BelongCompany',width:100">快递公司</th>
+            <th data-options="field:'BelongCompany.CourierName',width:100">快递公司</th>
             <th data-options="field:'CustomerName',width:80">客户名称</th>
             <th data-options="field:'CustomerPhone',width:80">客户电话</th>
             <th data-options="field:'CustomerAddress',width:200">客户地址</th>
@@ -14,94 +14,229 @@
 </table>
 <div id="receipt_tb">
     <a href="#" id="receipt_tb_add" class="easyui-linkbutton" data-options="plain:true">录入</a>
-    <a href="#" class="easyui-linkbutton" data-options="plain:true">修改</a>
+    <a href="#" id="receipt_tb_edit" class="easyui-linkbutton" data-options="plain:true">修改</a>
     <a href="#" class="easyui-linkbutton" data-options="plain:true">删除</a>
     <a href="#" class="easyui-linkbutton" data-options="plain:true">取件</a>
 </div>
-<div id="receipt_add" class="easyui-window" title="录入快递" style="width:600px;height:400px">
+<div id="receipt_add" class="easyui-window" title="录入快递" style="width:400px;height:250px">
     <form id="receipt_form" method="post">
-        <div>
-            <label for="name">快递单号:</label>
-            <input class="easyui-validatebox textbox" type="text" name="CourierNumber" data-options="required:true" />
-        </div>
-        <div>
-            <label for="BelongCompany">快递公司:</label>
-            <input class="easyui-validatebox" type="text" name="BelongCompany" />
-        </div>
-        <div>
-            <label for="CustomerName">客户名称:</label>
-            <input class="easyui-validatebox textbox" type="text" name="CustomerName" data-options="required:true" />
-        </div>
-        <div>
-            <label for="CustomerPhone">客户电话:</label>
-            <input class="easyui-validatebox numberbox" type="text" name="CustomerPhone" data-options="required:true" />
-        </div>
-        <div>
-            <label for="CustomerAddress">客户地址:</label>
-            <input class="easyui-validatebox textbox" type="text" name="CustomerAddress" />
-        </div>
+        <table class="TableStyle">
+            <tr>
+                <th>
+                    <label for="name">快递单号:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox textbox" type="text" name="CourierNumber" data-options="required:true,validType:'length[3,10]'" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="BelongCompany">快递公司:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox" type="text" name="BelongCompany" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CustomerName">客户名称:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox textbox" type="text" name="CustomerName" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CustomerPhone">客户电话:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox numberbox" type="text" name="CustomerPhone" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CustomerAddress">客户地址:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox textbox" type="text" name="CustomerAddress" />
+                </td>
+            </tr>
+        </table>
     </form>
 </div>
 
+<div id="receipt_edit" class="easyui-window" title="修改录入快递数据" style="width:400px;height:250px">
+    <form id="receipt_edit_form" method="post">
+        <input name="Id" type="hidden" />
+        <table class="TableStyle">
+            <tr>
+                <th>
+                    <label for="name">快递单号:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox textbox" type="text" name="CourierNumber" data-options="required:true,validType:'length[3,10]'" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="BelongCompany">快递公司:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox" type="text" name="BelongCompany" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CustomerName">客户名称:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox textbox" type="text" name="CustomerName" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CustomerPhone">客户电话:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox numberbox" type="text" name="CustomerPhone" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CustomerAddress">客户地址:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox textbox" type="text" name="CustomerAddress" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
 
 <script>
     $(function () {
-        $("#receipt_add").dialog({
-            modal: true,
-            closed: true,
-            buttons: [{
-                text: '保存继续录入',
-                handler: function () { }
-            }, {
-                text: '保存并关闭',
-                handler: function () {
-                    $.messager.progress();	// 显示进度条
-                    $('#receipt_form').form('submit', {
-                        url: '@Url.Action("Add")',
-                        onSubmit: function () {
-                            var isValid = $(this).form('validate');
-                            if (!isValid) {
-                                $.messager.progress('close');	// 如果表单是无效的则隐藏进度条
-                            }
-                            return isValid;
-                        },
-                        success: function (data) {
-                            $.messager.progress('close');	// 如果提交成功则隐藏进度条
-                            if (data) {
-                                $.messager.alert('提示', data);
-                            } else {
-                                $('#receipt_add').dialog('close')
+        var searchViewModel = {
+            $datagrid: null,
 
-                            }
+            init: function () {
+                $("#receipt_add").dialog({
+                    modal: true,
+                    closed: true,
+                    buttons: [{
+                        text: '保存继续录入',
+                        handler: function () {
+                            searchViewModel.receipt_add();
+                            $('#receipt_form').form('reset');
                         }
-                    });
-                }
-            }, {
-                text: '关闭',
-                handler: function () {
-                    $('#receipt_add').dialog('close')
-                }
-            }]
-        });
-        $("#receipt_dg").datagrid({
-            fit: true,
-            //fitColumns:true,
-            toolbar: '#receipt_tb',
-            pagination: true,
-            pageSize: 10,
-            loader: function (param, sucess) {
-                cashbag.services.post('@Url.Action("List")', {
-                    queryCond: {
-                        PageNo: param.page,
-                        PageSize: param.rows,
-                        QueryDto: { Id: 0 }
+                    }, {
+                        text: '保存并关闭',
+                        handler: function () {
+                            searchViewModel.receipt_add();
+                            $('#receipt_form').form('reset');
+                            $('#receipt_add').dialog('close')
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#receipt_add').dialog('close')
+                        }
+                    }]
+                });
+                $("#receipt_edit").dialog({
+                    modal: true,
+                    closed: true,
+                    buttons: [{
+                        text: '保存',
+                        handler: function () {
+                            searchViewModel.receipt_edit();
+                            $('#receipt_edit_form').form('reset');
+                            $('#receipt_edit').dialog('close')
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#receipt_edit').dialog('close')
+                        }
+                    }]
+                });
+                
+                searchViewModel.$datagrid = $("#receipt_dg").datagrid({
+                    fit: true,
+                    //fitColumns:true,
+                    singleSelect:true,
+                    toolbar: '#receipt_tb',
+                    pagination: true,
+                    pageSize: 10,
+                    loader: function (param, sucess) {
+                        cashbag.services.post('@Url.Action("List")', {
+                            queryCond: {
+                                PageNo: param.page,
+                                PageSize: param.rows,
+                                QueryDto: { Id: 0 }
+                            }
+                        }, sucess);
                     }
-                }, sucess);
+                });
+                $("#receipt_tb_add").click(function () {
+                    $('#receipt_form').form('reset');
+                    $('#receipt_add').dialog('open');
+                })
+                $("#receipt_tb_edit").click(function () {
+                    $('#receipt_edit_form').form('reset');
+                    var row=searchViewModel.$datagrid.datagrid("getSelected");
+                    if(!row){
+                        $.messager.alert('提示', '请选择一条数据');
+                    }
+                    cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
+                        $("#receipt_edit_form").form('loadData', data);
+                    });
+                    $('#receipt_edit').dialog('open');
+                })
+            },
+            search: function () {
+                this.$datagrid.datagrid("load");
+            },
+            receipt_add: function () {
+                $.messager.progress();	// 显示进度条
+                $('#receipt_form').form('submit', {
+                    url: '@Url.Action("Add")',
+                    onSubmit: function () {
+                        var isValid = $(this).form('validate');
+                        console.log(isValid);
+                        if (!isValid) {
+                            $.messager.progress('close');	// 如果表单是无效的则隐藏进度条
+                        }
+                        return isValid;
+                    },
+                    success: function (data) {
+                        $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                        $.messager.alert('提示', '录入成功');
+                        searchViewModel.search();
+                    }
+                });
+            },
+            receipt_edit: function () {
+                $.messager.progress();	// 显示进度条
+                $('#receipt_edit_form').form('submit', {
+                    url: '@Url.Action("Edit")',
+                    onSubmit: function () {
+                        var isValid = $(this).form('validate');
+                        console.log(isValid);
+                        if (!isValid) {
+                            $.messager.progress('close');	// 如果表单是无效的则隐藏进度条
+                        }
+                        return isValid;
+                    },
+                    success: function (data) {
+                        $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                        $.messager.alert('提示', '修改成功');
+                        searchViewModel.search();
+                    }
+                });
             }
-        });
-        $("#receipt_tb_add").click(function () {
-            $('#receipt_add').dialog('open');
-        })
+        }
+        searchViewModel.init();
+
 
     })
 </script>
