@@ -144,10 +144,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Code\BaseController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Configuration\TakeInfoMap.cs" />
     <Compile Include="Context\CTSInitializer.cs" />
     <Compile Include="Models\PagedParam.cs" />
     <Compile Include="Areas\ReceiptManagement\Controllers\ReceiptController.cs" />
@@ -175,6 +177,7 @@
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Models\ResultData.cs" />
     <Compile Include="Models\Send.cs" />
+    <Compile Include="Models\TakeInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -617,10 +620,12 @@
     <Content Include="Areas\ReceiptManagement\Views\Receipt\Index.cshtml" />
     <Content Include="Areas\ReceiptManagement\Views\_ViewStart.cshtml" />
     <Content Include="ClassDiagram1.cd" />
+    <Content Include="Areas\ReceiptManagement\Views\Receipt\AddOrder.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\easyui.form.extend.load.js" />
+    <Content Include="Scripts\easyui.validatebox.extend.js" />
     <Content Include="Scripts\jquery-1.9.1.js" />
     <Content Include="Scripts\jquery-1.9.1.min.js" />
     <Content Include="Scripts\jquery-1.9.1.min.map" />
@@ -1762,7 +1767,6 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Code\" />
     <Folder Include="App_Data\" />
     <Folder Include="Areas\ReceiptManagement\Models\" />
     <Folder Include="Areas\ReceiptManagement\Views\Shared\" />

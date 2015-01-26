@@ -1,0 +1,98 @@
+﻿@{
+    ViewBag.Title = "AddOrder";
+}
+<div id="addorder">
+    <form id="addorder_form" method="post">
+        <table class="TableStyle">
+            <tr>
+                <th>
+                    <label for="name">快递单号:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox textbox" type="text" name="CourierNumber" data-options="required:true,validType:'length[8,20]',novalidate:true,invalidMessage:'请输入正确的快递单号'" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="BelongCompany">快递公司:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-combobox" type="text" name="BelongCompany.Id" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CustomerName">客户名称:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox textbox" type="text" name="CustomerName" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CustomerPhone">客户电话:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-numberbox" type="text" name="CustomerPhone" data-options="required:true,validType:'length[8,12]',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CustomerAddress">客户地址:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox textbox" type="text" name="CustomerAddress" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align:center;">
+                    <a href="#" id="addorder_submit" class="easyui-linkbutton">录 入</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<script>
+    $(function () {
+        var addViewModel = {
+            init: function () {
+                $("#addorder_submit").click(function () {
+                    $.messager.progress();	// 显示进度条
+                    $('#addorder_form').form('submit', {
+                        novalidate: true,
+                        url: '@Url.Action("Add")',
+                        onSubmit: function () {
+                            var isValid = $(this).form('enableValidation').form('validate');
+                            if (!isValid) {
+                                $.messager.progress('close');	// 如果表单是无效的则隐藏进度条
+                            }
+                            return isValid;
+                        },
+                        success: function (data) {
+                            $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                            if (JSON.parse(data) == "T") {
+                                $.messager.alert('提示', '录入成功');
+                                $('#addorder_form').form('clear');
+                            } else {
+                                $.messager.alert('提示', '录入失败');
+                            }
+
+                        }
+                    });
+                });
+                $("#addorder_form [name='BelongCompany.Id']").combobox({
+                    url: '@Url.Action("GetCourierCompanyList")',
+                    valueField: 'id',
+                    textField: 'text'
+                });
+            },
+        }
+        addViewModel.init();
+        $('.easyui-validatebox').bind('blur', function () {
+            $(this).validatebox('enableValidation').validatebox('validate');
+        });
+        $("#addorder_form [name='CourierNumber']").focus();
+
+    })
+</script>

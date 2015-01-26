@@ -30,5 +30,9 @@ namespace CTS.Models
         /// 客户地址
         /// </summary>
         public string CustomerAddress { get; set; }
+        /// <summary>
+        /// 取件信息
+        /// </summary>
+        public TakeInfo TakeInfo { get; set; }
     }
 }

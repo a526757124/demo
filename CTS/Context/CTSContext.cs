@@ -23,6 +23,7 @@ namespace CTS.Context
         public DbSet<CourierCompany> CourierCompanys { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
         public DbSet<Send> Sends { get; set; }
+        public DbSet<TakeInfo> TakeInfos { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
