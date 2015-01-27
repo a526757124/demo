@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using PagedList;
 using CTS.Models;
 using System.Data.Entity;
+using CTS.Dto;
 namespace CTS.Areas.ReceiptManagement.Controllers
 {
     public class ReceiptController : Controller
@@ -22,6 +23,7 @@ namespace CTS.Areas.ReceiptManagement.Controllers
         {
             return View();
         }
+
         #region 增删改查
         [HttpPost]
         public ActionResult Add(Receipt model)
@@ -73,20 +75,57 @@ namespace CTS.Areas.ReceiptManagement.Controllers
                 return Json(model);
             }
         }
-        public ActionResult List(PagedParam queryCond)
+        public ActionResult List(PagedParam<ReceiptQueryDto> queryCond)
         {
             using (CTSContext context = new CTSContext())
             {
-                var result = context.Receipts
+
+
+                var express = context.Receipts
                     .Include(p => p.BelongCompany)
                     .Include(p => p.TakeInfo)
-                    .Where(p => !p.IsDeleted)
-                    .OrderByDescending(p => p.CreatedTime).ToPagedList(queryCond.PageNo, queryCond.PageSize);
+                    .Where(p => !p.IsDeleted);
+
+                if (queryCond.QueryDto != null)
+                {
+                    if (!string.IsNullOrEmpty(queryCond.QueryDto.CourierNumber))
+                    {
+                        express = express.Where(p => p.CourierNumber.Equals(queryCond.QueryDto.CourierNumber));
+                    }
+                    if (!string.IsNullOrEmpty(queryCond.QueryDto.CustomerPhone))
+                    {
+                        express = express.Where(p => p.CustomerPhone.Equals(queryCond.QueryDto.CustomerPhone)||p.CustomerPhone.Contains(queryCond.QueryDto.CustomerPhone));
+                    }
+                    if (queryCond.QueryDto.BelongCompanyId.HasValue)
+                    {
+                        if (queryCond.QueryDto.BelongCompanyId.Value != 0)
+                        {
+                            express = express.Where(p => p.BelongCompany.Id == queryCond.QueryDto.BelongCompanyId.Value);
+                        }
+                    }
+                    if (queryCond.QueryDto.State.HasValue)
+                    {
+                        if (queryCond.QueryDto.State != 0)
+                        {
+                            if (queryCond.QueryDto.State == 1)
+                            {
+                                express = express.Where(p => p.TakeInfo == null);
+                            }
+                            else
+                            {
+                                express = express.Where(p => p.TakeInfo != null);
+                            }
+                        }
+                    }
+                }
+                express=express.OrderByDescending(p => p.CreatedTime);
+                var result = express.ToPagedList(queryCond.PageNo, queryCond.PageSize);
                 return Json(new { rows = result.ToList(), total = result.TotalItemCount });
             }
         }
 
         #endregion
+
         #region 取件
         public ActionResult Take(FormCollection from,int? Id)
         {
@@ -99,19 +138,33 @@ namespace CTS.Areas.ReceiptManagement.Controllers
             }
         }
         #endregion
-        public ActionResult GetCourierCompanyList()
+        public ActionResult GetCourierCompanyList(int? tag)
         {
             using (CTSContext context = new CTSContext())
             {
+
                 var result = context.CourierCompanys
                     .Where(p => !p.IsDeleted)
-                    .Select(s => new
+                    .Select(s => new ComboData
                     {
                         id = s.Id,
                         text = s.CourierName
                     }).ToList();
-                return Json(result);
+                if (tag != null)
+                {
+                    result.Add(new ComboData
+                    {
+                        id = 0,
+                        text = "请选择"
+                    });
+                }
+                return Json(result.OrderBy(o=>o.id));
             }
         }
+    }
+    public class ComboData
+    {
+        public int id { get; set; }
+        public string text { get; set; }
     }
 }

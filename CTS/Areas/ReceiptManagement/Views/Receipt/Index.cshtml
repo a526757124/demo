@@ -8,9 +8,11 @@
             <th data-options="field:'BelongCompany.CourierName',width:100,formatter:searchViewModel.BelongCompanyColumnFormatter">快递公司</th>
             <th data-options="field:'CustomerName',width:80">客户名称</th>
             <th data-options="field:'CustomerPhone',width:80">客户电话</th>
+            <th data-options="field:'CreatedTime',width:130,formatter:com.DateTimeFormatter">收件时间</th>
             <th data-options="field:'t',width:80 ,formatter:searchViewModel.tColumnFormatter">状态</th>
             <th data-options="field:'CustomerAddress',width:200">客户地址</th>
             
+
         </tr>
     </thead>
 </table>
@@ -20,6 +22,35 @@
     <a href="#" id="receipt_tb_delete" class="easyui-linkbutton" data-options="plain:true">删除</a>
     <a href="#" id="receipt_tb_take" class="easyui-linkbutton" data-options="plain:true">取件</a>
     <a href="#" class="easyui-linkbutton" data-options="plain:true">打印凭证</a>
+    <br />
+    <form id="receipt_tb_form" method="post" style="background:#fff">
+        <table>
+            <tr>
+                <td style="padding-left:10px;">
+                    <label for="CourierNumber">快递单号:</label><input class=" easyui-textbox" type="text" style="width:110px;" name="CourierNumber" />
+                </td>
+                <td style="padding-left:10px;">
+                    <label for="CustomerPhone">手机号:</label><input class=" easyui-textbox" type="text" style="width:110px;" name="CustomerPhone" />
+                </td>
+                <td style="padding-left:10px;">
+                    <label for="BelongCompanyId">所属快递公司:</label><select style="width:110px;" name="BelongCompanyId"></select>
+                </td>
+                <td style="padding-left:10px;">
+                    <label for="State">状态:</label>
+                    <select  style="width:110px;" name="State" >
+                        <option value="0" selected="selected">全部</option>
+                        <option value="1">未取件</option>
+                        <option value="2">已取件</option> 
+                    </select>
+                </td>
+                <td style="padding-left:10px;">
+                    <a href="#" id="receipt_tb_form_search" class="easyui-linkbutton">查&nbsp;&nbsp;询</a>
+                </td>
+            </tr>
+        </table>
+
+
+    </form>
 </div>
 <div id="receipt_add" class="easyui-window" title="录入快递" style="width:400px;height:250px">
     <form id="receipt_form" method="post">
@@ -37,7 +68,7 @@
                     <label for="BelongCompany">快递公司:</label>
                 </th>
                 <td>
-                    <input class="easyui-validatebox easyui-combobox" type="text" name="BelongCompany.Id" data-options="required:true,novalidate:true" />
+                    <input class="easyui-validatebox" type="text" name="BelongCompany.Id" data-options="required:true,novalidate:true" />
                 </td>
             </tr>
             <tr>
@@ -85,7 +116,7 @@
                     <label for="BelongCompany">快递公司:</label>
                 </th>
                 <td>
-                    <input class="easyui-validatebox easyui-combobox" type="text" name="BelongCompany.Id" data-options="required:true,novalidate:true" />
+                    <input class="easyui-validatebox" type="text" name="BelongCompany.Id" data-options="required:true,novalidate:true" />
                 </td>
             </tr>
             <tr>
@@ -121,19 +152,19 @@
         <input name="Id" type="hidden" />
         <table class="TableStyle">
             <tr>
-                <th width="60" >
+                <th width="60">
                     <label for="name">快递单号:</label>
                 </th>
-                <td >
+                <td>
                     <label id="CourierNumber" />
-                    
+
                 </td>
-                </tr>
+            </tr>
             <tr>
-                <th >
+                <th>
                     <label for="BelongCompany">快递公司:</label>
                 </th>
-                <td >
+                <td>
                     <label id="BelongCompany.CourierName" />
                 </td>
             </tr>
@@ -171,16 +202,14 @@
             $datagrid: null,
 
             init: function () {
-                $("#receipt_form [name='BelongCompany.Id']").combobox({
-                    url: '@Url.Action("GetCourierCompanyList")',
+                $("#receipt_tb_form [name='BelongCompanyId']").combobox({
+                    url: '@Url.Action("GetCourierCompanyList", new { tag=1 })',
+                    panelHeight: 100,
                     valueField: 'id',
                     textField: 'text'
                 });
-                $("#receipt_edit_form [name='BelongCompany.Id']").combobox({
-                    url: '@Url.Action("GetCourierCompanyList")',
-                    valueField: 'id',
-                    textField: 'text'
-                });
+
+                $("#receipt_tb_form [name='State']").combobox({ editable: true, panelHeight: 100, editable: false });
                 $('.easyui-textbox').textbox();
                 $('.easyui-numberbox').numberbox();
                 //$.parser.parse('#receipt_add');
@@ -211,12 +240,14 @@
                     buttons: [{
                         text: '保存',
                         handler: function () {
-                            searchViewModel.receipt_edit()
+                            searchViewModel.receipt_edit();
+                            $.parser.parse('#receipt_edit');
                         }
                     }, {
                         text: '关闭',
                         handler: function () {
-                            $('#receipt_edit').dialog('close')
+                            $('#receipt_edit').dialog('close');
+                            $.parser.parse('#receipt_edit');
                         }
                     }]
                 });
@@ -244,18 +275,26 @@
                     pagination: true,
                     pageSize: 10,
                     loader: function (param, sucess) {
+                        var json = $('#receipt_tb_form').form('serialize');
                         cashbag.services.post('@Url.Action("List")', {
                             queryCond: {
                                 PageNo: param.page,
                                 PageSize: param.rows,
-                                QueryDto: { Id: 0 }
+                                QueryDto: json
                             }
                         }, sucess);
                     }
                 });
+
+
                 $("#receipt_tb_add").click(function () {
                     $('#receipt_form').form('reset');
                     $('#receipt_add').window('open');
+                    $("#receipt_form [name='BelongCompany.Id']").combobox({
+                        url: '@Url.Action("GetCourierCompanyList")',
+                        valueField: 'id',
+                        textField: 'text'
+                    });
                     $("#receipt_form [name='CourierNumber']").focus();
                 })
                 $("#receipt_tb_edit").click(function () {
@@ -269,11 +308,16 @@
                         $.messager.alert('提示', '此单已取件');
                         return;
                     }
+                    $("#receipt_edit_form [name='BelongCompany.Id']").combobox({
+                        url: '@Url.Action("GetCourierCompanyList")',
+                        valueField: 'id',
+                        textField: 'text'
+                    });
                     cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
                         $("#receipt_edit_form").form('loadData', data);
                         $('#receipt_edit').window('open');
                     });
-                    
+
 
 
                 })
@@ -292,7 +336,7 @@
                         $("#receipt_take_form").form('loadLabelData', data);
                         $('#receipt_take').window('open');
                     });
-                    
+
                 })
                 $("#receipt_tb_delete").click(function () {
                     var row = searchViewModel.$datagrid.datagrid("getSelected");
@@ -318,12 +362,11 @@
                             });
                         }
                     });
-
-
-
                 })
+                $("#receipt_tb_form_search").click(function () {
+                    searchViewModel.search();
+                });
                 $('.easyui-validatebox').bind('blur', function () {
-                    console.log(this);
                     $(this).validatebox('enableValidation').validatebox('validate');
                 });
 

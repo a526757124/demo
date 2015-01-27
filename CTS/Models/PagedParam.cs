@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CTS.Models
 {
-    public class PagedParam
+    public class PagedParam<T> where T : class
     {
         public PagedParam()
         {
@@ -20,6 +20,6 @@ namespace CTS.Models
 
         public int PageNo { get; set; }
         public int PageSize { get; set; }
-        public dynamic QueryDto { get; set; }
+        public T QueryDto { get; set; }
     }
 }

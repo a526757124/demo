@@ -1,0 +1,296 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<table id="couriercompany_dg" class="easyui-datagrid">
+    <thead>
+        <tr>
+            <th data-options="field:'CourierName',width:100">名称</th>
+            <th data-options="field:'CourierCode',width:100">编号</th>
+            <th data-options="field:'ContactName',width:80">联系人</th>
+            <th data-options="field:'ContactPhone',width:100">联系电话</th>
+            <th data-options="field:'ContactMobilePhone',width:100">联系人手机</th>
+            <th data-options="field:'IsDefault',width:80,formatter:searchCourierViewModel.isDefaultColumnFormatter">是否默认</th>
+
+        </tr>
+    </thead>
+</table>
+<div id="couriercompany_tb">
+    <a href="#" id="couriercompany_tb_add" class="easyui-linkbutton" data-options="plain:true">添加</a>
+    <a href="#" id="couriercompany_tb_edit" class="easyui-linkbutton" data-options="plain:true">修改</a>
+    <a href="#" id="couriercompany_tb_delete" class="easyui-linkbutton" data-options="plain:true">删除</a>
+</div>
+<div id="couriercompany_add" class="easyui-window" title="录入快递" style="width:400px;height:250px">
+    <form id="couriercompany_form" method="post">
+        <table class="TableStyle">
+            <tr>
+                <th>
+                    <label for="CourierName">快递公司名称:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CourierName" data-options="required:true,validType:'length[1,200]',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CourierCode">快递公司编号:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CourierCode" data-options="required:true,validType:'length[1,20]',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="ContactName">联系人名称:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="ContactName" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="ContactPhone">联系电话(座机):</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="ContactPhone" data-options="validType:'phone',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="ContactMobilePhone">联系人电话(手机):</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-numberbox" type="text" name="ContactMobilePhone" data-options="validType:'mobile',novalidate:true" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="couriercompany_edit" class="easyui-window" title="修改录入快递数据" style="width:400px;height:250px">
+    <form id="couriercompany_edit_form" method="post">
+        <input name="Id" type="hidden" />
+        <table class="TableStyle">
+            <tr>
+                <th>
+                    <label for="CourierName">快递公司名称:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CourierName" data-options="required:true,validType:'length[1,200]',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CourierCode">快递公司编号:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CourierCode" data-options="required:true,validType:'length[1,20]',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="ContactName">联系人名称:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="ContactName" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="ContactPhone">联系电话(座机):</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="ContactPhone" data-options="validType:'phone',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="ContactMobilePhone">联系人电话(手机):</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-numberbox" type="text" name="ContactMobilePhone" data-options="validType:'mobile',novalidate:true" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<script>
+    $(function () {
+        searchCourierViewModel = {
+            $datagrid: null,
+
+            init: function () {
+                $('.easyui-textbox').textbox();
+                $('.easyui-numberbox').numberbox();
+                //$.parser.parse('#couriercompany_add');
+                //$.parser.parse('#couriercompany_edit');
+                $("#couriercompany_add").dialog({
+                    modal: true,
+                    closed: true,
+                    buttons: [{
+                        text: '保存继续录入',
+                        handler: function () {
+                            searchCourierViewModel.couriercompany_add();
+                        }
+                    }, {
+                        text: '保存并关闭',
+                        handler: function () {
+                            searchCourierViewModel.couriercompany_add(true);
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#couriercompany_add').dialog('close')
+                        }
+                    }]
+                });
+                $("#couriercompany_edit").dialog({
+                    modal: true,
+                    closed: true,
+                    buttons: [{
+                        text: '保存',
+                        handler: function () {
+                            searchCourierViewModel.couriercompany_edit()
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#couriercompany_edit').dialog('close')
+                        }
+                    }]
+                });
+
+
+                searchCourierViewModel.$datagrid = $("#couriercompany_dg").datagrid({
+                    fit: true,
+                    //fitColumns:true,
+                    singleSelect: true,
+                    toolbar: '#couriercompany_tb',
+                    pagination: true,
+                    pageSize: 10,
+                    loader: function (param, sucess) {
+                        cashbag.services.post('@Url.Action("List")', {
+                            queryCond: {
+                                PageNo: param.page,
+                                PageSize: param.rows,
+                                QueryDto: { Id: 0 }
+                            }
+                        }, sucess);
+                    }
+                });
+                $("#couriercompany_tb_add").click(function () {
+                    $('#couriercompany_form').form('reset');
+                    $('#couriercompany_add').window('open');
+                })
+                $("#couriercompany_tb_edit").click(function () {
+                    $('#couriercompany_edit_form').form('reset');
+                    var row = searchCourierViewModel.$datagrid.datagrid("getSelected");
+                    if (!row) {
+                        $.messager.alert('提示', '请选择一条数据');
+                        return;
+                    }
+                    cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
+                        $("#couriercompany_edit_form").form('loadData', data);
+                        $('#couriercompany_edit').window('open');
+                    });
+
+
+
+                })
+                
+                $("#couriercompany_tb_delete").click(function () {
+                    var row = searchCourierViewModel.$datagrid.datagrid("getSelected");
+                    if (!row) {
+                        $.messager.alert('提示', '请选择一条数据');
+                        return;
+                    }
+                    
+                    $.messager.confirm('确认', '您确认想要删除记录吗？', function (r) {
+                        if (r) {
+                            $.messager.progress();	// 显示进度条
+                            cashbag.services.post('@Url.Action("Delete")', { id: row.Id }, function (data) {
+                                $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                                if (data == "T") {
+                                    $.messager.alert('提示', '删除成功');
+                                } else {
+                                    $.messager.alert('提示', '删除失败');
+                                }
+                                searchCourierViewModel.search();
+                            });
+                        }
+                    });
+
+
+
+                })
+                $('.easyui-validatebox').bind('blur', function () {
+                    $(this).validatebox('enableValidation').validatebox('validate');
+                });
+
+            },
+            isDefaultColumnFormatter: function (value, rowData, rowIndex) {
+                if (rowData.IsDefault) {
+                    return "<span style='color:blue'>是</span>";
+                }
+                return "";
+            },
+            search: function () {
+                this.$datagrid.datagrid("load");
+            },
+            couriercompany_add: function (c) {
+                $.messager.progress();	// 显示进度条
+                $('#couriercompany_form').form('submit', {
+                    url: '@Url.Action("Add")',
+                    onSubmit: function () {
+                        var isValid = $(this).form('enableValidation').form('validate');
+                        if (!isValid) {
+                            $.messager.progress('close');	// 如果表单是无效的则隐藏进度条
+                        }
+                        return isValid;
+                    },
+                    success: function (data) {
+                        $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                        searchCourierViewModel.search();
+                        if (JSON.parse(data) == "T") {
+                            $.messager.alert('提示', '添加成功');
+                            $('#couriercompany_form').form('reset');
+                            if (c) {
+                                $('#couriercompany_add').dialog('close')
+                            }
+                        } else {
+                            $.messager.alert('提示', '添加失败');
+                        }
+                    }
+                });
+            },
+            couriercompany_edit: function () {
+                $.messager.progress();	// 显示进度条
+                $('#couriercompany_edit_form').form('submit', {
+                    url: '@Url.Action("Edit")',
+                    onSubmit: function () {
+                        var isValid = $(this).form('enableValidation').form('validate');
+                        if (!isValid) {
+                            $.messager.progress('close');	// 如果表单是无效的则隐藏进度条
+                        }
+                        return isValid;
+                    },
+                    success: function (data) {
+                        $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                        searchCourierViewModel.search();
+                        if (JSON.parse(data) == "T") {
+                            $.messager.alert('提示', '修改成功');
+                            $('#couriercompany_edit_form').form('reset');
+                            $('#couriercompany_edit').dialog('close')
+                        } else {
+                            $.messager.alert('提示', '修改失败');
+                        }
+
+                    }
+                });
+            }
+        }
+        searchCourierViewModel.init();
+
+
+    })
+</script>
