@@ -24,7 +24,7 @@ namespace CTS.Configuration
             this.HasKey(p => p.Id);
             this.Property(p => p.Timestamp).IsConcurrencyToken();
             this.Property(p => p.IsDeleted).IsRequired();
-            this.Property(p => p.Remark).HasMaxLength(500);
+            this.Property(p => p.Remark).HasMaxLength(200);
         }
         /// <summary>
         /// 将当前实体映射对象注册到当前数据访问上下文实体映射配置注册器中

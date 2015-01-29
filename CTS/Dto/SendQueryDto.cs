@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CTS.Dto
 {
-    public class ReceiptQueryDto
+    public class SendQueryDto
     {
         public string CourierNumber { get; set; }
         public string CustomerPhone { get; set; }

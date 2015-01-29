@@ -52,3 +52,15 @@
 {
     width:20px;
 }
+
+
+.TablePrintStyle{
+    width: 100%;
+    border-collapse: collapse;
+}
+    .TablePrintStyle th, .TablePrintStyle td
+    {
+        border: 0;
+        border-width: 0 1px 1px 0;
+        padding: 3px 3px;
+    }

@@ -43,5 +43,21 @@ namespace CTS.Models
         /// 收件人地址
         /// </summary>
         public string RecipientAddress { get; set; }
+        /// <summary>
+        /// 重量
+        /// </summary>
+        public decimal Weight { get; set; }
+        /// <summary>
+        /// 价格
+        /// </summary>
+        public decimal Price { get; set; }
+        /// <summary>
+        /// 成本
+        /// </summary>
+        public decimal CostAmount { get; set; }
+        /// <summary>
+        /// 是否发出
+        /// </summary>
+        public bool IsSendOut { get; set; }
     }
 }

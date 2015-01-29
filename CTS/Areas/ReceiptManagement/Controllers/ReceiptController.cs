@@ -117,6 +117,15 @@ namespace CTS.Areas.ReceiptManagement.Controllers
                             }
                         }
                     }
+                    if (queryCond.QueryDto.CreatedTimeStart.HasValue)
+                    {
+                        express = express.Where(p => p.CreatedTime >= queryCond.QueryDto.CreatedTimeStart.Value);
+                    }
+                    if (queryCond.QueryDto.CreatedTimeEnd.HasValue)
+                    {
+                        var dt=queryCond.QueryDto.CreatedTimeEnd.Value.AddDays(1);
+                        express = express.Where(p => p.CreatedTime < dt);
+                    }
                 }
                 express=express.OrderByDescending(p => p.CreatedTime);
                 var result = express.ToPagedList(queryCond.PageNo, queryCond.PageSize);

@@ -11,7 +11,7 @@ com.TimeFormatter = function (value, rec, index) {
     if (value == undefined) {
         return "";
     }
-    if (value.indexOf("Date") > 0) {
+    if (typeof (value) == "string" && value.indexOf("Date") > 0) {
         value = dataInt(value);
     }
     if (value instanceof Date) {
@@ -37,7 +37,7 @@ com.DateTimeFormatter = function (value, rec, index) {
     if (value == undefined) {
         return "";
     }
-    if (value.indexOf("Date")>0) {
+    if (typeof (value)== "string" && value.indexOf("Date") > 0) {
         value=dataInt(value);
     }
     if (value instanceof Date) {
@@ -64,7 +64,7 @@ com.DateFormatter = function (value, rec, index) {
     if (value == undefined) {
         return "";
     }
-    if (value.indexOf("Date") > 0) {
+    if (typeof (value) == "string" && value.indexOf("Date") > 0) {
         value = dataInt(value);
     }
     if (value instanceof Date) {

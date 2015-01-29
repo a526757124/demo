@@ -1,36 +1,43 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-<table id="receipt_dg" class="easyui-datagrid">
+<table id="send_dg" class="easyui-datagrid">
     <thead>
         <tr>
-            <th data-options="field:'CourierNumber',width:120">快递单号</th>
-            <th data-options="field:'BelongCompany.CourierName',width:100,formatter:searchViewModel.BelongCompanyColumnFormatter">快递公司</th>
-            <th data-options="field:'CustomerName',width:80">客户名称</th>
-            <th data-options="field:'CustomerPhone',width:110">客户电话</th>
-            <th data-options="field:'CreatedTime',width:150,formatter:com.DateTimeFormatter">收件时间</th>
-            <th data-options="field:'t',width:80 ,formatter:searchViewModel.tColumnFormatter">状态</th>
-            <th data-options="field:'CustomerAddress',width:250">客户地址</th>
+            <th data-options="field:'CustomerName',width:80">发件人</th>
+            <th data-options="field:'CustomerPhone',width:85">发件电话</th>
+            <th data-options="field:'CustomerAddress',width:110">发件地址</th>
+            <th data-options="field:'RecipientName',width:80">收件人</th>
+            <th data-options="field:'RecipientPhone',width:85">收件电话</th>
+            <th data-options="field:'RecipientAddress',width:110">收件地址</th>
+            <th data-options="field:'Weight',width:80">重量</th>
+            <th data-options="field:'Price',width:80">价格</th>
+
+            <th data-options="field:'CourierNumber',width:100">快递单号</th>
+            <th data-options="field:'BelongCompany.CourierName',width:100,formatter:searchSendViewModel.BelongCompanyColumnFormatter">快递公司</th>
+            <th data-options="field:'CreatedTime',width:130,formatter:com.DateTimeFormatter">收件时间</th>
+            <th data-options="field:'t',width:80 ,formatter:searchSendViewModel.tColumnFormatter">状态</th>
+
 
 
         </tr>
     </thead>
 </table>
-<div id="receipt_tb">
-    <a href="#" id="receipt_tb_add" class="easyui-linkbutton" data-options="plain:true">录入</a>
-    <a href="#" id="receipt_tb_edit" class="easyui-linkbutton" data-options="plain:true">修改</a>
-    <a href="#" id="receipt_tb_delete" class="easyui-linkbutton" data-options="plain:true">删除</a>
-    <a href="#" id="receipt_tb_take" class="easyui-linkbutton" data-options="plain:true">取件</a>
-    <a href="#" id="receipt_tb_print" class="easyui-linkbutton" data-options="plain:true">打印凭证</a>
+<div id="send_tb">
+    <a href="#" id="send_tb_add" class="easyui-linkbutton" data-options="plain:true">录入</a>
+    <a href="#" id="send_tb_edit" class="easyui-linkbutton" data-options="plain:true">修改</a>
+    <a href="#" id="send_tb_delete" class="easyui-linkbutton" data-options="plain:true">删除</a>
+    <a href="#" id="send_tb_sendout" class="easyui-linkbutton" data-options="plain:true">发件</a>
+    <a href="#" id="send_tb_print" class="easyui-linkbutton" data-options="plain:true">打印凭证</a>
     <br />
-    <form id="receipt_tb_form" method="post" style="background:#fff">
+    <form id="send_tb_form" method="post" style="background:#fff">
         <table>
             <tr>
                 <td style="padding-left:10px;">
                     <label for="CourierNumber">快递单号:</label><input class=" easyui-textbox" type="text" style="width:110px;" name="CourierNumber" />
                 </td>
                 <td style="padding-left:10px;">
-                    <label for="CustomerPhone">手机号:</label><input class=" easyui-textbox" type="text" style="width:110px;" name="CustomerPhone" />
+                    <label for="CustomerPhone">发件人电话:</label><input class=" easyui-textbox" type="text" style="width:110px;" name="CustomerPhone" />
                 </td>
                 <td style="padding-left:10px;">
                     <label for="BelongCompanyId">所属快递公司:</label><select style="width:110px;" name="BelongCompanyId"></select>
@@ -45,13 +52,13 @@
                     <label for="State">状态:</label>
                     <select style="width:110px;" name="State">
                         <option value="0" selected="selected">全部</option>
-                        <option value="1">未取件</option>
-                        <option value="2">已取件</option>
+                        <option value="1">未发出</option>
+                        <option value="2">已发出</option>
                     </select>
                 </td>
                 <td style="padding-left:10px;">
-                    <a href="#" id="receipt_tb_form_search" class="easyui-linkbutton">查&nbsp;&nbsp;询</a>
-                    <a href="#" id="receipt_tb_form_clear" class="easyui-linkbutton">清&nbsp;&nbsp;空</a>
+                    <a href="#" id="send_tb_form_search" class="easyui-linkbutton">查&nbsp;&nbsp;询</a>
+                    <a href="#" id="send_tb_form_clear" class="easyui-linkbutton">清&nbsp;&nbsp;空</a>
                 </td>
             </tr>
         </table>
@@ -59,103 +66,167 @@
 
     </form>
 </div>
-<div id="receipt_add" class="easyui-window" title="录入快递" style="width:400px;height:250px">
-    <form id="receipt_form" method="post">
+<div id="send_add" class="easyui-window" title="录入快递" style="width:400px;height:250px">
+    <form id="send_form" method="post">
         <table class="TableStyle">
             <tr>
                 <th>
-                    <label for="name">快递单号:</label>
-                </th>
-                <td>
-                    <input class="easyui-validatebox easyui-textbox" type="text" name="CourierNumber" data-options="required:true,validType:'length[8,20]',novalidate:true" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="BelongCompany">快递公司:</label>
-                </th>
-                <td>
-                    <input class="easyui-validatebox" type="text" name="BelongCompany.Id" data-options="required:true,novalidate:true" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="CustomerName">客户名称:</label>
+                    <label for="CustomerName">发件人名称:</label>
                 </th>
                 <td>
                     <input class="easyui-validatebox easyui-textbox" type="text" name="CustomerName" data-options="required:true,novalidate:true" />
                 </td>
-            </tr>
-            <tr>
                 <th>
-                    <label for="CustomerPhone">客户电话:</label>
+                    <label for="RecipientName">收件人名称:</label>
                 </th>
                 <td>
-                    <input class="easyui-validatebox easyui-numberbox" type="text" name="CustomerPhone" data-options="required:true,validType:'length[8,12]',novalidate:true" />
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="RecipientName" data-options="required:true,novalidate:true" />
                 </td>
             </tr>
             <tr>
                 <th>
-                    <label for="CustomerAddress">客户地址:</label>
+                    <label for="CustomerPhone">发件人电话:</label>
                 </th>
                 <td>
-                    <input class="easyui-textbox" type="text" name="CustomerAddress" />
+                    <input class="easyui-validatebox easyui-numberbox" type="text" name="CustomerPhone" data-options="required:true,validType:'length[8,12]',novalidate:true" />
+                </td>
+                <th>
+                    <label for="RecipientPhone">收件人电话:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-numberbox" type="text" name="RecipientPhone" data-options="required:true,validType:'length[8,12]',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CourierNumber">快递单号:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CourierNumber" data-options="validType:'length[8,20]',novalidate:true" />
+                </td>
+                <th>
+                    <label for="BelongCompany">快递公司:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox" type="text" name="BelongCompany.Id" data-options="novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="Weight">重量:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-numberbox" type="text" name="Weight" data-options="required:true,precision:4,min:0,validType:'currency',novalidate:true" />
+                </td>
+                <th>
+                    <label for="Price">价格:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-numberbox" type="text" name="Price" data-options="required:true,precision:2,min:0,validType:'currency',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CustomerAddress">发件人地址:</label>
+                </th>
+                <td colspan="3">
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CustomerAddress" data-options="required:true,validType:'length[1,200]',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="RecipientAddress">收件人地址:</label>
+                </th>
+                <td colspan="3">
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="RecipientAddress" data-options="required:true,validType:'length[1,200]',novalidate:true" />
                 </td>
             </tr>
         </table>
     </form>
 </div>
 
-<div id="receipt_edit" class="easyui-window" title="修改录入快递数据" style="width:400px;height:250px">
-    <form id="receipt_edit_form" method="post">
+<div id="send_edit" class="easyui-window" title="修改录入快递数据" style="width:400px;height:250px">
+    <form id="send_edit_form" method="post">
         <input name="Id" type="hidden" />
         <table class="TableStyle">
             <tr>
                 <th>
-                    <label for="name">快递单号:</label>
-                </th>
-                <td>
-                    <input class="easyui-validatebox easyui-textbox" type="text" name="CourierNumber" data-options="required:true,validType:'length[8,20]',novalidate:true" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="BelongCompany">快递公司:</label>
-                </th>
-                <td>
-                    <input class="easyui-validatebox" type="text" name="BelongCompany.Id" data-options="required:true,novalidate:true" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="CustomerName">客户名称:</label>
+                    <label for="CustomerName">发件人名称:</label>
                 </th>
                 <td>
                     <input class="easyui-validatebox easyui-textbox" type="text" name="CustomerName" data-options="required:true,novalidate:true" />
                 </td>
-            </tr>
-            <tr>
                 <th>
-                    <label for="CustomerPhone">客户电话:</label>
+                    <label for="RecipientName">收件人名称:</label>
                 </th>
                 <td>
-                    <input class="easyui-validatebox easyui-numberbox" type="text" name="CustomerPhone" data-options="required:true,validType:'length[8,12]',novalidate:true" />
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="RecipientName" data-options="required:true,novalidate:true" />
                 </td>
             </tr>
             <tr>
                 <th>
-                    <label for="CustomerAddress">客户地址:</label>
+                    <label for="CustomerPhone">发件人电话:</label>
                 </th>
                 <td>
-                    <input class="easyui-validatebox easyui-textbox" type="text" name="CustomerAddress" data-options="required:true,novalidate:true" />
+                    <input class="easyui-validatebox easyui-numberbox" type="text" name="CustomerPhone" data-options="required:true,validType:'length[8,12]',novalidate:true" />
+                </td>
+                <th>
+                    <label for="RecipientPhone">收件人电话:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-numberbox" type="text" name="RecipientPhone" data-options="required:true,validType:'length[8,12]',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CourierNumber">快递单号:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CourierNumber" data-options="validType:'length[8,20]',novalidate:true" />
+                </td>
+                <th>
+                    <label for="BelongCompany">快递公司:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox" type="text" name="BelongCompany.Id" data-options="novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="Weight">重量:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-numberbox" type="text" name="Weight" data-options="required:true,precision:4,min:0,validType:'currency',novalidate:true" />
+                </td>
+                <th>
+                    <label for="Price">价格:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-numberbox" type="text" name="Price" data-options="required:true,precision:2,min:0,validType:'currency',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CustomerAddress">发件人地址:</label>
+                </th>
+                <td colspan="3">
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CustomerAddress" data-options="required:true,validType:'length[1,200]',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="RecipientAddress">收件人地址:</label>
+                </th>
+                <td colspan="3">
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="RecipientAddress" data-options="required:true,validType:'length[1,200]',novalidate:true" />
                 </td>
             </tr>
         </table>
     </form>
 </div>
 
-<div id="receipt_take" class="easyui-window" title="取件信息" style="width:400px;height:250px">
-    <form id="receipt_take_form" method="post">
+<div id="send_sendout" class="easyui-window" title="取件信息" style="width:400px;height:250px">
+    <form id="send_sendout_form" method="post">
         <input name="Id" type="hidden" />
         <table class="TableStyle">
             <tr>
@@ -203,8 +274,8 @@
     </form>
 </div>
 
-<div id="receipt_print" class="easyui-window" title="打印信息预览" style="width:350px;height:400px;padding:10px;">
-    <form id="receipt_print_form" method="post">
+<div id="send_print" class="easyui-window" title="打印信息预览" style="width:350px;height:400px;padding:10px;">
+    <form id="send_print_form" method="post">
         <input name="Id" type="hidden" />
         <table class="TablePrintStyle">
             <tr>
@@ -293,100 +364,108 @@
 
 <script>
     $(function () {
-        searchViewModel = {
+        searchSendViewModel = {
             $datagrid: null,
 
             init: function () {
-                $("#receipt_tb_form [name='BelongCompanyId']").combobox({
-                    url: '@Url.Action("GetCourierCompanyList", new { tag=1 })',
+                $("#send_tb_form [name='BelongCompanyId']").combobox({
+                    url: '@Url.Action("GetCourierCompanyList", "Receipt", new { tag = 1, area = "ReceiptManagement" })',
                     panelHeight: 100,
                     valueField: 'id',
                     textField: 'text'
                 });
+                $("#send_form [name='BelongCompany.Id']").combobox({
+                    url: '@Url.Action("GetCourierCompanyList", "Receipt", new {  area = "ReceiptManagement" })',
+                    valueField: 'id',
+                    textField: 'text'
+                });
+                $("#send_edit_form [name='BelongCompany.Id']").combobox({
+                    url: '@Url.Action("GetCourierCompanyList", "Receipt", new {  area = "ReceiptManagement" })',
+                    valueField: 'id',
+                    textField: 'text'
+                });
 
-                $("#receipt_tb_form [name='State']").combobox({ editable: true, panelHeight: 100, editable: false });
+                $("#send_tb_form [name='State']").combobox({ editable: true, panelHeight: 100, editable: false });
                 $('.easyui-textbox').textbox();
                 $('.easyui-numberbox').numberbox();
-                //$.parser.parse('#receipt_add');
-                //$.parser.parse('#receipt_edit');
-                $("#receipt_add").dialog({
+                //$.parser.parse('#send_add');
+                //$.parser.parse('#send_edit');
+                $("#send_add").dialog({
                     modal: true,
                     closed: true,
                     buttons: [{
                         text: '保存继续录入',
                         handler: function () {
-                            searchViewModel.receipt_add();
+                            searchSendViewModel.send_add();
                         }
                     }, {
                         text: '保存并关闭',
                         handler: function () {
-                            searchViewModel.receipt_add(true);
+                            searchSendViewModel.send_add(true);
                         }
                     }, {
                         text: '关闭',
                         handler: function () {
-                            $('#receipt_add').dialog('close')
+                            $('#send_add').dialog('close')
                         }
                     }]
                 });
-                $("#receipt_edit").dialog({
+                $("#send_edit").dialog({
                     modal: true,
                     closed: true,
                     buttons: [{
                         text: '保存',
                         handler: function () {
-                            searchViewModel.receipt_edit();
-                            $.parser.parse('#receipt_edit');
+                            searchSendViewModel.send_edit();
                         }
                     }, {
                         text: '关闭',
                         handler: function () {
-                            $('#receipt_edit').dialog('close');
-                            $.parser.parse('#receipt_edit');
+                            $('#send_edit').dialog('close');
                         }
                     }]
                 });
-                $("#receipt_take").dialog({
+                $("#send_sendout").dialog({
                     modal: true,
                     closed: true,
                     buttons: [{
-                        text: '取件',
+                        text: '发件',
                         handler: function () {
-                            searchViewModel.receipt_take()
+                            searchSendViewModel.send_sendout()
                         }
                     }, {
                         text: '关闭',
                         handler: function () {
-                            $('#receipt_take').dialog('close')
+                            $('#send_sendout').dialog('close')
                         }
                     }]
                 });
-                $("#receipt_print").dialog({
+                $("#send_print").dialog({
                     modal: true,
                     closed: true,
                     buttons: [{
                         text: '打印',
                         handler: function () {
-                            //document.body.innerHTML = document.getElementById('receipt_print_form').innerHTML;
+                            //document.body.innerHTML = document.getElementById('send_print_form').innerHTML;
                             //window.print();
                             window.open();
                         }
                     }, {
                         text: '关闭',
                         handler: function () {
-                            $('#receipt_print').dialog('close')
+                            $('#send_print').dialog('close')
                         }
                     }]
                 });
-                searchViewModel.$datagrid = $("#receipt_dg").datagrid({
+                searchSendViewModel.$datagrid = $("#send_dg").datagrid({
                     fit: true,
                     //fitColumns:true,
                     singleSelect: true,
-                    toolbar: '#receipt_tb',
+                    toolbar: '#send_tb',
                     pagination: true,
                     pageSize: 10,
                     loader: function (param, sucess) {
-                        var json = $('#receipt_tb_form').form('serialize');
+                        var json = $('#send_tb_form').form('serialize');
                         cashbag.services.post('@Url.Action("List")', {
                             queryCond: {
                                 PageNo: param.page,
@@ -396,76 +475,67 @@
                         }, sucess);
                     }
                 });
-                $("#receipt_form [name='BelongCompany.Id']").combobox({
-                    url: '@Url.Action("GetCourierCompanyList")',
-                    valueField: 'id',
-                    textField: 'text'
+                
+                $("#send_tb_add").click(function () {
+                    $('#send_form').form('reset');
+                    $('#send_add').window('open');
+                    $("#send_form [name='CourierNumber']").focus();
                 });
-                $("#receipt_edit_form [name='BelongCompany.Id']").combobox({
-                    url: '@Url.Action("GetCourierCompanyList")',
-                    valueField: 'id',
-                    textField: 'text'
-                });
-                $("#receipt_tb_add").click(function () {
-                    $('#receipt_form').form('reset');
-                    $('#receipt_add').window('open');
-                    $("#receipt_form [name='CourierNumber']").focus();
-                });
-                $("#receipt_tb_edit").click(function () {
-                    $('#receipt_edit_form').form('reset');
-                    var row = searchViewModel.$datagrid.datagrid("getSelected");
+                $("#send_tb_edit").click(function () {
+                    $('#send_edit_form').form('reset');
+                    var row = searchSendViewModel.$datagrid.datagrid("getSelected");
                     if (!row) {
                         $.messager.alert('提示', '请选择一条数据');
                         return;
                     }
-                    if (row.TakeInfo) {
-                        $.messager.alert('提示', '此单已取件');
+                    if (row.IsSendOut) {
+                        $.messager.alert('提示', '此单已发出');
                         return;
                     }
                     cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
-                        $("#receipt_edit_form").form('loadData', data);
-                        $('#receipt_edit').window('open');
+                        $("#send_edit_form").form('loadData', data);
+                        $('#send_edit').window('open');
                     });
                 });
-                $("#receipt_tb_take").click(function () {
-                    $('#receipt_take_form').form('reset');
-                    var row = searchViewModel.$datagrid.datagrid("getSelected");
+                $("#send_tb_sendout").click(function () {
+                    $('#send_sendout_form').form('reset');
+                    var row = searchSendViewModel.$datagrid.datagrid("getSelected");
                     if (!row) {
                         $.messager.alert('提示', '请选择一条数据');
                         return;
                     }
-                    if (row.TakeInfo) {
-                        $.messager.alert('提示', '此单已取件');
+                    if (row.IsSendOut) {
+                        $.messager.alert('提示', '此单已发出');
                         return;
                     }
                     cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
-                        $("#receipt_take_form").form('loadLabelData', data);
-                        $('#receipt_take').window('open');
+                        $("#send_sendout_form").form('loadLabelData', data);
+                        $('#send_sendout').window('open');
                     });
 
                 })
-                $("#receipt_tb_print").click(function () {
-                    $('#receipt_print_form').form('reset');
-                    var row = searchViewModel.$datagrid.datagrid("getSelected");
+                $("#send_tb_print").click(function () {
+                    $('#send_print_form').form('reset');
+                    var row = searchSendViewModel.$datagrid.datagrid("getSelected");
                     if (!row) {
                         $.messager.alert('提示', '请选择一条数据');
                         return;
                     }
                     cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
-                        $("#receipt_print_form").form('loadLabelData', data);
+                        $("#send_print_form").form('loadLabelData', data);
                         $("#time").html(com.DateTimeFormatter(new Date()))
-                        $('#receipt_print').window('open');
+                        $('#send_print').window('open');
                     });
 
                 })
-                $("#receipt_tb_delete").click(function () {
-                    var row = searchViewModel.$datagrid.datagrid("getSelected");
+                $("#send_tb_delete").click(function () {
+                    var row = searchSendViewModel.$datagrid.datagrid("getSelected");
                     if (!row) {
                         $.messager.alert('提示', '请选择一条数据');
                         return;
                     }
-                    if (row.TakeInfo) {
-                        $.messager.alert('提示', '此单已取件');
+                    if (row.IsSendOut) {
+                        $.messager.alert('提示', '此单已发出');
                         return;
                     }
                     $.messager.confirm('确认', '您确认想要删除记录吗？', function (r) {
@@ -478,17 +548,17 @@
                                 } else {
                                     $.messager.alert('提示', '删除失败');
                                 }
-                                searchViewModel.search();
+                                searchSendViewModel.search();
                             });
                         }
                     });
                 })
-                $("#receipt_tb_form_search").click(function () {
-                    searchViewModel.search();
+                $("#send_tb_form_search").click(function () {
+                    searchSendViewModel.search();
                 });
-                $("#receipt_tb_form_clear").click(function () {
-                    $('#receipt_tb_form').form('reset');
-                    searchViewModel.search();
+                $("#send_tb_form_clear").click(function () {
+                    $('#send_tb_form').form('reset');
+                    searchSendViewModel.search();
                 });
                 $('.easyui-validatebox').bind('blur', function () {
                     $(this).validatebox('enableValidation').validatebox('validate');
@@ -502,17 +572,17 @@
                 return "";
             },
             tColumnFormatter: function (value, rowData, rowIndex) {
-                if (rowData.TakeInfo) {
-                    return "<span style='color:blue'>已取件</span>";
+                if (rowData.IsSendOut) {
+                    return "<span style='color:blue'>已发出</span>";
                 }
-                return "<span style='color:red'>未取件</span>";
+                return "<span style='color:red'>未发出</span>";
             },
             search: function () {
                 this.$datagrid.datagrid("load");
             },
-            receipt_add: function (c) {
+            send_add: function (c) {
                 $.messager.progress();	// 显示进度条
-                $('#receipt_form').form('submit', {
+                $('#send_form').form('submit', {
                     url: '@Url.Action("Add")',
                     onSubmit: function () {
                         var isValid = $(this).form('enableValidation').form('validate');
@@ -523,12 +593,12 @@
                     },
                     success: function (data) {
                         $.messager.progress('close');	// 如果提交成功则隐藏进度条
-                        searchViewModel.search();
+                        searchSendViewModel.search();
                         if (JSON.parse(data) == "T") {
                             $.messager.alert('提示', '添加成功');
-                            $('#receipt_form').form('reset');
+                            $('#send_form').form('reset');
                             if (c) {
-                                $('#receipt_add').dialog('close')
+                                $('#send_add').dialog('close')
                             }
                         } else {
                             $.messager.alert('提示', '添加失败');
@@ -536,9 +606,9 @@
                     }
                 });
             },
-            receipt_edit: function () {
+            send_edit: function () {
                 $.messager.progress();	// 显示进度条
-                $('#receipt_edit_form').form('submit', {
+                $('#send_edit_form').form('submit', {
                     url: '@Url.Action("Edit")',
                     onSubmit: function () {
                         var isValid = $(this).form('enableValidation').form('validate');
@@ -549,11 +619,11 @@
                     },
                     success: function (data) {
                         $.messager.progress('close');	// 如果提交成功则隐藏进度条
-                        searchViewModel.search();
+                        searchSendViewModel.search();
                         if (JSON.parse(data) == "T") {
                             $.messager.alert('提示', '修改成功');
-                            $('#receipt_edit_form').form('reset');
-                            $('#receipt_edit').dialog('close')
+                            $('#send_edit_form').form('reset');
+                            $('#send_edit').dialog('close')
                         } else {
                             $.messager.alert('提示', '修改失败');
                         }
@@ -561,10 +631,10 @@
                     }
                 });
             },
-            receipt_take: function () {
+            send_sendout: function () {
                 $.messager.progress();	// 显示进度条
-                $('#receipt_take_form').form('submit', {
-                    url: '@Url.Action("Take")',
+                $('#send_sendout_form').form('submit', {
+                    url: '@Url.Action("SendOut")',
                     onSubmit: function () {
                         var isValid = $(this).form('enableValidation').form('validate');
                         if (!isValid) {
@@ -574,10 +644,10 @@
                     },
                     success: function (data) {
                         $.messager.progress('close');	// 如果提交成功则隐藏进度条
-                        searchViewModel.search();
+                        searchSendViewModel.search();
                         if (JSON.parse(data) == "T") {
                             $.messager.alert('提示', '取件成功');
-                            $('#receipt_take').dialog('close')
+                            $('#send_sendout').dialog('close')
                         } else {
                             $.messager.alert('提示', '取件失败');
                         }
@@ -586,7 +656,7 @@
                 });
             }
         }
-        searchViewModel.init();
+        searchSendViewModel.init();
 
 
     })

@@ -13,7 +13,7 @@
                 <ul id="ztree_1" class="menutree ztree" style="width:120px; overflow:auto;"></ul>
             </div>
             <div title="发件中心" style=" background: #e5eaee;">
-
+                <ul id="ztree_2" class="menutree ztree" style="width:120px; overflow:auto;"></ul>
             </div>
             <div title="客户中心" style=" background: #e5eaee;">
 
@@ -42,10 +42,14 @@
             var data_1=[
                     { id: 1, pId: 0, name: "收件管理", link:'@Url.Action("Index", "Receipt", new { area = "ReceiptManagement" })' }
             ];
+            var data_2 = [
+                    { id: 1, pId: 0, name: "发件管理", link: '@Url.Action("Index", "Send", new { area = "SendManagement" })' }
+            ];
             var data_4 = [
                     { id: 1, pId: 0, name: "快递公司管理", link: '@Url.Action("Index", "CourierCompany", new { area = "SystemSettings" })' }
             ];
             $.fn.zTree.init($("#ztree_1"), setting, data_1);
+            $.fn.zTree.init($("#ztree_2"), setting, data_2);
             $.fn.zTree.init($("#ztree_4"), setting, data_4);
             //$.fn.zTree.init(t, setting, zNodes);
 

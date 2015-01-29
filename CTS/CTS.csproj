@@ -51,9 +51,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\MySql.Data.Entity.EF6.6.8.3\lib\net40\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data.Entity, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+    <Reference Include="MySql.Data.Entity, Version=6.9.4.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MySql.Data.Entity.EF6.6.8.3\lib\net40\MySql.Data.Entity.dll</HintPath>
+      <HintPath>..\CTSOnly\packages\MySql.Data.Entity.EF6.6.8.3\lib\net40\MySql.Data.Entity.dll</HintPath>
     </Reference>
     <Reference Include="MySql.Data.Entity.EF6, Version=6.8.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -144,11 +144,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\SendQueryDto.cs" />
+    <Compile Include="Service\SendService.cs" />
     <Content Include="App_Code\BaseController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\SendManagement\Controllers\SendController.cs" />
+    <Compile Include="Areas\SendManagement\SendManagementAreaRegistration.cs" />
     <Compile Include="Areas\SystemSettings\Controllers\CourierCompanyController.cs" />
     <Compile Include="Configuration\TakeInfoMap.cs" />
     <Compile Include="Context\CTSInitializer.cs" />
@@ -172,7 +176,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\CourierCompany.cs" />
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\EntityBase.cs" />
@@ -625,6 +628,9 @@
     <Content Include="Areas\ReceiptManagement\Views\Receipt\AddOrder.cshtml" />
     <Content Include="Areas\SystemSettings\Views\_ViewStart.cshtml" />
     <Content Include="Areas\SystemSettings\Views\CourierCompany\Index.cshtml" />
+    <Content Include="Areas\SendManagement\Views\Web.config" />
+    <Content Include="Areas\SendManagement\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\SendManagement\Views\Send\Index.cshtml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -1755,6 +1761,29 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\My97DatePicker\calendar.js" />
+    <Content Include="Scripts\My97DatePicker\lang\en.js" />
+    <Content Include="Scripts\My97DatePicker\lang\zh-cn.js" />
+    <Content Include="Scripts\My97DatePicker\lang\zh-tw.js" />
+    <Content Include="Scripts\My97DatePicker\skin\datePicker.gif" />
+    <Content Include="Scripts\My97DatePicker\skin\default\datepicker.css" />
+    <Content Include="Scripts\My97DatePicker\skin\default\img.gif" />
+    <Content Include="Scripts\My97DatePicker\skin\WdatePicker.css" />
+    <Content Include="Scripts\My97DatePicker\skin\whyGreen\bg.jpg" />
+    <Content Include="Scripts\My97DatePicker\skin\whyGreen\datepicker.css" />
+    <Content Include="Scripts\My97DatePicker\skin\whyGreen\img.gif" />
+    <Content Include="Scripts\My97DatePicker\WdatePicker.js" />
+    <Content Include="Scripts\My97DatePicker\开发包\lang\en.js" />
+    <Content Include="Scripts\My97DatePicker\开发包\lang\zh-cn.js" />
+    <Content Include="Scripts\My97DatePicker\开发包\lang\zh-tw.js" />
+    <Content Include="Scripts\My97DatePicker\开发包\readme.txt" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\datePicker.gif" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\default\datepicker.css" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\default\img.gif" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\WdatePicker.css" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\whyGreen\bg.jpg" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\whyGreen\datepicker.css" />
+    <Content Include="Scripts\My97DatePicker\开发包\skin\whyGreen\img.gif" />
     <Content Include="Scripts\npm.js" />
     <Content Include="Scripts\services.js" />
     <Content Include="Scripts\zTree_v3\api\apiCss\api.js" />
@@ -2247,7 +2276,9 @@
     <Content Include="Scripts\zTree_v3\log v3.x.txt" />
     <Content Include="Scripts\zTree_v3\QUI 框架介绍.txt" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -2270,9 +2301,10 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\ReceiptManagement\Models\" />
     <Folder Include="Areas\ReceiptManagement\Views\Shared\" />
+    <Folder Include="Areas\SendManagement\Models\" />
+    <Folder Include="Areas\SendManagement\Views\Shared\" />
     <Folder Include="Areas\SystemSettings\Models\" />
     <Folder Include="Areas\SystemSettings\Views\Shared\" />
-    <Folder Include="Service\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

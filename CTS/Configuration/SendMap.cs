@@ -14,13 +14,17 @@ namespace CTS.Configuration
            
 
             this.HasRequired(p => p.BelongCompany).WithOptional();
-            this.Property(p => p.CourierNumber).IsRequired().HasMaxLength(100);
-            this.Property(p => p.CustomerAddress).HasMaxLength(500);
+            this.Property(p => p.CourierNumber).HasMaxLength(100);
+            this.Property(p => p.CustomerAddress).HasMaxLength(200);
             this.Property(p => p.CustomerName).IsRequired().HasMaxLength(30);
             this.Property(p => p.CustomerPhone).IsRequired().HasMaxLength(12);
-            this.Property(p => p.RecipientAddress).IsRequired().HasMaxLength(500);
+            this.Property(p => p.RecipientAddress).IsRequired().HasMaxLength(200);
             this.Property(p => p.RecipientName).IsRequired().HasMaxLength(30);
             this.Property(p => p.RecipientPhone).IsRequired().HasMaxLength(12);
+
+            this.Property(p => p.Weight).HasPrecision(12,4);
+            this.Property(p => p.Price).HasPrecision(12, 2);
+            this.Property(p => p.CostAmount).HasPrecision(12, 2);
         }
     }
 }

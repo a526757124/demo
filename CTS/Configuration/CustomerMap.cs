@@ -12,7 +12,7 @@ namespace CTS.Configuration
         public CustomerMap()
         {
 
-            this.Property(p => p.CustomerAddress).HasMaxLength(500);
+            this.Property(p => p.CustomerAddress).HasMaxLength(200);
             this.Property(p => p.CustomerName).HasMaxLength(30);
             this.HasOptional(p => p.CustomerOftenCompany).WithMany();
             this.Property(p => p.CustomerPhone).HasMaxLength(12);
