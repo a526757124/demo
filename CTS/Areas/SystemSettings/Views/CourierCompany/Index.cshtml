@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-<table id="couriercompany_dg" class="easyui-datagrid">
+<table id="couriercompany_dg"  >
     <thead>
         <tr>
             <th data-options="field:'CourierName',width:100">名称</th>
@@ -19,7 +19,7 @@
     <a href="#" id="couriercompany_tb_edit" class="easyui-linkbutton" data-options="plain:true">修改</a>
     <a href="#" id="couriercompany_tb_delete" class="easyui-linkbutton" data-options="plain:true">删除</a>
 </div>
-<div id="couriercompany_add" class="easyui-window" title="录入快递" style="width:400px;height:250px">
+<div id="couriercompany_add"  title="录入快递公司" style="width:400px;height:250px">
     <form id="couriercompany_form" method="post">
         <table class="TableStyle">
             <tr>
@@ -66,7 +66,7 @@
     </form>
 </div>
 
-<div id="couriercompany_edit" class="easyui-window" title="修改录入快递数据" style="width:400px;height:250px">
+<div id="couriercompany_edit"  title="修改快递公司数据" style="width:400px;height:250px">
     <form id="couriercompany_edit_form" method="post">
         <input name="Id" type="hidden" />
         <table class="TableStyle">

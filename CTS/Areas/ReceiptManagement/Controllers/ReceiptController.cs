@@ -8,9 +8,10 @@ using PagedList;
 using CTS.Models;
 using System.Data.Entity;
 using CTS.Dto;
+using CTS.Common;
 namespace CTS.Areas.ReceiptManagement.Controllers
 {
-    public class ReceiptController : Controller
+    public class ReceiptController : BaseController
     {
         //
         // GET: /ReceiptManagement/Receipt/

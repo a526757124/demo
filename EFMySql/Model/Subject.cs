@@ -80,5 +80,13 @@ namespace Model
             }
         }
 
+        private string _remark;
+        public string Remark
+        {
+            get { return _remark; }
+            set { _remark = value; OnPropertyChanged("Remark"); }
+
+        }
+
     }
 }

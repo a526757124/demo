@@ -13,7 +13,7 @@ namespace EFMySql.Configuration
         public SubjectMap()
         {
             this.HasKey(p => p.Id);
-            this.Property(p => p.Name).HasMaxLength(12).IsRequired();
+            this.Property(p => p.Name).HasMaxLength(20).IsRequired();
             this.Property(p => p.MnemonicCode).HasMaxLength(8).IsUnicode();
             this.Property(p => p.Timestamp).IsConcurrencyToken();
         }

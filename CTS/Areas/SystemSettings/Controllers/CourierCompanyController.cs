@@ -6,9 +6,10 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using PagedList;
+using CTS.Common;
 namespace CTS.Areas.SystemSettings.Controllers
 {
-    public class CourierCompanyController : Controller
+    public class CourierCompanyController : BaseController
     {
         //
         // GET: /SystemSettings/CourierCompany/

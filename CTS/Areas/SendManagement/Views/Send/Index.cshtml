@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
-<table id="send_dg" class="easyui-datagrid">
+<table id="send_dg">
     <thead>
         <tr>
             <th data-options="field:'CustomerName',width:80">发件人</th>
@@ -66,7 +66,7 @@
 
     </form>
 </div>
-<div id="send_add" class="easyui-window" title="录入快递" style="width:400px;height:250px">
+<div id="send_add" title="录入快递" style="width: 550px; height: 300px">
     <form id="send_form" method="post">
         <table class="TableStyle">
             <tr>
@@ -130,7 +130,7 @@
                     <label for="CustomerAddress">发件人地址:</label>
                 </th>
                 <td colspan="3">
-                    <input class="easyui-validatebox easyui-textbox" type="text" name="CustomerAddress" data-options="required:true,validType:'length[1,200]',novalidate:true" />
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CustomerAddress" style="width:250px;" data-options="required:true,validType:'length[1,200]',novalidate:true" />
                 </td>
             </tr>
             <tr>
@@ -138,14 +138,14 @@
                     <label for="RecipientAddress">收件人地址:</label>
                 </th>
                 <td colspan="3">
-                    <input class="easyui-validatebox easyui-textbox" type="text" name="RecipientAddress" data-options="required:true,validType:'length[1,200]',novalidate:true" />
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="RecipientAddress" style="width:250px;" data-options="required:true,validType:'length[1,200]',novalidate:true" />
                 </td>
             </tr>
         </table>
     </form>
 </div>
 
-<div id="send_edit" class="easyui-window" title="修改录入快递数据" style="width:400px;height:250px">
+<div id="send_edit"  title="修改录入快递数据" style="width: 550px; height: 300px">
     <form id="send_edit_form" method="post">
         <input name="Id" type="hidden" />
         <table class="TableStyle">
@@ -210,7 +210,7 @@
                     <label for="CustomerAddress">发件人地址:</label>
                 </th>
                 <td colspan="3">
-                    <input class="easyui-validatebox easyui-textbox" type="text" name="CustomerAddress" data-options="required:true,validType:'length[1,200]',novalidate:true" />
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CustomerAddress" style="width:250px;" data-options="required:true,validType:'length[1,200]',novalidate:true" />
                 </td>
             </tr>
             <tr>
@@ -218,27 +218,52 @@
                     <label for="RecipientAddress">收件人地址:</label>
                 </th>
                 <td colspan="3">
-                    <input class="easyui-validatebox easyui-textbox" type="text" name="RecipientAddress" data-options="required:true,validType:'length[1,200]',novalidate:true" />
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="RecipientAddress" style="width:250px;" data-options="required:true,validType:'length[1,200]',novalidate:true" />
                 </td>
             </tr>
         </table>
     </form>
 </div>
 
-<div id="send_sendout" class="easyui-window" title="取件信息" style="width:400px;height:250px">
+<div id="send_sendout"  title="取件信息" style="width: 550px; height: 300px">
     <form id="send_sendout_form" method="post">
         <input name="Id" type="hidden" />
         <table class="TableStyle">
             <tr>
-                <th width="60">
-                    <label for="name">快递单号:</label>
+                <th>
+                    <label for="CustomerName">发件人名称:</label>
                 </th>
                 <td>
-                    <label id="CourierNumber" />
-
+                    <label id="CustomerName" />
+                </td>
+                <th>
+                    <label for="RecipientName">收件人名称:</label>
+                </th>
+                <td>
+                    <label id="RecipientName" />
                 </td>
             </tr>
             <tr>
+                <th>
+                    <label for="CustomerPhone">发件人电话:</label>
+                </th>
+                <td>
+                    <label id="CustomerPhone" />
+                </td>
+                <th>
+                    <label for="RecipientPhone">收件人电话:</label>
+                </th>
+                <td>
+                    <label id="RecipientPhone" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CourierNumber">快递单号:</label>
+                </th>
+                <td>
+                    <label id="CourierNumber" />
+                </td>
                 <th>
                     <label for="BelongCompany">快递公司:</label>
                 </th>
@@ -248,39 +273,45 @@
             </tr>
             <tr>
                 <th>
-                    <label for="CustomerName">客户名称:</label>
+                    <label for="Weight">重量:</label>
                 </th>
                 <td>
-                    <label id="CustomerName" />
+                    <label id="Weight" />
+                </td>
+                <th>
+                    <label for="Price">价格:</label>
+                </th>
+                <td>
+                    <label id="Price" />
                 </td>
             </tr>
             <tr>
                 <th>
-                    <label for="CustomerPhone">客户电话:</label>
+                    <label for="CustomerAddress">发件人地址:</label>
                 </th>
-                <td>
-                    <label id="CustomerPhone" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="CustomerAddress">客户地址:</label>
-                </th>
-                <td>
+                <td colspan="3">
                     <label id="CustomerAddress" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="RecipientAddress">收件人地址:</label>
+                </th>
+                <td colspan="3">
+                    <label id="RecipientAddress" />
                 </td>
             </tr>
         </table>
     </form>
 </div>
 
-<div id="send_print" class="easyui-window" title="打印信息预览" style="width:350px;height:400px;padding:10px;">
+<div id="send_print"  title="打印信息预览" style="width:370px;height:400px;padding:10px;">
     <form id="send_print_form" method="post">
         <input name="Id" type="hidden" />
         <table class="TablePrintStyle">
             <tr>
                 <th colspan="2" style="text-align: center;">
-                    <h3>快递领取信息</h3>
+                    <h3>快递发件信息</h3>
 
                 </th>
             </tr>
@@ -290,7 +321,7 @@
                 </td>
             </tr>
             <tr>
-                <th width="60">
+                <th width="70">
 
                     <label for="name">快递单号:</label>
                 </th>
@@ -309,7 +340,7 @@
             </tr>
             <tr>
                 <th>
-                    <label for="CustomerName">客户名称:</label>
+                    <label for="CustomerName">发件人名称:</label>
                 </th>
                 <td>
                     <label id="CustomerName" />
@@ -317,7 +348,7 @@
             </tr>
             <tr>
                 <th>
-                    <label for="CustomerPhone">客户电话:</label>
+                    <label for="CustomerPhone">发件人电话:</label>
                 </th>
                 <td>
                     <label id="CustomerPhone" />
@@ -325,10 +356,52 @@
             </tr>
             <tr>
                 <th>
-                    <label for="CustomerAddress">客户地址:</label>
+                    <label for="CustomerAddress">发件人地址:</label>
+                </th>
+                <td colspan="3">
+                    <label id="CustomerAddress" />
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    <label for="RecipientName">收件人名称:</label>
                 </th>
                 <td>
-                    <label id="CustomerAddress" />
+                    <label id="RecipientName" />
+                </td>
+            </tr>
+
+            <tr>
+                <th>
+                    <label for="RecipientPhone">收件人电话:</label>
+                </th>
+                <td>
+                    <label id="RecipientPhone" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="RecipientAddress">收件人地址:</label>
+                </th>
+                <td colspan="3">
+                    <label id="RecipientAddress" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="Weight">重量:</label>
+                </th>
+                <td>
+                    <label id="Weight" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="Price">价格:</label>
+                </th>
+                <td>
+                    <label id="Price" />
                 </td>
             </tr>
 
@@ -475,7 +548,7 @@
                         }, sucess);
                     }
                 });
-                
+
                 $("#send_tb_add").click(function () {
                     $('#send_form').form('reset');
                     $('#send_add').window('open');
@@ -646,10 +719,10 @@
                         $.messager.progress('close');	// 如果提交成功则隐藏进度条
                         searchSendViewModel.search();
                         if (JSON.parse(data) == "T") {
-                            $.messager.alert('提示', '取件成功');
+                            $.messager.alert('提示', '发件成功');
                             $('#send_sendout').dialog('close')
                         } else {
-                            $.messager.alert('提示', '取件失败');
+                            $.messager.alert('提示', data);
                         }
 
                     }

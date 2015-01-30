@@ -8,8 +8,6 @@ using System.Web;
 using System.Reflection;
 using System.Data;
 using CTS.Models;
-using MySql.Data.MySqlClient;
-using MySql.Data.Entity;
 namespace CTS.Context
 {
     public class CTSContext : DbContext

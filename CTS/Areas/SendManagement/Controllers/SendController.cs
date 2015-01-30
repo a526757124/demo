@@ -1,4 +1,5 @@
-﻿using CTS.Dto;
+﻿using CTS.Common;
+using CTS.Dto;
 using CTS.Models;
 using CTS.Service;
 using PagedList;
@@ -10,7 +11,7 @@ using System.Web.Mvc;
 
 namespace CTS.Areas.SendManagement.Controllers
 {
-    public class SendController : Controller
+    public class SendController : BaseController
     {
         //
         // GET: /SendManagement/Send/
@@ -48,9 +49,16 @@ namespace CTS.Areas.SendManagement.Controllers
         }
         #endregion
 
-        public ActionResult SendOut(int sendId, string courierNumber, int courierCompanyId)
+        public ActionResult SendOut(int Id)
         {
-            _service.SendOut(sendId, courierNumber, courierCompanyId);
+            try
+            {
+                _service.SendOut(Id, null, null);
+            }
+            catch (BusinessException ex)
+            {
+                return Json(ex.Message);
+            }
             return Json("T");
         }
     }

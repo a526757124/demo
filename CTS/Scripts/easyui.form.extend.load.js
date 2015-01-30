@@ -45,6 +45,7 @@
                         
                     } else {
                         this.getElementById(jq_id, t_key).html(v);
+                        this.getElementByName(jq_id, key).val(value);
                     }
                 }
             }

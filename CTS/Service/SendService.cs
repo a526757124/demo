@@ -117,13 +117,32 @@ namespace CTS.Service
         } 
         #endregion
 
-        public void SendOut(int sendId, string courierNumber, int courierCompanyId)
+        public void SendOut(int sendId, string courierNumber, int? courierCompanyId)
         {
             using (CTSContext context = new CTSContext())
             {
-                var model = context.Sends.FirstOrDefault(p => p.Id == sendId);
-                model.BelongCompany = context.CourierCompanys.FirstOrDefault(p => p.Id == courierCompanyId);
-                model.CourierNumber = courierNumber;
+                var model = context.Sends
+                    .Include(p=>p.BelongCompany)
+                    .FirstOrDefault(p => p.Id == sendId);
+                
+                
+                if (!string.IsNullOrEmpty(courierNumber))
+                {
+                    model.CourierNumber = courierNumber;
+                }
+                if (courierCompanyId.HasValue)
+                {
+                    model.BelongCompany = context.CourierCompanys.FirstOrDefault(p => p.Id == courierCompanyId);
+                }
+                if (string.IsNullOrEmpty(model.CourierNumber))
+                {
+                    throw new BusinessException("发件时，快递单号不能为空");
+                }
+                if (model.BelongCompany==null)
+                {
+                    throw new BusinessException("发件时，快递公司不能为空");
+                }
+                model.IsSendOut = true;
                 context.SaveChanges();
             }
         }
