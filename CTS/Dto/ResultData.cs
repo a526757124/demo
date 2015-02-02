@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CTS.Models
+namespace CTS.Dto
 {
     public class ResultData
     {

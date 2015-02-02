@@ -93,6 +93,10 @@ namespace CTS.Areas.ReceiptManagement.Controllers
                     {
                         express = express.Where(p => p.CourierNumber.Equals(queryCond.QueryDto.CourierNumber));
                     }
+                    if (!string.IsNullOrEmpty(queryCond.QueryDto.CustomerName))
+                    {
+                        express = express.Where(p => p.CustomerName.Contains(queryCond.QueryDto.CustomerName));
+                    }
                     if (!string.IsNullOrEmpty(queryCond.QueryDto.CustomerPhone))
                     {
                         express = express.Where(p => p.CustomerPhone.Equals(queryCond.QueryDto.CustomerPhone)||p.CustomerPhone.Contains(queryCond.QueryDto.CustomerPhone));
@@ -143,6 +147,11 @@ namespace CTS.Areas.ReceiptManagement.Controllers
             {
                 var receipts = context.Receipts.FirstOrDefault(p => p.Id == Id);
                 receipts.TakeInfo = new TakeInfo();
+                Customer customer = new Customer();
+                customer.CustomerPhone = receipts.CustomerPhone;
+                customer.CustomerName = receipts.CustomerName;
+                customer.CustomerAddress = receipts.CustomerAddress;
+                context.Customers.Add(customer);
                 context.SaveChanges();
                 return Json("T");
             }

@@ -12,9 +12,8 @@ namespace CTS.Configuration
         public SendMap()
         {
            
-
-            this.HasRequired(p => p.BelongCompany).WithOptional();
-            this.Property(p => p.CourierNumber).HasMaxLength(100);
+            this.HasOptional(p => p.BelongCompany);
+            this.Property(p => p.CourierNumber).HasMaxLength(20);
             this.Property(p => p.CustomerAddress).HasMaxLength(200);
             this.Property(p => p.CustomerName).IsRequired().HasMaxLength(30);
             this.Property(p => p.CustomerPhone).IsRequired().HasMaxLength(12);

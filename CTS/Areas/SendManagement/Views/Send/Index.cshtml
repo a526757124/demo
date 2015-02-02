@@ -108,7 +108,7 @@
                     <label for="BelongCompany">快递公司:</label>
                 </th>
                 <td>
-                    <input class="easyui-validatebox" type="text" name="BelongCompany.Id" data-options="novalidate:true" />
+                    <input class="easyui-validatebox" type="text" name="BelongCompany.Id" />
                 </td>
             </tr>
             <tr>
@@ -188,7 +188,7 @@
                     <label for="BelongCompany">快递公司:</label>
                 </th>
                 <td>
-                    <input class="easyui-validatebox" type="text" name="BelongCompany.Id" data-options="novalidate:true" />
+                    <input class="easyui-validatebox" type="text" name="BelongCompany.Id" />
                 </td>
             </tr>
             <tr>
@@ -445,20 +445,32 @@
                     url: '@Url.Action("GetCourierCompanyList", "Receipt", new { tag = 1, area = "ReceiptManagement" })',
                     panelHeight: 100,
                     valueField: 'id',
-                    textField: 'text'
+                    textField: 'text',
+                    onChange: function (newValue, oldValue) {
+                        searchSendViewModel.search();
+                    }
+                });
+                $("#send_tb_form [name='State']").combobox({
+                    panelHeight: 100,
+                    editable: false,
+                    onChange: function (newValue, oldValue) {
+                        searchSendViewModel.search();
+                    }
                 });
                 $("#send_form [name='BelongCompany.Id']").combobox({
-                    url: '@Url.Action("GetCourierCompanyList", "Receipt", new {  area = "ReceiptManagement" })',
+                    url: '@Url.Action("GetCourierCompanyList", "Receipt", new { tag = 1, area = "ReceiptManagement" })',
                     valueField: 'id',
-                    textField: 'text'
+                    textField: 'text',
+                    novalidate: true
                 });
                 $("#send_edit_form [name='BelongCompany.Id']").combobox({
-                    url: '@Url.Action("GetCourierCompanyList", "Receipt", new {  area = "ReceiptManagement" })',
+                    url: '@Url.Action("GetCourierCompanyList", "Receipt", new { tag = 1, area = "ReceiptManagement" })',
                     valueField: 'id',
-                    textField: 'text'
+                    textField: 'text',
+                    novalidate: true
                 });
 
-                $("#send_tb_form [name='State']").combobox({ editable: true, panelHeight: 100, editable: false });
+                
                 $('.easyui-textbox').textbox();
                 $('.easyui-numberbox').numberbox();
                 //$.parser.parse('#send_add');

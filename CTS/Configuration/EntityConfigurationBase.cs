@@ -17,14 +17,19 @@ namespace CTS.Configuration
     /// </summary>
     /// <typeparam name="TEntity">动态实体类型</typeparam>
     /// <typeparam name="TKey">动态主键类型</typeparam>
-    public abstract class EntityConfigurationBase<TEntity, TKey> : EntityTypeConfiguration<TEntity>, IEntityMapper where TEntity : EntityBase<TKey>
+    public abstract class EntityConfigurationBase<TEntity, TKey> : EntityTypeConfiguration<TEntity>, IEntityMapper
+        where TEntity : EntityBase<TKey>
+        where TKey : struct
     {
         public EntityConfigurationBase()
         {
             this.HasKey(p => p.Id);
-            this.Property(p => p.Timestamp).IsConcurrencyToken();
+            this.Property(p => p.Id).HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            this.Property(p => p.RowVersion).IsConcurrencyToken().HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
+            //this.Property(p => p.Timestamp).IsConcurrencyToken();
             this.Property(p => p.IsDeleted).IsRequired();
             this.Property(p => p.Remark).HasMaxLength(200);
+            
         }
         /// <summary>
         /// 将当前实体映射对象注册到当前数据访问上下文实体映射配置注册器中

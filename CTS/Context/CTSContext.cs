@@ -16,8 +16,30 @@ namespace CTS.Context
             : base("name=MySqlConnectionString")
         {
             //Database.SetInitializer<CTSContext>(null);
-            //Database.SetInitializer<CTSContext>(new CTSInitializer());
+            Database.SetInitializer<CTSContext>(new CTSInitializer());
+//            string sql;
+//            sql = @" ALTER TABLE `cts`.`couriercompanies` CHANGE COLUMN `RowVersion` `RowVersion` DATETIME NOT NULL 
+//                        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ; ";
+//            sql += @" ALTER TABLE `cts`.`Customers` CHANGE COLUMN `RowVersion` `RowVersion` DATETIME NOT NULL 
+//                        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ; ";
+//            sql += @" ALTER TABLE `cts`.`Receipts` CHANGE COLUMN `RowVersion` `RowVersion` DATETIME NOT NULL 
+//                        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ; ";
+//            sql += @" ALTER TABLE `cts`.`Sends` CHANGE COLUMN `RowVersion` `RowVersion` DATETIME NOT NULL 
+//                        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ; ";
+//            sql += @" ALTER TABLE `cts`.`takeinfoes` CHANGE COLUMN `RowVersion` `RowVersion` DATETIME NOT NULL 
+//                        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ; ";
+//            context.Database.ExecuteSqlCommand(sql);
         }
+        //DbContext构造器中的部分代码，通过isDoInitialize参数来控制是否初始化数据库。
+        //public CTSContext(bool isDoInitialize = true)
+        //    : base("name=MySqlConnectionString")
+        //{
+        //    if (!isDoInitialize)
+        //    {
+        //        Database.SetInitializer<CTSContext>(null);
+        //    }
+            
+        //}
         public DbSet<Customer> Customers { get; set; }
         public DbSet<CourierCompany> CourierCompanys { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
@@ -25,6 +47,7 @@ namespace CTS.Context
         public DbSet<TakeInfo> TakeInfos { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             //modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             //Assembly assembly = Assembly.GetExecutingAssembly();
             //Type baseType = typeof(IEntityMapper);

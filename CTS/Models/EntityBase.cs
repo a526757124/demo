@@ -13,13 +13,13 @@ namespace CTS.Models
     /// 可持久化到数据库的数据模型基类
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
-    public abstract class EntityBase<TKey>
+    public abstract class EntityBase<TKey> where TKey : struct   
     {
         protected EntityBase()
         {
             IsDeleted = false;
             CreatedTime = DateTime.Now;
-            Timestamp = DateTime.Now.AddMilliseconds(DateTime.Now.Millisecond);
+            //Timestamp = DateTime.Now.AddMilliseconds(DateTime.Now.Millisecond);
         }
 
         #region 属性
@@ -45,7 +45,7 @@ namespace CTS.Models
         /// <summary>
         /// 获取或设置 版本控制标识，用于处理并发
         /// </summary>
-        public DateTime Timestamp { get; set; }
+        public DateTime RowVersion { get; set; }
 
         #endregion
 

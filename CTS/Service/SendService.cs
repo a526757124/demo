@@ -16,7 +16,14 @@ namespace CTS.Service
         {
             using (CTSContext context = new CTSContext())
             {
-                model.BelongCompany = context.CourierCompanys.FirstOrDefault(p => p.Id == model.BelongCompany.Id);
+                if (model.BelongCompany.Id > 0)
+                {
+                    model.BelongCompany = context.CourierCompanys.FirstOrDefault(p => p.Id == model.BelongCompany.Id);
+                }
+                else
+                {
+                    model.BelongCompany = null;
+                }
                 context.Sends.Add(model);
                 context.SaveChanges();
             }
@@ -26,7 +33,10 @@ namespace CTS.Service
             using (CTSContext context = new CTSContext())
             {
                 var send = context.Sends.FirstOrDefault(p => p.Id == model.Id);
-                send.BelongCompany = context.CourierCompanys.FirstOrDefault(p => p.Id == model.BelongCompany.Id);
+                if (model.BelongCompany.Id > 0)
+                {
+                    send.BelongCompany = context.CourierCompanys.FirstOrDefault(p => p.Id == model.BelongCompany.Id);
+                }
                 send.CourierNumber = model.CourierNumber;
                 send.CustomerAddress = model.CustomerAddress;
                 send.CustomerName = model.CustomerName;
@@ -114,7 +124,7 @@ namespace CTS.Service
                 var result = express.ToPagedList(queryCond.PageNo, queryCond.PageSize);
                 return result;
             }
-        } 
+        }
         #endregion
 
         public void SendOut(int sendId, string courierNumber, int? courierCompanyId)
@@ -122,10 +132,14 @@ namespace CTS.Service
             using (CTSContext context = new CTSContext())
             {
                 var model = context.Sends
-                    .Include(p=>p.BelongCompany)
+                    .Include(p => p.BelongCompany)
                     .FirstOrDefault(p => p.Id == sendId);
-                
-                
+                Customer customer = new Customer();
+                customer.CustomerPhone = model.CustomerPhone;
+                customer.CustomerName = model.CustomerName;
+                customer.CustomerAddress = model.CustomerAddress;
+                context.Customers.Add(customer);
+
                 if (!string.IsNullOrEmpty(courierNumber))
                 {
                     model.CourierNumber = courierNumber;
@@ -134,11 +148,11 @@ namespace CTS.Service
                 {
                     model.BelongCompany = context.CourierCompanys.FirstOrDefault(p => p.Id == courierCompanyId);
                 }
-                if (string.IsNullOrEmpty(model.CourierNumber))
-                {
-                    throw new BusinessException("发件时，快递单号不能为空");
-                }
-                if (model.BelongCompany==null)
+                //if (string.IsNullOrEmpty(model.CourierNumber))
+                //{
+                //    throw new BusinessException("发件时，快递单号不能为空");
+                //}
+                if (model.BelongCompany == null)
                 {
                     throw new BusinessException("发件时，快递公司不能为空");
                 }
