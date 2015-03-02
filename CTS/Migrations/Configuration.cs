@@ -29,7 +29,6 @@ namespace CTS.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-
             StringBuilder sql = new StringBuilder();
 
             Assembly assembly = Assembly.GetExecutingAssembly();

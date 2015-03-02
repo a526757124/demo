@@ -147,9 +147,9 @@
   <ItemGroup>
     <Compile Include="Common\BaseController.cs" />
     <Compile Include="Dto\SendQueryDto.cs" />
-    <Compile Include="Migrations\201502020803555_init.cs" />
-    <Compile Include="Migrations\201502020803555_init.Designer.cs">
-      <DependentUpon>201502020803555_init.cs</DependentUpon>
+    <Compile Include="Migrations\201502030114134_init.cs" />
+    <Compile Include="Migrations\201502030114134_init.Designer.cs">
+      <DependentUpon>201502030114134_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Service\BusinessException.cs" />
@@ -640,6 +640,7 @@
     <Content Include="Areas\SendManagement\Views\Web.config" />
     <Content Include="Areas\SendManagement\Views\_ViewStart.cshtml" />
     <Content Include="Areas\SendManagement\Views\Send\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\文件系统.pubxml" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -2319,8 +2320,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201502020803555_init.resx">
-      <DependentUpon>201502020803555_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201502030114134_init.resx">
+      <DependentUpon>201502030114134_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

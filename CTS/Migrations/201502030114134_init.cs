@@ -102,7 +102,6 @@ namespace CTS.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.CourierCompany", t => t.BelongCompany_Id)
                 .Index(t => t.BelongCompany_Id);
-            
         }
         
         public override void Down()

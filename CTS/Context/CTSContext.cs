@@ -29,6 +29,21 @@ namespace CTS.Context
 //            sql += @" ALTER TABLE `cts`.`takeinfoes` CHANGE COLUMN `RowVersion` `RowVersion` DATETIME NOT NULL 
 //                        DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ; ";
 //            context.Database.ExecuteSqlCommand(sql);
+
+//            StringBuilder sql = new StringBuilder();
+
+//            Assembly assembly = Assembly.GetExecutingAssembly();
+//            Type baseType = typeof(EntityBase<int>);
+//            Type[] modelTypes = assembly.GetTypes()
+//                .Where(type => baseType.IsAssignableFrom(type) && type != baseType && !type.IsAbstract).ToArray();
+//            //注册实体配置信息
+//            foreach (Type type in modelTypes)
+//            {
+//                sql.AppendFormat(@" ALTER TABLE `cts`.`{0}` CHANGE COLUMN `RowVersion` `RowVersion` DATETIME NOT NULL 
+//                                    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP ; ", type.Name);
+//            }
+//            if (sql.Length > 0)
+//                context.Database.ExecuteSqlCommand(sql.ToString());
         }
         //DbContext构造器中的部分代码，通过isDoInitialize参数来控制是否初始化数据库。
         //public CTSContext(bool isDoInitialize = true)

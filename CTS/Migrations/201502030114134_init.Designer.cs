@@ -13,7 +13,7 @@ namespace CTS.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201502020803555_init"; }
+            get { return "201502030114134_init"; }
         }
         
         string IMigrationMetadata.Source

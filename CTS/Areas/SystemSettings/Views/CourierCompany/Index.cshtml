@@ -211,7 +211,7 @@
                             cashbag.services.post('@Url.Action("Delete")', { id: row.Id }, function (data) {
                                 $.messager.progress('close');	// 如果提交成功则隐藏进度条
                                 if (data == "T") {
-                                    $.messager.alert('提示', '删除成功');
+                                    //$.messager.alert('提示', '删除成功');
                                 } else {
                                     $.messager.alert('提示', '删除失败');
                                 }
@@ -252,7 +252,7 @@
                         $.messager.progress('close');	// 如果提交成功则隐藏进度条
                         searchCourierViewModel.search();
                         if (JSON.parse(data) == "T") {
-                            $.messager.alert('提示', '添加成功');
+                            //$.messager.alert('提示', '添加成功');
                             $('#couriercompany_form').form('reset');
                             if (c) {
                                 $('#couriercompany_add').dialog('close')
@@ -278,7 +278,7 @@
                         $.messager.progress('close');	// 如果提交成功则隐藏进度条
                         searchCourierViewModel.search();
                         if (JSON.parse(data) == "T") {
-                            $.messager.alert('提示', '修改成功');
+                            //$.messager.alert('提示', '修改成功');
                             $('#couriercompany_edit_form').form('reset');
                             $('#couriercompany_edit').dialog('close')
                         } else {

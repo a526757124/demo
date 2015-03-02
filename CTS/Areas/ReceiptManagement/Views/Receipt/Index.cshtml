@@ -100,7 +100,7 @@
                     <label for="name">快递单号:</label>
                 </th>
                 <td>
-                    <input class="easyui-validatebox easyui-textbox" type="text" name="CourierNumber" data-options="required:true,validType:'length[8,20]',novalidate:true" />
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CourierNumber" data-options="validType:'length[8,20]',novalidate:true" />
                 </td>
             </tr>
             <tr>
@@ -127,22 +127,7 @@
     <form id="receipt_edit_form" method="post">
         <input name="Id" type="hidden" />
         <table class="TableStyle">
-            <tr>
-                <th>
-                    <label for="name">快递单号:</label>
-                </th>
-                <td>
-                    <input class="easyui-validatebox easyui-textbox" type="text" name="CourierNumber" data-options="required:true,validType:'length[8,20]',novalidate:true" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="BelongCompany">快递公司:</label>
-                </th>
-                <td>
-                    <input class="easyui-validatebox" type="text" name="BelongCompany.Id" />
-                </td>
-            </tr>
+            
             <tr>
                 <th>
                     <label for="CustomerName">客户名称:</label>
@@ -161,10 +146,26 @@
             </tr>
             <tr>
                 <th>
+                    <label for="name">快递单号:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CourierNumber" data-options="validType:'length[8,20]',novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="BelongCompany">快递公司:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox" type="text" name="BelongCompany.Id" />
+                </td>
+            </tr>
+            <tr>
+                <th>
                     <label for="CustomerAddress">客户地址:</label>
                 </th>
                 <td>
-                    <input class="easyui-validatebox easyui-textbox" type="text" name="CustomerAddress" data-options="required:true,novalidate:true" />
+                    <input class="easyui-textbox" type="text" name="CustomerAddress" />
                 </td>
             </tr>
         </table>
@@ -175,6 +176,23 @@
     <form id="receipt_take_form" method="post">
         <input name="Id" type="hidden" />
         <table class="TableStyle">
+            
+            <tr>
+                <th width="60">
+                    <label for="CustomerName">客户名称:</label>
+                </th>
+                <td>
+                    <label id="CustomerName" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CustomerPhone">客户电话:</label>
+                </th>
+                <td>
+                    <label id="CustomerPhone" />
+                </td>
+            </tr>
             <tr>
                 <th width="60">
                     <label for="name">快递单号:</label>
@@ -190,22 +208,6 @@
                 </th>
                 <td>
                     <label id="BelongCompany.CourierName" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="CustomerName">客户名称:</label>
-                </th>
-                <td>
-                    <label id="CustomerName" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="CustomerPhone">客户电话:</label>
-                </th>
-                <td>
-                    <label id="CustomerPhone" />
                 </td>
             </tr>
             <tr>
@@ -227,12 +229,28 @@
             <tr>
                 <th colspan="2" style="text-align: center;">
                     <h3>快递领取信息</h3>
-
                 </th>
             </tr>
             <tr>
                 <td colspan="2">
                     ----------------------------------------------------------
+                </td>
+            </tr>
+            
+            <tr>
+                <th width="60">
+                    <label for="CustomerName">客户名称:</label>
+                </th>
+                <td>
+                    <label id="CustomerName" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CustomerPhone">客户电话:</label>
+                </th>
+                <td>
+                    <label id="CustomerPhone" />
                 </td>
             </tr>
             <tr>
@@ -251,22 +269,6 @@
                 </th>
                 <td>
                     <label id="BelongCompany.CourierName" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="CustomerName">客户名称:</label>
-                </th>
-                <td>
-                    <label id="CustomerName" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="CustomerPhone">客户电话:</label>
-                </th>
-                <td>
-                    <label id="CustomerPhone" />
                 </td>
             </tr>
             <tr>
@@ -425,6 +427,9 @@
                                 QueryDto: json
                             }
                         }, sucess);
+                    },
+                    onDblClickRow: function (index, row) {
+                        searchViewModel.receipt_windows_take();
                     }
                 });
                 $("#receipt_form [name='BelongCompany.Id']").combobox({
@@ -453,31 +458,18 @@
                         $.messager.alert('提示', '请选择一条数据');
                         return;
                     }
-                    if (row.TakeInfo) {
-                        $.messager.alert('提示', '此单已取件');
-                        return;
-                    }
+                    //if (row.TakeInfo) {
+                    //    $.messager.alert('提示', '此单已取件');
+                    //    return;
+                    //}
                     cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
                         $("#receipt_edit_form").form('loadData', data);
                         $('#receipt_edit').window('open');
+                        
                     });
                 });
                 $("#receipt_tb_take").click(function () {
-                    $('#receipt_take_form').form('reset');
-                    var row = searchViewModel.$datagrid.datagrid("getSelected");
-                    if (!row) {
-                        $.messager.alert('提示', '请选择一条数据');
-                        return;
-                    }
-                    if (row.TakeInfo) {
-                        $.messager.alert('提示', '此单已取件');
-                        return;
-                    }
-                    cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
-                        $("#receipt_take_form").form('loadLabelData', data);
-                        $('#receipt_take').window('open');
-                    });
-
+                    searchViewModel.receipt_windows_take();
                 })
                 $("#receipt_tb_print").click(function () {
                     $('#receipt_print_form').form('reset');
@@ -509,7 +501,7 @@
                             cashbag.services.post('@Url.Action("Delete")', { id: row.Id }, function (data) {
                                 $.messager.progress('close');	// 如果提交成功则隐藏进度条
                                 if (data == "T") {
-                                    $.messager.alert('提示', '删除成功');
+                                    //$.messager.alert('提示', '删除成功');
                                 } else {
                                     $.messager.alert('提示', '删除失败');
                                 }
@@ -560,7 +552,7 @@
                         $.messager.progress('close');	// 如果提交成功则隐藏进度条
                         searchViewModel.search();
                         if (JSON.parse(data) == "T") {
-                            $.messager.alert('提示', '添加成功');
+                            //$.messager.alert('提示', '添加成功');
                             $('#receipt_form').form('reset');
                             if (c) {
                                 $('#receipt_add').dialog('close')
@@ -586,7 +578,7 @@
                         $.messager.progress('close');	// 如果提交成功则隐藏进度条
                         searchViewModel.search();
                         if (JSON.parse(data) == "T") {
-                            $.messager.alert('提示', '修改成功');
+                            //$.messager.alert('提示', '修改成功');
                             $('#receipt_edit_form').form('reset');
                             $('#receipt_edit').dialog('close')
                         } else {
@@ -594,6 +586,22 @@
                         }
 
                     }
+                });
+            },
+            receipt_windows_take:function(){
+                $('#receipt_take_form').form('reset');
+                var row = searchViewModel.$datagrid.datagrid("getSelected");
+                if (!row) {
+                    $.messager.alert('提示', '请选择一条数据');
+                    return;
+                }
+                if (row.TakeInfo) {
+                    $.messager.alert('提示', '此单已取件');
+                    return;
+                }
+                cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
+                    $("#receipt_take_form").form('loadLabelData', data);
+                    $('#receipt_take').window('open');
                 });
             },
             receipt_take: function () {
@@ -611,7 +619,7 @@
                         $.messager.progress('close');	// 如果提交成功则隐藏进度条
                         searchViewModel.search();
                         if (JSON.parse(data) == "T") {
-                            $.messager.alert('提示', '取件成功');
+                            //$.messager.alert('提示', '取件成功');
                             $('#receipt_take').dialog('close')
                         } else {
                             $.messager.alert('提示', '取件失败');
