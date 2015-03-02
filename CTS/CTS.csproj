@@ -145,7 +145,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\AjaxResult.cs" />
+    <Compile Include="Common\AjaxResultType.cs" />
     <Compile Include="Common\BaseController.cs" />
+    <Compile Include="Common\Printer.cs" />
     <Compile Include="Common\PrintInvoice.cs" />
     <Compile Include="Dto\SendQueryDto.cs" />
     <Compile Include="Migrations\201502030114134_init.cs" />
@@ -642,6 +645,7 @@
     <Content Include="Areas\SendManagement\Views\_ViewStart.cshtml" />
     <Content Include="Areas\SendManagement\Views\Send\Index.cshtml" />
     <None Include="Properties\PublishProfiles\文件系统.pubxml" />
+    <Content Include="Scripts\easyui.form.extend.submit.js" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

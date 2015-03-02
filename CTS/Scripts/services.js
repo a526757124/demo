@@ -50,7 +50,18 @@ cashbag.services = cashbag.services || {
             data: JSON.stringify(postData),
             success: function (data) {
                 self._functions.afterCall(data);
-                success(data);
+                if (data.Type == "Success") {
+                    if (data.Data) {
+                        success(data.Data);
+                    } else {
+                        $.messager.alert('提示', data.Content);
+                        success(data);
+                    }
+                }
+                if (data.Type == "Error") {
+                    $.messager.alert('提示', data.Content, 'error');
+                    success(data);
+                }
             },
             error: error || this._functions.error
         });

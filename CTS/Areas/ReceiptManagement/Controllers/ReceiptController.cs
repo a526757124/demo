@@ -32,12 +32,10 @@ namespace CTS.Areas.ReceiptManagement.Controllers
         {
             using (CTSContext context = new CTSContext())
             {
-                
                 model.BelongCompany = context.CourierCompanys.FirstOrDefault(p => p.Id == model.BelongCompany.Id);
                 context.Receipts.Add(model);
                 context.SaveChanges();
-
-                return Json("T");
+                return Json(new AjaxResult("添加成功", AjaxResultType.Success));
             }
         }
         public ActionResult Delete(int id)
@@ -48,7 +46,7 @@ namespace CTS.Areas.ReceiptManagement.Controllers
 
                 context.SaveChanges();
 
-                return Json("T");
+                return Json(new AjaxResult("删除成功", AjaxResultType.Success));
             }
         }
         public ActionResult Edit(Receipt model)
@@ -63,7 +61,7 @@ namespace CTS.Areas.ReceiptManagement.Controllers
                 receipts.CustomerPhone = model.CustomerPhone;
                 receipts.Remark = model.Remark;
                 context.SaveChanges();
-                return Json("T");
+                return Json(new AjaxResult("编辑成功", AjaxResultType.Success));
             }
         }
         public ActionResult GetById(int id)
@@ -74,7 +72,7 @@ namespace CTS.Areas.ReceiptManagement.Controllers
                     .Include(p => p.BelongCompany)
                     .Include(p=>p.TakeInfo)
                     .FirstOrDefault(p => p.Id == id);
-                return Json(model);
+                return Json(new AjaxResult("查询成功", AjaxResultType.Success, model));
             }
         }
         public ActionResult List(PagedParam<ReceiptQueryDto> queryCond)
@@ -135,45 +133,52 @@ namespace CTS.Areas.ReceiptManagement.Controllers
                 }
                 express=express.OrderByDescending(p => p.CreatedTime);
                 var result = express.ToPagedList(queryCond.PageNo, queryCond.PageSize);
-                return Json(new { rows = result.ToList(), total = result.TotalItemCount });
+                return Json(new AjaxResult("查询成功", AjaxResultType.Success, new { rows = result.ToList(), total = result.TotalItemCount }));
             }
         }
 
         #endregion
 
         #region 取件
-        public ActionResult Take(FormCollection from,int? Id)
+        public ActionResult Take(FormCollection from,int[] ids)
         {
             using (CTSContext context = new CTSContext())
             {
-                var receipts = context.Receipts.FirstOrDefault(p => p.Id == Id);
-                receipts.TakeInfo = new TakeInfo();
-                Customer customer = new Customer();
-                customer.CustomerPhone = receipts.CustomerPhone;
-                customer.CustomerName = receipts.CustomerName;
-                customer.CustomerAddress = receipts.CustomerAddress;
-                context.Customers.Add(customer);
+                var receipts = context.Receipts
+                    .Include(p => p.BelongCompany)
+                    .Include(p => p.TakeInfo)
+                    .Where(p => ids.Contains(p.Id)).ToList();
+                foreach (var item in receipts)
+                {
+                    item.TakeInfo = new TakeInfo();
+                    Customer customer = new Customer();
+                    customer.CustomerPhone = item.CustomerPhone;
+                    customer.CustomerName = item.CustomerName;
+                    customer.CustomerAddress = item.CustomerAddress;
+                    context.Customers.Add(customer);
+                }
                 context.SaveChanges();
-                return Json("T");
+                new Printer().Print(receipts);
+                return Json(new AjaxResult("取件并打印成功", AjaxResultType.Success));
             }
         }
         #endregion
-        public ActionResult Print(int? id)
+        #region 打印
+        
+        public ActionResult Print(int[] ids)
         {
-            PrintDocument print = new PrintDocument();
-            string sDefault = print.PrinterSettings.PrinterName;//默认打印机名
-            //lblDefault.Text = sDefault;
-
-            foreach (string sPrint in PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            using (CTSContext context = new CTSContext())
             {
-                //lstPrinter.Items.Add(sPrint);
-                if (sPrint == sDefault) ;
-                    //lstPrinter.SelectedIndex = lstPrinter.Items.IndexOf(sPrint);
+                var list = context.Receipts
+                    .Include(p => p.BelongCompany)
+                    .Include(p => p.TakeInfo)
+                    .Where(p => ids.Contains(p.Id)).ToList();
+                new Printer().Print(list);
             }
-            //new PrintInvoice().Printeg();
-            new Printer().print("测试\n测试\n测试\n测试\n测试\n");
-            return Json("T");
+            return Json(new AjaxResult("打印成功", AjaxResultType.Success));
         }
+        #endregion
+
         public ActionResult GetCourierCompanyList(int? tag)
         {
             using (CTSContext context = new CTSContext())

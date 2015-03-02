@@ -4,6 +4,7 @@
 <table id="receipt_dg">
     <thead>
         <tr>
+            <th data-options="field:'ck',checkbox:true"></th>
             <th data-options="field:'CustomerName',width:80">客户名称</th>
             <th data-options="field:'CustomerPhone',width:110">客户电话</th>
             <th data-options="field:'CourierNumber',width:120">快递单号</th>
@@ -222,94 +223,6 @@
     </form>
 </div>
 
-<div id="receipt_print" title="打印信息预览" style="width:350px;height:400px;padding:10px;">
-    <form id="receipt_print_form" method="post">
-        <input name="Id" type="hidden" />
-        <table class="TablePrintStyle">
-            <tr>
-                <th colspan="2" style="text-align: center;">
-                    <h3>快递领取信息</h3>
-                </th>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    ----------------------------------------------------------
-                </td>
-            </tr>
-            
-            <tr>
-                <th width="60">
-                    <label for="CustomerName">客户名称:</label>
-                </th>
-                <td>
-                    <label id="CustomerName" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="CustomerPhone">客户电话:</label>
-                </th>
-                <td>
-                    <label id="CustomerPhone" />
-                </td>
-            </tr>
-            <tr>
-                <th width="60">
-
-                    <label for="name">快递单号:</label>
-                </th>
-                <td>
-                    <label id="CourierNumber" />
-
-                </td>
-            </tr>
-            <tr>
-                <th width="60">
-                    <label for="BelongCompany">快递公司:</label>
-                </th>
-                <td>
-                    <label id="BelongCompany.CourierName" />
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="CustomerAddress">客户地址:</label>
-                </th>
-                <td>
-                    <label id="CustomerAddress" />
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="2">
-                    ----------------------------------------------------------
-                </td>
-            </tr>
-            <tr>
-                <th>
-                    <label for="">客户签名:</label>
-                    <br />
-                    <br />
-                </th>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    ----------------------------------------------------------
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" style="text-align:center;">
-                    <span id="time"></span>
-                    <br />
-                    欢迎光临XXX快递收发点
-                </td>
-            </tr>
-        </table>
-        <object id="WebBrowser" classid=CLSID:8856F961-340A-11D0-A96B-00C04FD705A2 height="0" width="0"></object>
-    </form>
-</div>
-
 <script>
     $(function () {
         searchViewModel = {
@@ -394,28 +307,10 @@
                         }
                     }]
                 });
-                $("#receipt_print").dialog({
-                    modal: true,
-                    closed: true,
-                    buttons: [{
-                        text: '打印',
-                        handler: function () {
-                            searchViewModel.receipt_print();
-                            //document.body.innerHTML = document.getElementById('receipt_print_form').innerHTML;
-                            //window.print();
-                            //window.open();
-                        }
-                    }, {
-                        text: '关闭',
-                        handler: function () {
-                            $('#receipt_print').dialog('close')
-                        }
-                    }]
-                });
                 searchViewModel.$datagrid = $("#receipt_dg").datagrid({
                     fit: true,
                     //fitColumns:true,
-                    singleSelect: true,
+                    singleSelect: false,
                     toolbar: '#receipt_tb',
                     pagination: true,
                     pageSize: 10,
@@ -430,7 +325,7 @@
                         }, sucess);
                     },
                     onDblClickRow: function (index, row) {
-                        searchViewModel.receipt_windows_take();
+                        searchViewModel.receipt_take();
                     }
                 });
                 $("#receipt_form [name='BelongCompany.Id']").combobox({
@@ -454,58 +349,53 @@
                 });
                 $("#receipt_tb_edit").click(function () {
                     $('#receipt_edit_form').form('reset');
-                    var row = searchViewModel.$datagrid.datagrid("getSelected");
-                    if (!row) {
+                    var rows = searchViewModel.$datagrid.datagrid("getSelections");
+                    if (!rows) {
                         $.messager.alert('提示', '请选择一条数据');
+                        return;
+                    }
+                    //var row = searchViewModel.$datagrid.datagrid("getSelected");
+                    if (rows.length>1) {
+                        $.messager.alert('提示', '请选择单条数据进行编辑');
                         return;
                     }
                     //if (row.TakeInfo) {
                     //    $.messager.alert('提示', '此单已取件');
                     //    return;
                     //}
-                    cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
+                    cashbag.services.post('@Url.Action("GetById")', { id: rows[0].Id }, function (data) {
                         $("#receipt_edit_form").form('loadData', data);
                         $('#receipt_edit').window('open');
-                        
+
                     });
                 });
                 $("#receipt_tb_take").click(function () {
-                    searchViewModel.receipt_windows_take();
+                    searchViewModel.receipt_take();
                 })
                 $("#receipt_tb_print").click(function () {
-                    $('#receipt_print_form').form('reset');
-                    var row = searchViewModel.$datagrid.datagrid("getSelected");
-                    if (!row) {
-                        $.messager.alert('提示', '请选择一条数据');
-                        return;
-                    }
-                    cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
-                        $("#receipt_print_form").form('loadLabelData', data);
-                        $("#time").html(com.DateTimeFormatter(new Date()))
-                        $('#receipt_print').window('open');
-                    });
-
+                    
+                    searchViewModel.receipt_print();
                 })
                 $("#receipt_tb_delete").click(function () {
-                    var row = searchViewModel.$datagrid.datagrid("getSelected");
-                    if (!row) {
+                    var rows = searchViewModel.$datagrid.datagrid("getSelections");
+                    if (!rows) {
                         $.messager.alert('提示', '请选择一条数据');
                         return;
                     }
-                    if (row.TakeInfo) {
+                    //var row = searchViewModel.$datagrid.datagrid("getSelected");
+                    if (rows.length > 1) {
+                        $.messager.alert('提示', '请选择单条数据进行编辑');
+                        return;
+                    }
+                    if (rows[0].TakeInfo) {
                         $.messager.alert('提示', '此单已取件');
                         return;
                     }
                     $.messager.confirm('确认', '您确认想要删除记录吗？', function (r) {
                         if (r) {
                             $.messager.progress();	// 显示进度条
-                            cashbag.services.post('@Url.Action("Delete")', { id: row.Id }, function (data) {
+                            cashbag.services.post('@Url.Action("Delete")', { id: rows[0].Id }, function (data) {
                                 $.messager.progress('close');	// 如果提交成功则隐藏进度条
-                                if (data == "T") {
-                                    //$.messager.alert('提示', '删除成功');
-                                } else {
-                                    $.messager.alert('提示', '删除失败');
-                                }
                                 searchViewModel.search();
                             });
                         }
@@ -540,74 +430,71 @@
             },
             receipt_add: function (c) {
                 $.messager.progress();	// 显示进度条
-                $('#receipt_form').form('submit', {
+                $('#receipt_form').form('submitData', {
+                    successAlert: false,
                     url: '@Url.Action("Add")',
-                    onSubmit: function () {
-                        var isValid = $(this).form('enableValidation').form('validate');
-                        if (!isValid) {
-                            $.messager.progress('close');	// 如果表单是无效的则隐藏进度条
-                        }
-                        return isValid;
-                    },
                     success: function (data) {
-                        $.messager.progress('close');	// 如果提交成功则隐藏进度条
                         searchViewModel.search();
-                        if (JSON.parse(data) == "T") {
-                            //$.messager.alert('提示', '添加成功');
-                            $('#receipt_form').form('reset');
-                            if (c) {
-                                $('#receipt_add').dialog('close')
-                            }
-                        } else {
-                            $.messager.alert('提示', '添加失败');
+                        if (c) {
+                            $('#receipt_add').dialog('close')
                         }
                     }
                 });
             },
             receipt_edit: function () {
-                $.messager.progress();	// 显示进度条
-                $('#receipt_edit_form').form('submit', {
+                $('#receipt_edit_form').form('submitData', {
+                    successAlert:false,
                     url: '@Url.Action("Edit")',
-                    onSubmit: function () {
-                        var isValid = $(this).form('enableValidation').form('validate');
-                        if (!isValid) {
-                            $.messager.progress('close');	// 如果表单是无效的则隐藏进度条
-                        }
-                        return isValid;
-                    },
                     success: function (data) {
-                        $.messager.progress('close');	// 如果提交成功则隐藏进度条
                         searchViewModel.search();
-                        if (JSON.parse(data) == "T") {
-                            //$.messager.alert('提示', '修改成功');
-                            $('#receipt_edit_form').form('reset');
-                            $('#receipt_edit').dialog('close')
-                        } else {
-                            $.messager.alert('提示', '修改失败');
-                        }
-
+                        $('#receipt_edit').dialog('close');
                     }
                 });
             },
-            receipt_windows_take:function(){
+            receipt_windows_take: function () {
                 $('#receipt_take_form').form('reset');
-                var row = searchViewModel.$datagrid.datagrid("getSelected");
-                if (!row) {
+                var rows = searchViewModel.$datagrid.datagrid("getSelections");
+                if (!rows) {
                     $.messager.alert('提示', '请选择一条数据');
                     return;
                 }
-                if (row.TakeInfo) {
-                    $.messager.alert('提示', '此单已取件');
-                    return;
+                var arrId=new Array();
+                for (var i = 0; i < rows.length; i++) {
+                    arrId.push(rows[i].Id);
+                    if (rows[i].TakeInfo) {
+                        $.messager.alert('提示', '选择数据中有已取件快递');
+                        return;
+                    }
                 }
-                cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
+                cashbag.services.post('@Url.Action("GetById")', { ids: arrId }, function (data) {
                     $("#receipt_take_form").form('loadLabelData', data);
                     $('#receipt_take').window('open');
                 });
             },
             receipt_take: function () {
+                
+                var rows = searchViewModel.$datagrid.datagrid("getSelections");
+                if (!rows) {
+                    $.messager.alert('提示', '请选择一条数据');
+                    return;
+                }
+                var arrId = new Array();
+                for (var i = 0; i < rows.length; i++) {
+                    arrId.push(rows[i].Id);
+                    if (rows[i].TakeInfo) {
+                        $.messager.alert('提示', '选择数据中有已取件快递');
+                        return;
+                    }
+                }
                 $.messager.progress();	// 显示进度条
-                $('#receipt_take_form').form('submit', {
+                cashbag.services.post('@Url.Action("Take")', { ids: arrId }, function (data) {
+                    $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                    searchViewModel.search();
+                });
+
+
+
+                @*$('#receipt_take_form').form('submit', {
                     url: '@Url.Action("Take")',
                     onSubmit: function () {
                         var isValid = $(this).form('enableValidation').form('validate');
@@ -627,17 +514,22 @@
                         }
 
                     }
-                });
+                });*@
             },
             receipt_print: function () {
+                
+                var rows = searchViewModel.$datagrid.datagrid("getSelections");
+                if (!rows) {
+                    $.messager.alert('提示', '请选择一条数据');
+                    return;
+                }
+                var arrId = new Array();
+                for (var i = 0; i < rows.length; i++) {
+                    arrId.push(rows[i].Id);
+                }
                 $.messager.progress();	// 显示进度条
-                cashbag.services.post('@Url.Action("Print")', {  }, function (data) {
+                cashbag.services.post('@Url.Action("Print")', { ids: arrId }, function (data) {
                     $.messager.progress('close');	// 如果提交成功则隐藏进度条
-                    if (data == "T") {
-                        $.messager.alert('提示', '打印成功');
-                    } else {
-                        $.messager.alert('提示', '打印失败');
-                    }
                     searchViewModel.search();
                 });
             }
