@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace CTS.Service
+namespace CTS.Common
 {
     public class BusinessException : Exception
     {

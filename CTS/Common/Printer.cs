@@ -24,21 +24,22 @@ namespace CTS.Common
             if (receipt == null) return;
 
             StringBuilder sb = new StringBuilder();
-            sb.Append("\n\t\t快递领取信息\n");
-            sb.Append("----------------------------------------------\n");
-            sb.AppendFormat("客户名称: {0}\n",receipt.CustomerName);
-            sb.AppendFormat("客户电话: {0}\n",receipt.CustomerPhone);
-            sb.Append("----------------------------------------------\n");
-            sb.Append("快递公司\t数量\n");
-            sb.Append("----------------------------------------------\n");
-            foreach (var item in list.GroupBy(g=>g.BelongCompany))
+            sb.Append("     快递领取信息\n");
+            sb.Append("**********************************************\n");
+            sb.AppendFormat("客户名称: {0}\n", receipt.CustomerName);
+            sb.AppendFormat("客户电话: {0}\n", receipt.CustomerPhone);
+            sb.Append("**********************************************\n");
+            sb.Append("快递公司        数量\n");
+            sb.Append("\n");
+            foreach (var item in list.GroupBy(g => g.BelongCompany))
             {
-                sb.AppendFormat("{0}\t\t{1}件\n", item.Key.CourierName, item.Count());
+                sb.AppendFormat("{0}         {1}件\n", item.Key.CourierName, item.Count());
             }
-            sb.Append("----------------------------------------------\n");
+            sb.Append("**********************************************\n");
             sb.Append("\n客户签字: \n");
-            sb.AppendFormat("\n\t{0}\n",DateTime.Now.ToString("yyyy-MM-dd hh:mm"));
-            sb.Append("\t欢迎光临快递收发点 \n");
+            sb.Append("\n**********************************************\n");
+            sb.AppendFormat("\n      {0}\n", DateTime.Now.ToString("yyyy-MM-dd hh:mm"));
+            sb.Append("     欢迎光临快递收发点 \n");
             Print(sb.ToString());
         }
         /// <summary>
@@ -51,14 +52,14 @@ namespace CTS.Common
             {
                 streamToPrint = new StringReader(str);
                 printFont = new Font("宋体", 10);
-                titleFont = new Font("宋体", 12,FontStyle.Bold);
+                titleFont = new Font("宋体", 12, FontStyle.Bold);
                 System.Drawing.Printing.PrintDocument pd = new System.Drawing.Printing.PrintDocument();
                 //pd.PrinterSettings.PrinterName = "SmartPrinter";
                 pd.DocumentName = pd.PrinterSettings.MaximumCopies.ToString();
                 pd.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.pd_PrintPage);
                 pd.PrintController = new System.Drawing.Printing.StandardPrintController();
-                PageSettings pageSetting=new PageSettings();
-                pageSetting.Margins = new Margins(1, 1, 2, 2);
+                PageSettings pageSetting = new PageSettings();
+                pageSetting.Margins = new Margins(0, 1, 2, 2);
                 pd.DefaultPageSettings = pageSetting;
                 pd.Print();
             }
@@ -70,7 +71,7 @@ namespace CTS.Common
 
         private void pd_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs ev)
         {
-            
+
             float linesPerPage = 0;
             float yPos = 0;
             int count = 0;
@@ -84,11 +85,16 @@ namespace CTS.Common
                 if (count == 0)
                 {
                     yPos = topMargin + (count * printFont.GetHeight(ev.Graphics));
-                    ev.Graphics.DrawString(line, titleFont, Brushes.Black, leftMargin + 10, yPos, new StringFormat());
+                    ev.Graphics.DrawString(line, titleFont, Brushes.Black, leftMargin, yPos, new StringFormat());
+                }
+                else if (count == 5)
+                {
+                    yPos = topMargin + (count * printFont.GetHeight(ev.Graphics));
+                    ev.Graphics.DrawString(line, new Font("宋体", 10, FontStyle.Bold), Brushes.Black, leftMargin, yPos, new StringFormat());
                 }
                 else
                 {
-                    yPos = topMargin + (count * printFont.GetHeight(ev.Graphics)+2);
+                    yPos = topMargin + (count * printFont.GetHeight(ev.Graphics));
                     ev.Graphics.DrawString(line, printFont, Brushes.Black, leftMargin, yPos, new StringFormat());
                 }
                 count++;

@@ -156,7 +156,7 @@
       <DependentUpon>201502030114134_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Service\BusinessException.cs" />
+    <Compile Include="Common\BusinessException.cs" />
     <Compile Include="Service\CustomerService.cs" />
     <Compile Include="Service\SendService.cs" />
     <Content Include="App_Code\BaseController.cs" />

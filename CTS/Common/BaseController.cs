@@ -15,7 +15,13 @@ namespace CTS.Common
             if (filterContext.HttpContext.Request.IsAjaxRequest())
             {
                 message = "Ajax访问时引发异常：";
-                if (exception is HttpAntiForgeryException)
+                AjaxResult ajaxResult = null;
+                if (exception is BusinessException)
+                {
+                    message = exception.Message;
+                    ajaxResult = new AjaxResult(message, AjaxResultType.Warning);
+                }
+                else if (exception is HttpAntiForgeryException)
                 {
                     message += "安全性验证失败。<br>请刷新页面重试，详情请查看系统日志。";
                 }
@@ -23,7 +29,7 @@ namespace CTS.Common
                 {
                     message += exception.Message;
                 }
-                filterContext.Result = Json(new AjaxResult(message, AjaxResultType.Error));
+                filterContext.Result = Json(ajaxResult??new AjaxResult(message, AjaxResultType.Error));
                 filterContext.ExceptionHandled = true;
             }
         }

@@ -79,7 +79,7 @@
 <div id="receipt_add" title="录入快递" style="width:400px;height:250px">
     <form id="receipt_form" method="post">
         <table class="TableStyle">
-            
+
             <tr>
                 <th>
                     <label for="CustomerName">客户名称:</label>
@@ -128,7 +128,7 @@
     <form id="receipt_edit_form" method="post">
         <input name="Id" type="hidden" />
         <table class="TableStyle">
-            
+
             <tr>
                 <th>
                     <label for="CustomerName">客户名称:</label>
@@ -177,7 +177,7 @@
     <form id="receipt_take_form" method="post">
         <input name="Id" type="hidden" />
         <table class="TableStyle">
-            
+
             <tr>
                 <th width="60">
                     <label for="CustomerName">客户名称:</label>
@@ -325,7 +325,7 @@
                         }, sucess);
                     },
                     onDblClickRow: function (index, row) {
-                        searchViewModel.receipt_take();
+                        //searchViewModel.receipt_take();
                     }
                 });
                 $("#receipt_form [name='BelongCompany.Id']").combobox({
@@ -350,12 +350,12 @@
                 $("#receipt_tb_edit").click(function () {
                     $('#receipt_edit_form').form('reset');
                     var rows = searchViewModel.$datagrid.datagrid("getSelections");
-                    if (!rows) {
+                    if (rows.length == 0) {
                         $.messager.alert('提示', '请选择一条数据');
                         return;
                     }
                     //var row = searchViewModel.$datagrid.datagrid("getSelected");
-                    if (rows.length>1) {
+                    if (rows.length > 1) {
                         $.messager.alert('提示', '请选择单条数据进行编辑');
                         return;
                     }
@@ -373,12 +373,12 @@
                     searchViewModel.receipt_take();
                 })
                 $("#receipt_tb_print").click(function () {
-                    
+
                     searchViewModel.receipt_print();
                 })
                 $("#receipt_tb_delete").click(function () {
                     var rows = searchViewModel.$datagrid.datagrid("getSelections");
-                    if (!rows) {
+                    if (rows.length == 0) {
                         $.messager.alert('提示', '请选择一条数据');
                         return;
                     }
@@ -443,7 +443,7 @@
             },
             receipt_edit: function () {
                 $('#receipt_edit_form').form('submitData', {
-                    successAlert:false,
+                    successAlert: false,
                     url: '@Url.Action("Edit")',
                     success: function (data) {
                         searchViewModel.search();
@@ -454,11 +454,11 @@
             receipt_windows_take: function () {
                 $('#receipt_take_form').form('reset');
                 var rows = searchViewModel.$datagrid.datagrid("getSelections");
-                if (!rows) {
+                if (rows.length == 0) {
                     $.messager.alert('提示', '请选择一条数据');
                     return;
                 }
-                var arrId=new Array();
+                var arrId = new Array();
                 for (var i = 0; i < rows.length; i++) {
                     arrId.push(rows[i].Id);
                     if (rows[i].TakeInfo) {
@@ -472,9 +472,9 @@
                 });
             },
             receipt_take: function () {
-                
+
                 var rows = searchViewModel.$datagrid.datagrid("getSelections");
-                if (!rows) {
+                if (rows.length == 0) {
                     $.messager.alert('提示', '请选择一条数据');
                     return;
                 }
@@ -517,9 +517,9 @@
                 });*@
             },
             receipt_print: function () {
-                
+
                 var rows = searchViewModel.$datagrid.datagrid("getSelections");
-                if (!rows) {
+                if (rows.length == 0) {
                     $.messager.alert('提示', '请选择一条数据');
                     return;
                 }

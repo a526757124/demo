@@ -62,6 +62,14 @@ cashbag.services = cashbag.services || {
                     $.messager.alert('提示', data.Content, 'error');
                     success(data);
                 }
+                if (data.Type == "Warning") {
+                    $.messager.alert('提示', data.Content, 'warning');
+                    success(data);
+                }
+                if (data.Type == "Info") {
+                    $.messager.alert('提示', data.Content, 'info');
+                    success(data);
+                }
             },
             error: error || this._functions.error
         });

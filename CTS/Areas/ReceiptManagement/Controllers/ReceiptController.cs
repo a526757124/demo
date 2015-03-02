@@ -148,6 +148,10 @@ namespace CTS.Areas.ReceiptManagement.Controllers
                     .Include(p => p.BelongCompany)
                     .Include(p => p.TakeInfo)
                     .Where(p => ids.Contains(p.Id)).ToList();
+                if (receipts.GroupBy(g => g.CustomerPhone).Count() > 1)
+                {
+                    throw new BusinessException("取件时存在不是同一手机号的快递");
+                }
                 foreach (var item in receipts)
                 {
                     item.TakeInfo = new TakeInfo();
@@ -173,6 +177,10 @@ namespace CTS.Areas.ReceiptManagement.Controllers
                     .Include(p => p.BelongCompany)
                     .Include(p => p.TakeInfo)
                     .Where(p => ids.Contains(p.Id)).ToList();
+                if (list.GroupBy(g => g.CustomerPhone).Count() > 1)
+                {
+                    throw new BusinessException("打印快递单中存在不是同一手机号的快递");
+                }
                 new Printer().Print(list);
             }
             return Json(new AjaxResult("打印成功", AjaxResultType.Success));

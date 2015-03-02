@@ -7,6 +7,7 @@ using System.Web;
 using System.Data.Entity;
 using PagedList;
 using CTS.Dto;
+using CTS.Common;
 namespace CTS.Service
 {
     public class SendService
