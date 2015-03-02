@@ -146,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\BaseController.cs" />
+    <Compile Include="Common\PrintInvoice.cs" />
     <Compile Include="Dto\SendQueryDto.cs" />
     <Compile Include="Migrations\201502030114134_init.cs" />
     <Compile Include="Migrations\201502030114134_init.Designer.cs">

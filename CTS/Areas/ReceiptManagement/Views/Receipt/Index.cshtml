@@ -400,9 +400,10 @@
                     buttons: [{
                         text: '打印',
                         handler: function () {
+                            searchViewModel.receipt_print();
                             //document.body.innerHTML = document.getElementById('receipt_print_form').innerHTML;
                             //window.print();
-                            window.open();
+                            //window.open();
                         }
                     }, {
                         text: '关闭',
@@ -626,6 +627,18 @@
                         }
 
                     }
+                });
+            },
+            receipt_print: function () {
+                $.messager.progress();	// 显示进度条
+                cashbag.services.post('@Url.Action("Print")', {  }, function (data) {
+                    $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                    if (data == "T") {
+                        $.messager.alert('提示', '打印成功');
+                    } else {
+                        $.messager.alert('提示', '打印失败');
+                    }
+                    searchViewModel.search();
                 });
             }
         }

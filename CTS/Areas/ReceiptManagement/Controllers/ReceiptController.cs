@@ -9,6 +9,7 @@ using CTS.Models;
 using System.Data.Entity;
 using CTS.Dto;
 using CTS.Common;
+using System.Drawing.Printing;
 namespace CTS.Areas.ReceiptManagement.Controllers
 {
     public class ReceiptController : BaseController
@@ -157,6 +158,22 @@ namespace CTS.Areas.ReceiptManagement.Controllers
             }
         }
         #endregion
+        public ActionResult Print(int? id)
+        {
+            PrintDocument print = new PrintDocument();
+            string sDefault = print.PrinterSettings.PrinterName;//默认打印机名
+            //lblDefault.Text = sDefault;
+
+            foreach (string sPrint in PrinterSettings.InstalledPrinters)//获取所有打印机名称
+            {
+                //lstPrinter.Items.Add(sPrint);
+                if (sPrint == sDefault) ;
+                    //lstPrinter.SelectedIndex = lstPrinter.Items.IndexOf(sPrint);
+            }
+            //new PrintInvoice().Printeg();
+            new Printer().print("测试\n测试\n测试\n测试\n测试\n");
+            return Json("T");
+        }
         public ActionResult GetCourierCompanyList(int? tag)
         {
             using (CTSContext context = new CTSContext())
