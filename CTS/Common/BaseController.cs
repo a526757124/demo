@@ -29,6 +29,7 @@ namespace CTS.Common
                 {
                     message += exception.Message;
                 }
+                
                 filterContext.Result = Json(ajaxResult??new AjaxResult(message, AjaxResultType.Error));
                 filterContext.ExceptionHandled = true;
             }
