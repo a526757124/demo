@@ -186,7 +186,6 @@ namespace CTS.Areas.ReceiptManagement.Controllers
             return Json(new AjaxResult("打印成功", AjaxResultType.Success));
         }
         #endregion
-
         public ActionResult GetCourierCompanyList(int? tag)
         {
             using (CTSContext context = new CTSContext())
@@ -207,7 +206,7 @@ namespace CTS.Areas.ReceiptManagement.Controllers
                         text = "请选择"
                     });
                 }
-                return Json(result.OrderBy(o=>o.id));
+                return Json(result.OrderBy(o=>o.id),JsonRequestBehavior.AllowGet);
             }
         }
     }

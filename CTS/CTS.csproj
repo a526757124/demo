@@ -2311,6 +2311,7 @@
     <Content Include="Scripts\zTree_v3\demo\en\asyncData\getNodes.php" />
     <Content Include="Scripts\zTree_v3\demo\en\asyncData\getNodesForBigData.php" />
     <Content Include="Scripts\zTree_v3\README.md" />
+    <Content Include="Views\Home\Default.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
