@@ -33,6 +33,10 @@ namespace CTS.Common
                 filterContext.Result = Json(ajaxResult??new AjaxResult(message, AjaxResultType.Error));
                 filterContext.ExceptionHandled = true;
             }
+            else
+            {
+                filterContext.Result =Content("系统异常:"+exception.Message);
+            }
         }
     }
 }
