@@ -429,7 +429,6 @@
                 this.$datagrid.datagrid("load");
             },
             receipt_add: function (c) {
-                $.messager.progress();	// 显示进度条
                 $('#receipt_form').form('submitData', {
                     successAlert: false,
                     url: '@Url.Action("Add")',
@@ -517,7 +516,7 @@
                 });*@
             },
             receipt_print: function () {
-
+                
                 var rows = searchViewModel.$datagrid.datagrid("getSelections");
                 if (rows.length == 0) {
                     $.messager.alert('提示', '请选择一条数据');

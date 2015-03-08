@@ -28,7 +28,7 @@ namespace CTS.Areas.SystemSettings.Controllers
                 context.CourierCompanys.Add(model);
                 context.SaveChanges();
 
-                return Json("T");
+                return Json(new AjaxResult("添加成功", AjaxResultType.Success));
             }
         }
         public ActionResult Delete(int id)
@@ -39,7 +39,7 @@ namespace CTS.Areas.SystemSettings.Controllers
 
                 context.SaveChanges();
 
-                return Json("T");
+                return Json(new AjaxResult("删除成功", AjaxResultType.Success));
             }
         }
         public ActionResult Edit(CourierCompany model)
@@ -54,7 +54,7 @@ namespace CTS.Areas.SystemSettings.Controllers
                 courierCompany.CourierName = model.CourierName;
                 courierCompany.Remark = model.Remark;
                 context.SaveChanges();
-                return Json("T");
+                return Json(new AjaxResult("编辑成功", AjaxResultType.Success));
             }
         }
         public ActionResult GetById(int id)
@@ -63,7 +63,7 @@ namespace CTS.Areas.SystemSettings.Controllers
             {
                 var model = context.CourierCompanys
                     .FirstOrDefault(p => p.Id == id);
-                return Json(model);
+                return Json(new AjaxResult("查询成功", AjaxResultType.Success, model));
             }
         }
         public ActionResult List(PagedParam<dynamic> queryCond)
@@ -73,7 +73,7 @@ namespace CTS.Areas.SystemSettings.Controllers
                 var result = context.CourierCompanys
                     .Where(p => !p.IsDeleted)
                     .OrderByDescending(p => p.CreatedTime).ToPagedList(queryCond.PageNo, queryCond.PageSize);
-                return Json(new { rows = result.ToList(), total = result.TotalItemCount });
+                return Json(new AjaxResult("查询成功", AjaxResultType.Success, new { rows = result.ToList(), total = result.TotalItemCount }));
             }
         }
 
