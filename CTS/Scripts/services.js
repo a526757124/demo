@@ -54,7 +54,7 @@ cashbag.services = cashbag.services || {
                     if (data.Data) {
                         success(data.Data);
                     } else {
-                        $.messager.alert('提示', data.Content);
+                        //$.messager.alert('提示', data.Content);
                         success(data);
                     }
                 }
