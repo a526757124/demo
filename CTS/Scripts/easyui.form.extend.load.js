@@ -24,13 +24,13 @@
             $(this).form("load", data);
         });
     },
-    loadLabelData:function(jq,data){
+    loadLabelData: function (jq, data) {
         var jq_id = jq.attr("id");
         for (var key in data) {
             if (!key)
                 continue;
             var value = data[key];
-            if (!value)
+            if (!value && !(typeof (value) === "boolean"))
                 continue;
             if (value.constructor == Object) {
                 //this.dealObject(value, jq_id, key);
@@ -42,7 +42,7 @@
                     if (!v)
                         continue;
                     if (v.constructor == Object) {
-                        
+
                     } else {
                         this.getElementById(jq_id, t_key).html(v);
                         this.getElementByName(jq_id, key).val(value);
@@ -62,7 +62,7 @@
             if (!key)
                 continue;
             var value = data[key];
-            if (!value)
+            if (!value && !(typeof (value) === "boolean"))
                 continue;
             if (value.constructor == Object) {
                 this.dealObject(value, jq_id, key);
@@ -110,6 +110,14 @@
             //easyui 下拉列表
             var comobj = this.getElementByComboName(jq_id, key);
             if (comobj && (comobj.hasClass("easyui-combobox") || comobj.hasClass("combobox-f"))) {
+                //是布耳值 false为0 true为1
+                //if (typeof (value) === "boolean") {
+                //    if (value) {
+                //        comobj.combobox('setValue', 1);
+                //    } else {
+                //        comobj.combobox('setValue', 0);
+                //    }
+                //}
                 comobj.combobox('setValue', value);
                 return;
             }
@@ -134,7 +142,7 @@
                 }
                 return;
             }
-            
+
             obj.val(value);
         }
     },

@@ -9,7 +9,7 @@
             <th data-options="field:'ContactName',width:80">联系人</th>
             <th data-options="field:'ContactPhone',width:100">联系电话</th>
             <th data-options="field:'ContactMobilePhone',width:100">联系人手机</th>
-            <th data-options="field:'IsDefault',width:80,formatter:searchCourierViewModel.isSendSMSColumnFormatter">发送短信</th>
+            <th data-options="field:'IsSendSMS',width:80,formatter:searchCourierViewModel.isSendSMSColumnFormatter">发送短信</th>
             <th data-options="field:'IsDefault',width:80,formatter:searchCourierViewModel.isDefaultColumnFormatter">是否默认</th>
 
         </tr>
@@ -113,8 +113,8 @@
                 </th>
                 <td>
                     <select id="IsSendSMS" class="easyui-combobox" name="IsSendSMS" style="width:135px;">
-                        <option value="0">否</option>
-                        <option value="1" selected="selected">是</option>
+                        <option value="false">否</option>
+                        <option value="true" selected="selected">是</option>
                     </select>
                 </td>
             </tr>
@@ -146,6 +146,13 @@
             init: function () {
                 $('.easyui-textbox').textbox();
                 $('.easyui-numberbox').numberbox();
+                $(".easyui-combobox").combobox({
+                    panelHeight: 100,
+                    editable: false,
+                    onChange: function (newValue, oldValue) {
+                        
+                    }
+                });
                 //$.parser.parse('#couriercompany_add');
                 //$.parser.parse('#couriercompany_edit');
                 $("#couriercompany_add").dialog({
@@ -254,10 +261,10 @@
                 return "";
             },
             isSendSMSColumnFormatter: function (value, rowData, rowIndex) {
-                if (rowData.IsDefault) {
+                if (rowData.IsSendSMS) {
                     return "<span style='color:blue'>是</span>";
                 }
-                return "";
+                return "否";
             },
             search: function () {
                 this.$datagrid.datagrid("load");

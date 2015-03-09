@@ -64,7 +64,7 @@ namespace CTS.Areas.SystemSettings.Controllers
             {
                 var model = context.CourierCompanys
                     .FirstOrDefault(p => p.Id == id);
-                return Json(new AjaxResult("查询成功", AjaxResultType.Success, model));
+                return Json(new AjaxResult("查询成功", AjaxResultType.Success, model), JsonRequestBehavior.AllowGet);
             }
         }
         public ActionResult List(PagedParam<dynamic> queryCond)
