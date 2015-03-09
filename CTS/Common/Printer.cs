@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Web;
 using System.Text;
 using System.Drawing.Printing;
+using System.Runtime.InteropServices;
 
 namespace CTS.Common
 {
@@ -41,6 +42,7 @@ namespace CTS.Common
             sb.AppendFormat("\n      {0}\n", DateTime.Now.ToString("yyyy-MM-dd hh:mm"));
             sb.Append("     欢迎光临快递收发点 \n");
             Print(sb.ToString());
+            PrintPage(sb.ToString());
         }
         /// <summary>
         /// 设置PrintDocument 的相关属性
@@ -68,6 +70,28 @@ namespace CTS.Common
             }
         }
 
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr CreateFile(string fileName, uint disiredAccess, uint shareMode,
+             uint securityAttributes, uint creationDisposition, uint flagsAndAttributes, int hTemplateFile);
+
+        protected bool PrintPage(string strPos)
+        {
+            IntPtr iHandle = CreateFile("LPT1", 0x40000000, 0, 0, 3, 0, 0);
+            if (iHandle.ToInt32() == -1)
+            {
+                return false;
+            }
+            else
+            {
+                FileStream fs = new FileStream(iHandle, FileAccess.ReadWrite);
+                StreamWriter sw = new StreamWriter(fs, Encoding.Default);
+                sw.WriteLine(strPos, 0, 500);
+                sw.Close();
+                fs.Close();
+                return true;
+
+            }
+        }
 
         private void pd_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs ev)
         {
