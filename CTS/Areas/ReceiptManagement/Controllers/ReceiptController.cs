@@ -51,7 +51,7 @@ namespace CTS.Areas.ReceiptManagement.Controllers
             using (CTSContext context = new CTSContext())
             {
                 context.Receipts.FirstOrDefault(p => p.Id == id).IsDeleted = true; 
-
+                
                 context.SaveChanges();
 
                 return Json(new AjaxResult("删除成功", AjaxResultType.Success));
