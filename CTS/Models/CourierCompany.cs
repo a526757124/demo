@@ -31,6 +31,10 @@ namespace CTS.Models
         /// </summary>
         public string ContactMobilePhone { get; set; }
         /// <summary>
+        /// 是否发送短信
+        /// </summary>
+        public bool IsSendSMS { get; set; }
+        /// <summary>
         /// 注 只能存在一个
         /// </summary>
         public bool IsDefault { get; set; }

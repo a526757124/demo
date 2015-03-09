@@ -33,11 +33,14 @@ namespace CTS.Areas.ReceiptManagement.Controllers
             using (CTSContext context = new CTSContext())
             {
                 model.BelongCompany = context.CourierCompanys.FirstOrDefault(p => p.Id == model.BelongCompany.Id);
-                context.Customers.Add(new Customer()
+                if (!context.Customers.Any(p => p.CustomerPhone.Equals(model.CustomerPhone)))
                 {
-                    CustomerName = model.CustomerName,
-                    CustomerPhone = model.CustomerPhone
-                });
+                    context.Customers.Add(new Customer()
+                    {
+                        CustomerName = model.CustomerName,
+                        CustomerPhone = model.CustomerPhone
+                    });
+                }
                 context.Receipts.Add(model);
                 context.SaveChanges();
                 return Json(new AjaxResult("添加成功", AjaxResultType.Success));

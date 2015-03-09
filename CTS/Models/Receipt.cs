@@ -31,6 +31,11 @@ namespace CTS.Models
         /// </summary>
         public string CustomerAddress { get; set; }
         /// <summary>
+        /// 是否到付
+        /// </summary>
+        public bool IsPay { get; set; }
+        
+        /// <summary>
         /// 取件信息
         /// </summary>
         public TakeInfo TakeInfo { get; set; }

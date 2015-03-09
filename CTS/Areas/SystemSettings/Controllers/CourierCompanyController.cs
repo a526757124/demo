@@ -52,6 +52,7 @@ namespace CTS.Areas.SystemSettings.Controllers
                 courierCompany.ContactPhone = model.ContactPhone;
                 courierCompany.CourierCode = model.CourierCode;
                 courierCompany.CourierName = model.CourierName;
+                courierCompany.IsSendSMS = model.IsSendSMS;
                 courierCompany.Remark = model.Remark;
                 context.SaveChanges();
                 return Json(new AjaxResult("编辑成功", AjaxResultType.Success));

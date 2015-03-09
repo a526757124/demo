@@ -9,6 +9,7 @@
             <th data-options="field:'ContactName',width:80">联系人</th>
             <th data-options="field:'ContactPhone',width:100">联系电话</th>
             <th data-options="field:'ContactMobilePhone',width:100">联系人手机</th>
+            <th data-options="field:'IsDefault',width:80,formatter:searchCourierViewModel.isSendSMSColumnFormatter">发送短信</th>
             <th data-options="field:'IsDefault',width:80,formatter:searchCourierViewModel.isDefaultColumnFormatter">是否默认</th>
 
         </tr>
@@ -19,7 +20,7 @@
     <a href="#" id="couriercompany_tb_edit" class="easyui-linkbutton" data-options="plain:true">修改</a>
     <a href="#" id="couriercompany_tb_delete" class="easyui-linkbutton" data-options="plain:true">删除</a>
 </div>
-<div id="couriercompany_add" title="录入快递公司" style="width:400px;height:250px">
+<div id="couriercompany_add" title="录入快递公司" style="width:400px;height:300px">
     <form id="couriercompany_form" method="post">
         <table class="TableStyle">
             <tr>
@@ -48,6 +49,17 @@
             </tr>
             <tr>
                 <th>
+                    <label for="ContactMobilePhone">发送短信:</label>
+                </th>
+                <td>
+                    <select id="IsSendSMS" class="easyui-combobox" name="IsSendSMS" style="width:135px;">
+                        <option value="0">否</option>
+                        <option value="1" selected="selected">是</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>
                     <label for="ContactPhone">联系电话(座机):</label>
                 </th>
                 <td>
@@ -62,11 +74,12 @@
                     <input class="easyui-validatebox easyui-numberbox" type="text" name="ContactMobilePhone" data-options="validType:'mobile',novalidate:true" />
                 </td>
             </tr>
+            
         </table>
     </form>
 </div>
 
-<div id="couriercompany_edit" title="修改快递公司数据" style="width:400px;height:250px">
+<div id="couriercompany_edit" title="修改快递公司数据" style="width:400px;height:300px">
     <form id="couriercompany_edit_form" method="post">
         <input name="Id" type="hidden" />
         <table class="TableStyle">
@@ -92,6 +105,17 @@
                 </th>
                 <td>
                     <input class="easyui-validatebox easyui-textbox" type="text" name="ContactName" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="ContactMobilePhone">发送短信:</label>
+                </th>
+                <td>
+                    <select id="IsSendSMS" class="easyui-combobox" name="IsSendSMS" style="width:135px;">
+                        <option value="0">否</option>
+                        <option value="1" selected="selected">是</option>
+                    </select>
                 </td>
             </tr>
             <tr>
@@ -224,6 +248,12 @@
 
             },
             isDefaultColumnFormatter: function (value, rowData, rowIndex) {
+                if (rowData.IsDefault) {
+                    return "<span style='color:blue'>是</span>";
+                }
+                return "";
+            },
+            isSendSMSColumnFormatter: function (value, rowData, rowIndex) {
                 if (rowData.IsDefault) {
                     return "<span style='color:blue'>是</span>";
                 }
