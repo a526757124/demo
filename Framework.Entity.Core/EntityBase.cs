@@ -7,18 +7,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace DomainModels
+namespace ETVS.Framework.Entity.Core
 {
     /// <summary>
     /// 可持久化到数据库的数据模型基类
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
-    public abstract class EntityBase<TKey>
+    public abstract class EntityBase<TKey> where TKey : struct
     {
         protected EntityBase()
         {
             IsDeleted = false;
             CreatedTime = DateTime.Now;
+            //Timestamp = DateTime.Now.AddMilliseconds(DateTime.Now.Millisecond);
         }
 
         #region 属性
@@ -26,9 +27,11 @@ namespace DomainModels
         /// <summary>
         /// 获取或设置 实体唯一标识，主键
         /// </summary>
-        [Key]
         public TKey Id { get; set; }
-
+        /// <summary>
+        /// 获取或设置 备注
+        /// </summary>
+        public string Remark { get; set; }
         /// <summary>
         /// 获取或设置 是否删除，逻辑上的删除，非物品删除
         /// </summary>
@@ -42,9 +45,7 @@ namespace DomainModels
         /// <summary>
         /// 获取或设置 版本控制标识，用于处理并发
         /// </summary>
-        [ConcurrencyCheck]
-        [Timestamp]
-        public byte[] Timestamp { get; set; }
+        public DateTime RowVersion { get; set; }
 
         #endregion
 

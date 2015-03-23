@@ -9,7 +9,7 @@ namespace DomainModels
     /// <summary>
     /// 用户
     /// </summary>
-    public class User:Operator
+    public class User :EntityBase<int>
     {
         /// <summary>
         /// 用户姓名
@@ -22,6 +22,6 @@ namespace DomainModels
         /// <summary>
         /// 登录密码
         /// </summary>
-        public string Pwd { get; set; }
+        public string Password { get; set; }
     }
 }

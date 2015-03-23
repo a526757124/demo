@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ETVS.Framework.Entity.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace DomainModels
     /// <summary>
     /// 公司
     /// </summary>
-    public class Company
+    public class Company : EntityBase<int>
     {
         /// <summary>
         /// 公司名称

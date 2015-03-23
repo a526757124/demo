@@ -18,7 +18,7 @@ namespace ETVS.Framework.Entity.Core
     /// 当前操作者信息类
     /// 注:要记录操作 所有用户都得继承此类
     /// </summary>
-    public class Operator
+    public class Operator : EntityBase<int>
     {
         /// <summary>
         /// 获取或设置 当前用户标识

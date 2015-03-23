@@ -1,4 +1,5 @@
-﻿using Framework.Enums;
+﻿using ETVS.Framework.Entity.Core;
+using Framework.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
