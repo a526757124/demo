@@ -9,7 +9,7 @@ using System.Text;
 
 namespace Repositories
 {
-    public class ETVSContext : DbContext
+    public class ETVSContext : DbContext, IDisposable
     {
         public ETVSContext()
             : base("MySqlConnectionString")
@@ -18,6 +18,10 @@ namespace Repositories
             //Configuration.ProxyCreationEnabled = false;
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Company> Companys { get; set; }
+        public DbSet<Subject> Subjects { get; set; }
+        public DbSet<SubjectType> SubjectTypes { get; set; }
+        public DbSet<Voucher> Vouchers { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -45,6 +45,8 @@
     <Compile Include="SubjectType.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Voucher.cs" />
+    <Compile Include="VoucherDetail.cs" />
+    <Compile Include="VoucherWord.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Framework.Entity.Core\Framework.Entity.Core.csproj">

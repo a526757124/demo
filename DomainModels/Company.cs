@@ -29,6 +29,5 @@ namespace DomainModels
         /// </summary>
         public string CompanyAddress { get; set; }
 
-
     }
 }

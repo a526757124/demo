@@ -12,62 +12,82 @@ namespace DomainModels
     /// </summary>
     public class Voucher : EntityBase<int>
     {
-        private string _digest;
-        public string Digest
+        /// <summary>
+        /// 凭证明细
+        /// </summary>
+        public virtual List<VoucherDetail> VoucherDetails { get; set; }
+        private decimal _debtorTotalAmount;
+        /// <summary>
+        /// 借方合计
+        /// </summary>
+        public decimal DebtorTotalAmount
         {
             get
             {
-                return _digest;
+                return _debtorTotalAmount;
             }
             set
             {
-                _digest = value;
+                if (VoucherDetails != null)
+                    _debtorTotalAmount = VoucherDetails.Sum(p => p.DebtorAmount);
+                _debtorTotalAmount = 0;
             }
+        }
+        private decimal _creditTotalAmount;
+        /// <summary>
+        /// 贷方合计
+        /// </summary>
+        public decimal CreditTotalAmount
+        {
+            get
+            {
+                return _creditTotalAmount;
+            }
+            set
+            {
+                if (VoucherDetails != null)
+                    _creditTotalAmount = VoucherDetails.Sum(p => p.CreditAmount);
+                _creditTotalAmount = 0;
+            }
+        }
+        /// <summary>
+        /// 附单据数量
+        /// </summary>
+        public int BillsTotal { get; set; }
+        private Company _belongCompany;
+        
+        /// <summary>
+        /// 所属公司
+        /// </summary>
+        public virtual Company BelongCompany
+        {
+            get { return _belongCompany; }
+            set { _belongCompany = value; }
 
         }
-        private Subject _subject;
-        public Subject Subject
+        /// <summary>
+        /// 凭证字
+        /// </summary>
+        public virtual VoucherWord Word { get; set; }
+        /// <summary>
+        /// 凭证编号
+        /// </summary>
+        public string VoucherCode { get; set; }
+        /// <summary>
+        /// 录入人
+        /// </summary>
+        public User CreateUser
         {
-            get
-            {
-                return _subject;
-            }
-            set
-            {
-                _subject = value;
-            }
+            get;
+            set;
         }
-        private decimal _debtorAmount;
-        public decimal DebtorAmount
+        /// <summary>
+        /// 最后一次修改人
+        /// </summary>
+        public User ModifUser
         {
-            get
-            {
-                return _debtorAmount;
-            }
-            set
-            {
-                _debtorAmount = value;
-            }
-        }
-        private decimal _creditAmount;
-        public decimal CreditAmount
-        {
-            get
-            {
-                return _creditAmount;
-            }
-            set
-            {
-                _creditAmount = value;
-            }
-        }
-        private string _remark;
-
-        public string Remark
-        {
-            get { return _remark; }
-            set { _remark = value; }
-
+            get;
+            set;
         }
     }
 }

@@ -152,6 +152,7 @@
     <Compile Include="Common\AjaxResult.cs" />
     <Compile Include="Common\AjaxResultType.cs" />
     <Compile Include="Common\BaseController.cs" />
+    <Compile Include="Common\ExceptionFilter.cs" />
     <Compile Include="Common\Printer.cs" />
     <Compile Include="Common\PrintInvoice.cs" />
     <Compile Include="Dto\SendQueryDto.cs" />
