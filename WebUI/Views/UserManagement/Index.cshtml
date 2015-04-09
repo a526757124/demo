@@ -1,0 +1,224 @@
+﻿@{
+    ViewBag.Title = "用户管理";
+}
+<table id="user_dg">
+    <thead>
+        <tr>
+            <th data-options="field:'UserName',width:80">用户名</th>
+            <th data-options="field:'LoginName',width:85">登录名</th>
+        </tr>
+    </thead>
+</table>
+<div id="user_tb">
+    <a href="#" id="user_tb_add" class="easyui-linkbutton" data-options="plain:true">添加</a>
+    <a href="#" id="user_tb_edit" class="easyui-linkbutton" data-options="plain:true">修改</a>
+    <a href="#" id="user_tb_delete" class="easyui-linkbutton" data-options="plain:true">删除</a>
+    <a href="#" id="user_tb_resetPassword" class="easyui-linkbutton" data-options="plain:true">重置密码</a>
+    <br />
+    <form id="user_tb_form" class="autoSearchKey" method="post" style="background:#fff">
+        <table>
+            <tr>
+                <td style="padding-left:10px;">
+                    <label for="UserName">用户名:</label>
+                    <input class="easyui-textbox" type="text" style="width:110px;" name="UserName" />
+                </td>
+                <td style="padding-left:10px;">
+                    <label for="LoginName">登录名:</label>
+                    <input class=" easyui-textbox" type="text" style="width:110px;" name="LoginName" />
+                </td>
+                <td style="padding-left:10px;">
+                    <a href="#" id="user_tb_form_search" class="easyui-linkbutton">查&nbsp;&nbsp;询</a>
+                    <a href="#" id="user_tb_form_clear" class="easyui-linkbutton">清&nbsp;&nbsp;空</a>
+                </td>
+            </tr>
+        </table>
+
+
+    </form>
+</div>
+<div id="user_add" title="添加用户" style="width: 300px; height: 180px;">
+    <form id="user_form" method="post">
+        <table class="TableStyle">
+            <tr>
+                <th>
+                    <label for="UserName">用户名:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="UserName" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="LoginName">登录名:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="LoginName" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="user_edit" title="修改用户数据" style="width: 300px; height: 180px;">
+    <form id="user_edit_form" method="post">
+        <input name="Id" type="hidden" />
+        <table class="TableStyle">
+            <tr>
+                <th>
+                    <label for="UserName">用户名:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="UserName" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="LoginName">登录名:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="LoginName" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    $(function () {
+        searchUserViewModel = {
+            $datagrid: null,
+
+            init: function () {
+                $('.easyui-textbox').textbox();
+                $('.easyui-numberbox').numberbox();
+                $('.autoSearchKey input').keypress(function (event) {
+                    if (event.keyCode == 13) {
+                        searchUserViewModel.search();
+                    }
+                })
+                $("#user_add").dialog({
+                    modal: true,
+                    closed: true,
+                    buttons: [{
+                        text: '保存继续录入',
+                        handler: function () {
+                            searchUserViewModel.user_add();
+                        }
+                    }, {
+                        text: '保存并关闭',
+                        handler: function () {
+                            searchUserViewModel.user_add(true);
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#user_add').dialog('close')
+                        }
+                    }]
+                });
+                $("#user_edit").dialog({
+                    modal: true,
+                    closed: true,
+                    buttons: [{
+                        text: '保存',
+                        handler: function () {
+                            searchUserViewModel.user_edit();
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#user_edit').dialog('close');
+                        }
+                    }]
+                });
+
+                searchUserViewModel.$datagrid = $("#user_dg").datagrid({
+                    fit: true,
+                    //fitColumns:true,
+                    singleSelect: true,
+                    toolbar: '#user_tb',
+                    pagination: true,
+                    pageSize: 10,
+                    loader: function (param, sucess) {
+                        var json = $('#user_tb_form').form('serialize');
+                        cashbag.services.post('@Url.Action("List")', {
+                            queryCond: {
+                                PageNo: param.page,
+                                PageSize: param.rows,
+                                QueryDto: json
+                            }
+                        }, sucess, {nuload:true});
+                    }
+                });
+
+                $("#user_tb_add").click(function () {
+                    $('#user_form').form('reset');
+                    $('#user_add').window('open');
+                });
+                $("#user_tb_edit").click(function () {
+                    $('#user_edit_form').form('reset');
+                    var row = searchUserViewModel.$datagrid.datagrid("getSelected");
+                    if (!row) {
+                        $.messager.alert('提示', '请选择一条数据');
+                        return;
+                    }
+                    cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
+                        $("#user_edit_form").form('loadData', data);
+                        $('#user_edit').window('open');
+                    });
+                });
+                $("#user_tb_delete").click(function () {
+                    var row = searchUserViewModel.$datagrid.datagrid("getSelected");
+                    if (!row) {
+                        $.messager.alert('提示', '请选择一条数据');
+                        return;
+                    }
+                    $.messager.confirm('确认', '您确认想要删除记录吗？', function (r) {
+                        if (r) {
+                            cashbag.services.post('@Url.Action("Delete")', { id: row.Id }, function (data) {
+                                searchUserViewModel.search();
+                            });
+                        }
+                    });
+                })
+                $("#user_tb_form_search").click(function () {
+                    searchUserViewModel.search();
+                });
+                $("#user_tb_form_clear").click(function () {
+                    $('#user_tb_form').form('reset');
+                    searchUserViewModel.search();
+                });
+                $('.easyui-validatebox').bind('blur', function () {
+                    $(this).validatebox('enableValidation').validatebox('validate');
+                });
+            },
+            search: function () {
+                this.$datagrid.datagrid("load");
+            },
+            user_add: function (c) {
+                $('#user_form').form('submitData', {
+                    url: '@Url.Action("Add")',
+                    success: function (data) {
+                        searchUserViewModel.search();
+                        $('#user_form').form('reset');
+                        if (c) {
+                            $('#user_add').dialog('close')
+                        }
+                    }
+                });
+            },
+            user_edit: function () {
+                $('#user_edit_form').form('submitData', {
+                    url: '@Url.Action("Edit")',
+                    success: function (data) {
+                        searchUserViewModel.search();
+                        $('#user_edit').dialog('close')
+                    }
+                });
+            }
+
+        }
+        searchUserViewModel.init();
+
+
+    })
+</script>

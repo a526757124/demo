@@ -50,7 +50,7 @@ namespace DomainModels
         }
         private SubjectType _type;
         /// <summary>
-        /// 科目类别
+        /// 科目类型
         /// </summary>
         public SubjectType Type
         {
@@ -60,6 +60,10 @@ namespace DomainModels
                 _type = value;
             }
         }
+        /// <summary>
+        /// 科目类别
+        /// </summary>
+        public SubjectCategory Category { get; set; }
         private BalanceDirection balanceDirection;
         /// <summary>
         /// 余额方向
@@ -72,6 +76,10 @@ namespace DomainModels
                 balanceDirection = value;
             }
         }
+        /// <summary>
+        /// 父级
+        /// </summary>
+        public virtual Subject ParentSubject { get; set; }
 
     }
 }

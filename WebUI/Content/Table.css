@@ -1,0 +1,66 @@
+﻿.TableStyle
+{
+    width: 100%;
+    border-collapse: collapse;
+    border: solid #c5c5c5;
+    border-width: 1px 0 0 1px;
+}
+
+    .TableStyle th, .TableStyle td
+    {
+        border: solid #c5c5c5;
+        border-width: 0 1px 1px 0;
+        padding: 3px 3px;
+    }
+
+    .TableStyle th
+    {
+        color: #004669;
+        text-align: right;
+        padding-right: 10px;
+    }
+
+        .TableStyle th span
+        {
+            color: red;
+            vertical-align: middle;
+            font-size: 18px;
+        }
+
+    .TableStyle td
+    {
+        padding: 5px 3px;
+        vertical-align: middle;
+    }
+
+.tdcenter
+{
+    vertical-align: middle;
+    text-align: center;
+}
+
+.TableStyle input, select
+{
+    width: 130px;
+}
+
+.TableStyle input[type=checkbox]
+{
+    width:20px;
+}
+.TableStyle input[type=radio]
+{
+    width:20px;
+}
+
+
+.TablePrintStyle{
+    width: 100%;
+    border-collapse: collapse;
+}
+    .TablePrintStyle th, .TablePrintStyle td
+    {
+        border: 0;
+        border-width: 0 1px 1px 0;
+        padding: 3px 3px;
+    }

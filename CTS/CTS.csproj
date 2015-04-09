@@ -155,6 +155,7 @@
     <Compile Include="Common\ExceptionFilter.cs" />
     <Compile Include="Common\Printer.cs" />
     <Compile Include="Common\PrintInvoice.cs" />
+    <Compile Include="Common\ZPLPrint.cs" />
     <Compile Include="Dto\SendQueryDto.cs" />
     <Compile Include="Migrations\201502030114134_init.cs" />
     <Compile Include="Migrations\201502030114134_init.Designer.cs">

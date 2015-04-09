@@ -63,13 +63,9 @@
     <Compile Include="EntityConfigurationBase.cs" />
     <Compile Include="ETVSContext.cs" />
     <Compile Include="IEntityMapper.cs" />
-    <Compile Include="Migrations\201503230832430_init.cs" />
-    <Compile Include="Migrations\201503230832430_init.Designer.cs">
-      <DependentUpon>201503230832430_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504030948546_2.cs" />
-    <Compile Include="Migrations\201504030948546_2.Designer.cs">
-      <DependentUpon>201504030948546_2.cs</DependentUpon>
+    <Compile Include="Migrations\201504081306508_init.cs" />
+    <Compile Include="Migrations\201504081306508_init.Designer.cs">
+      <DependentUpon>201504081306508_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -87,13 +83,14 @@
       <Project>{95218538-693a-47ab-ad1d-aa4556a304ba}</Project>
       <Name>Framework.Entity.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Framework.Enums\Framework.Enums.csproj">
+      <Project>{1d9ca2d6-344a-4124-901d-c9b7c77aff04}</Project>
+      <Name>Framework.Enums</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201503230832430_init.resx">
-      <DependentUpon>201503230832430_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504030948546_2.resx">
-      <DependentUpon>201504030948546_2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201504081306508_init.resx">
+      <DependentUpon>201504081306508_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

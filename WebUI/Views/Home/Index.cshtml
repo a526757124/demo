@@ -1,0 +1,102 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<body class="easyui-layout">
+    <div data-options="region:'north',split:true" style="height:100px; background:#0b9196;vertical-align:middle;">
+        <h1>欢迎使用ETVS系统</h1>
+    </div>
+    <div data-options="region:'south',split:true" style="height:50px;">
+    </div>
+    <div data-options="region:'west',title:'ETVS导航',split:true" style="width: 200px; background: #e5eaee;">
+        <div id="meun" class="easyui-accordion" fit="true" style="background: #e5eaee;">
+            <div title="凭证中心" style=" background: #e5eaee;">
+                <ul id="ztree_1" class="menutree ztree" style="width:120px; overflow:auto;"></ul>
+            </div>
+            <div title="报表管理" style=" background: #e5eaee;">
+                <ul id="ztree_2" class="menutree ztree" style="width:120px; overflow:auto;"></ul>
+            </div>
+            <div title="系统管理" style=" background: #e5eaee;">
+                <ul id="ztree_4" class="menutree ztree" style="width:120px; overflow:auto;"></ul>
+            </div>
+        </div>
+    </div>
+    <div data-options="region:'center',title:'欢迎使用CTS系统'" style="padding:0px;background:#eee;">
+        <div id="globalTabsNav" class="easyui-tabs" fit="true">
+        </div>
+    </div>
+    <script>
+        $(function () {
+            var setting = {
+                data: {
+                    simpleData: {
+                        enable: true
+                    }
+                },
+                callback: {
+                    onClick: treeClick
+                }
+            };
+            var data_1 = [
+                    { id: 1, pId: 0, name: "凭证管理", link: '@Url.Action("Index", "Receipt", new { area = "ReceiptManagement" })' }
+
+            ];
+            var data_2 = [
+            ];
+            var data_4 = [
+                    { id: 1, pId: 0, name: "公司管理", link: '@Url.Action("Index", "CompanyManagement")' },
+                    { id: 1, pId: 0, name: "用户管理", link: '@Url.Action("Index","UserManagement")' },
+                    { id: 1, pId: 0, name: "会计科目管理", link: '@Url.Action("Index","SubjectManagement")' },
+            ];
+            $.fn.zTree.init($("#ztree_1"), setting, data_1);
+            $.fn.zTree.init($("#ztree_2"), setting, data_2);
+            $.fn.zTree.init($("#ztree_4"), setting, data_4);
+            //$.fn.zTree.init(t, setting, zNodes);
+
+            function treeClick(event, treeId, treeNode, clickFlag) {
+                var t = $("#globalTabsNav").tabs("tabs");
+                //在于6个Tab时从第一个开始关闭
+                if (t.length > 6) {
+                    $("#globalTabsNav").tabs("close", $(t[1]).panel('options').tab.text());
+                }
+                //if ($("#globalTreeNav").tree("isLeaf", treeNode.url)) {
+                //如果点击的是子节点则判断选项卡是否已经存在，如果存在则选中，反之则打开
+                if ($("#globalTabsNav").tabs("exists", treeNode.name)) {
+                    $("#globalTabsNav").tabs("select", treeNode.name);
+                } else {
+                    var content = createFrame(treeNode.link);
+                    $("#globalTabsNav").tabs("add", {
+                        title: treeNode.name,
+                        iconCls: treeNode.iconCls,
+                        //href: treeNode.link,
+                        closable: true,
+                        cache: false,
+                        content: content,
+                        closable: true
+                    });
+                }
+                return true;
+                //} else {
+                //    return false;
+                //}
+            }
+
+            //创建iframe
+            function createFrame(url) {
+                var s = '<iframe scrolling="auto" frameborder="0"  src="' + url + '" style="width:100%;height:99%;"></iframe>';
+                return s;
+            }
+
+            $("#globalTabsNav").tabs("add", {
+                title: "首页",
+                selected: true,
+                closable: false,
+                cache: false,
+                iconCls: "icon-home",
+                //content: createFrame("Home/Default")
+                href: "Home/Default"
+
+            });
+        });
+
+    </script>
+</body>

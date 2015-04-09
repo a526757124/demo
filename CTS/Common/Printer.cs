@@ -26,23 +26,25 @@ namespace CTS.Common
 
             StringBuilder sb = new StringBuilder();
             sb.Append("     快递领取信息\n");
-            sb.Append("**********************************************\n");
+            sb.Append("********************************\n");
             sb.AppendFormat("客户名称: {0}\n", receipt.CustomerName);
             sb.AppendFormat("客户电话: {0}\n", receipt.CustomerPhone);
-            sb.Append("**********************************************\n");
+            sb.Append("********************************\n");
             sb.Append("快递公司        数量\n");
             sb.Append("\n");
             foreach (var item in list.GroupBy(g => g.BelongCompany))
             {
                 sb.AppendFormat("{0}         {1}件\n", item.Key.CourierName, item.Count());
             }
-            sb.Append("**********************************************\n");
+            sb.Append("********************************\n");
             sb.Append("\n客户签字: \n");
-            sb.Append("\n**********************************************\n");
+            sb.Append("\n********************************\n");
             sb.AppendFormat("\n      {0}\n", DateTime.Now.ToString("yyyy-MM-dd hh:mm"));
             sb.Append("     欢迎光临快递收发点 \n");
-            Print(sb.ToString());
-            PrintPage(sb.ToString());
+            sb.Append("\n\n\n");
+            new ZPLPrint().ZPL_Print(sb.ToString());
+            //Print(sb.ToString());
+            //PrintPage(sb.ToString());
         }
         /// <summary>
         /// 设置PrintDocument 的相关属性

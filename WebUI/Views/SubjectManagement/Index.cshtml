@@ -1,0 +1,330 @@
+﻿@{
+    ViewBag.Title = "会计科目管理";
+}
+<div class="easyui-layout" fit="true">
+    <div data-options="region:'west',title:'科目类型',split:true" style="width:150px;">
+        <ul id="ztree_subjecttype" class="ztree" style="width:120px; overflow:auto;"></ul>
+    </div>
+    <div data-options="region:'center',title:'会计科目管理'" style="padding:0px;background:#eee;">
+        <table id="subject_tg">
+            <thead>
+                <tr>
+                    <th data-options="field:'Code'" width="150">科目代码</th>
+                    <th data-options="field:'Name'" width="180">科目名称</th>
+                    <th data-options="field:'CategoryName'" width="80">科目类别</th>
+                    <th data-options="field:'BalanceDirection',formatter:searchSubjectViewModel.BalanceDirectionColumnFormatter" width="80">余额方向</th>
+                    <th data-options="field:'MnemonicCode'" width="80">助记码</th>
+                    <th data-options="field:'op',formatter:searchSubjectViewModel.opColumnFormatter" align="center" width="80">操作</th>
+                </tr>
+            </thead>
+        </table>
+        <div id="subject_tb">
+            <a href="#" id="subject_tb_add" class="easyui-linkbutton" data-options="plain:true">添加</a>
+            <a href="#" id="subject_tb_edit" class="easyui-linkbutton" data-options="plain:true">修改</a>
+            <a href="#" id="subject_tb_delete" class="easyui-linkbutton" data-options="plain:true">删除</a>
+            <form id="subject_tb_form">
+                <input type="hidden" id="subject_tb_form_type" name="type" />
+            </form>
+        </div>
+        <div id="subject_add" title="添加会计科目" style="width: 450px; height: 300px;">
+            <form id="subject_form" method="post">
+                <input type="hidden" name="Type.Id" />
+                <input type="hidden" name="ParentSubject.Id" />
+                <table class="TableStyle">
+                    <tr>
+                        <th>
+                            <label for="Code">科目代码:</label>
+                        </th>
+                        <td>
+                            <input class="easyui-validatebox easyui-textbox" type="text" name="Code" data-options="required:true,novalidate:true" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="MnemonicCode">助记码:</label>
+                        </th>
+                        <td>
+                            <input class="easyui-validatebox easyui-textbox" type="text" name="MnemonicCode" data-options="required:true,novalidate:true" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="Name">科目名称:</label>
+                        </th>
+                        <td >
+                            <input class="easyui-validatebox easyui-textbox" type="text" name="Name" data-options="required:true,novalidate:true" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="Category.Id">科目类别:</label>
+                        </th>
+                        <td>
+                            <select style="width:135px;" name="Category.Id"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="BalanceDirection">余额方向:</label>
+                        </th>
+                        <td>
+                            <select id="BalanceDirection" style="width:135px;"  name="BalanceDirection">
+                                <option value="0">借方</option>
+                                <option value="1">贷方</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div id="subject_edit" title="修改会计科目" style="width: 450px; height: 300px;">
+            <form id="subject_edit_form" method="post">
+                <input type="hidden" name="Id" />
+                <input type="hidden" name="Type.Id" />
+                <input type="hidden" name="ParentSubject.Id" />
+                <table class="TableStyle">
+                    <tr>
+                        <th>
+                            <label for="Code">科目代码:</label>
+                        </th>
+                        <td>
+                            <input class="easyui-validatebox easyui-textbox" type="text" name="Code" data-options="required:true,novalidate:true" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="MnemonicCode">助记码:</label>
+                        </th>
+                        <td>
+                            <input class="easyui-validatebox easyui-textbox" type="text" name="MnemonicCode" data-options="required:true,novalidate:true" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="Name">科目名称:</label>
+                        </th>
+                        <td>
+                            <input class="easyui-validatebox easyui-textbox" type="text" name="Name" data-options="required:true,novalidate:true" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="Category.Id">科目类别:</label>
+                        </th>
+                        <td>
+                            <select style="width:135px;" name="Category.Id"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            <label for="BalanceDirection">余额方向:</label>
+                        </th>
+                        <td>
+                            <select id="BalanceDirection" style="width:135px;" name="BalanceDirection">
+                                <option value="0">借方</option>
+                                <option value="1">贷方</option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        searchSubjectViewModel = {
+            init: function () {
+
+                var setting = {
+                    data: {
+                        simpleData: {
+                            enable: true
+                        }
+                    },
+                    callback: {
+                        onClick: searchSubjectViewModel.treeClick
+                    }
+                };
+                cashbag.services.post('@Url.Action("GetSubjectTypeTreeList")', {}, function (data) {
+                    var treeObj = $.fn.zTree.init($("#ztree_subjecttype"), setting, data);
+                    //var nodes = treeObj.getNodes();
+                    //if (nodes.length > 0) {
+                    //    treeObj.selectNode(nodes[0]);
+                    //}
+                });
+
+                $('#subject_tg').treegrid({
+                    idField: 'Id',
+                    treeField: 'Code',
+                    toolbar: '#subject_tb',
+                    fit: true,
+                    singleSelect: true,
+                    onLoadSuccess: function (row, data) {
+                        $('#subject_tg').treegrid('collapseAll');
+                    },
+                    loader: function (param, sucess) {
+                        var json = $('#subject_tb_form').form('serialize');
+                        cashbag.services.post('@Url.Action("GetTreeGridList")', json, sucess, { nuload: true });
+                    }
+                });
+                $("#subject_form [name='BalanceDirection']").combobox({
+                    panelHeight: 100,
+                    editable: false,
+                });
+                $("#subject_form [name='Category.Id']").combobox({
+                    url: '@Url.Action("GetComboboxList")',
+                    panelHeight: 100,
+                    valueField: 'id',
+                    textField: 'text',
+                    editable: false,
+                    onChange: function (newValue, oldValue) {
+                        cashbag.services.post('@Url.Action("GetSubjectCategoryBalanceDirection")', {
+                            id: newValue
+                        }, function (data) {
+                            $("#subject_form [comboname='BalanceDirection']").combobox('setValue', data);
+                        }, { nuload: true });
+                    }
+                });
+                $("#subject_edit_form [name='BalanceDirection']").combobox({
+                    panelHeight: 100,
+                    editable: false,
+                });
+                $("#subject_edit_form [name='Category.Id']").combobox({
+                    url: '@Url.Action("GetComboboxList")',
+                    panelHeight: 100,
+                    valueField: 'id',
+                    textField: 'text',
+                    editable: false,
+                    onChange: function (newValue, oldValue) {
+                        cashbag.services.post('@Url.Action("GetSubjectCategoryBalanceDirection")', {
+                            id: newValue
+                        }, function (data) {
+                            $("#subject_edit_form [comboname='BalanceDirection']").combobox('setValue', data);
+                        }, { nuload: true });
+                    }
+                });
+                $("#subject_add").dialog({
+                    modal: true,
+                    closed: true,
+                    buttons: [{
+                        text: '保存继续录入',
+                        handler: function () {
+                            searchSubjectViewModel.subject_add();
+                        }
+                    }, {
+                        text: '保存并关闭',
+                        handler: function () {
+                            searchSubjectViewModel.subject_add(true);
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#subject_add').dialog('close')
+                        }
+                    }]
+                });
+                $("#subject_edit").dialog({
+                    modal: true,
+                    closed: true,
+                    buttons: [{
+                        text: '保存并关闭',
+                        handler: function () {
+                            searchSubjectViewModel.subject_edit();
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#subject_edit').dialog('close')
+                        }
+                    }]
+                });
+                $("#subject_tb_add").click(function () {
+                    searchSubjectViewModel.subject_openadd();
+                });
+                $("#subject_tb_edit").click(function () {
+                    searchSubjectViewModel.subject_openedit();
+                });
+            },
+            search: function () {
+                $('#subject_tg').treegrid('load');
+            },
+            treeClick: function (event, treeId, treeNode, clickFlag) {
+                $("#subject_tb_form_type").val(treeNode.id);
+                $('#subject_tg').treegrid('load');
+            },
+            BalanceDirectionColumnFormatter: function (value, rowData, rowIndex) {
+                if (value === 1) {
+                    return "贷方";
+                }
+                return "借方";
+            },
+            opColumnFormatter: function (value, rowData, rowIndex) {
+                var html = "";
+                html += "<a href='javascript:void(0)' style='color:blue;' onclick='searchSubjectViewModel.subject_openadd(" + rowData.Id + ");' >新增</a>"
+                return html;
+            },
+            subject_openadd: function (id) {
+                var treeObj = $.fn.zTree.getZTreeObj("ztree_subjecttype");
+                var nodes = treeObj.getSelectedNodes();
+                if (nodes.length <= 0) {
+                    $.messager.alert('提示', "请选择一个科目类型");
+                    return;
+                }
+                $("#subject_form [name='Type.Id']").val(nodes[0].id);
+                $("#subject_form [name='ParentSubject.Id']").val('');
+                $("#subject_form [comboname='Category.Id']").combo('enable');
+                if (id) {
+                    cashbag.services.post('@Url.Action("GetSubjectById")', {
+                        id: id
+                    }, function (data) {
+                        $("#subject_form [comboname='Category.Id']").combobox('setValue', data.Category.Id);
+                        $("#subject_form [comboname='Category.Id']").combo('readonly');
+                        $("#subject_form [name='ParentSubject.Id']").val(data.Id);
+
+                    }, { nuload: true });
+                }
+                $('#subject_form').form('reset');
+                $('#subject_add').window('open');
+            },
+            subject_openedit: function () {
+                $('#subject_edit_form').form('reset');
+                var row = $('#subject_tg').treegrid("getSelected");
+                if (!row) {
+                    $.messager.alert('提示', '请选择一条数据');
+                    return;
+                }
+                cashbag.services.post('@Url.Action("GetSubjectById")', {
+                    id: row.Id
+                }, function (data) {
+                    $("#subject_edit_form").form('loadData', data);
+                });
+                $('#subject_edit').window('open');
+            },
+            subject_add: function (c) {
+                $('#subject_form').form('submitData', {
+                    url: '@Url.Action("Add")',
+                    success: function (data) {
+                        searchSubjectViewModel.search();
+                        $('#subject_form').form('reset');
+                        if (c) {
+                            $('#subject_form').dialog('close')
+                        }
+                    }
+                });
+            },
+            subject_edit: function () {
+                $('#subject_edit_form').form('submitData', {
+                    successAlert: false,
+                    url: '@Url.Action("Edit")',
+                    success: function (data) {
+                        searchSubjectViewModel.search();
+                        $('#subject_edit').dialog('close');
+                    }
+                });
+            }
+        }
+        searchSubjectViewModel.init();
+    })
+</script>

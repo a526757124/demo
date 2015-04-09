@@ -1,0 +1,256 @@
+﻿@{
+    ViewBag.Title = "公司管理";
+}
+<table id="company_dg">
+    <thead>
+        <tr>
+            <th data-options="field:'CompanyName',width:80">名称</th>
+            <th data-options="field:'CompanyContact',width:85">联系人</th>
+            <th data-options="field:'CompanyPhone',width:120">联系电话</th>
+            <th data-options="field:'CompanyAddress',width:300">地址</th>
+        </tr>
+    </thead>
+</table>
+<div id="company_tb">
+    <a href="#" id="company_tb_add" class="easyui-linkbutton" data-options="plain:true">添加</a>
+    <a href="#" id="company_tb_edit" class="easyui-linkbutton" data-options="plain:true">修改</a>
+    <a href="#" id="company_tb_delete" class="easyui-linkbutton" data-options="plain:true">删除</a>
+    <a href="#" id="company_tb_resetPassword" class="easyui-linkbutton" data-options="plain:true">重置密码</a>
+    <br />
+    <form id="company_tb_form" class="autoSearchKey" method="post" style="background:#fff">
+        <table>
+            <tr>
+                <td style="padding-left:10px;">
+                    <label for="CompanyName">名称:</label>
+                    <input class="easyui-textbox" type="text" style="width:110px;" name="CompanyName" />
+                </td>
+                <td style="padding-left:10px;">
+                    <label for="CompanyContact">联系人:</label>
+                    <input class=" easyui-textbox" type="text" style="width:110px;" name="CompanyContact" />
+                </td>
+                <td style="padding-left:10px;">
+                    <a href="#" id="company_tb_form_search" class="easyui-linkbutton">查&nbsp;&nbsp;询</a>
+                    <a href="#" id="company_tb_form_clear" class="easyui-linkbutton">清&nbsp;&nbsp;空</a>
+                </td>
+            </tr>
+        </table>
+
+
+    </form>
+</div>
+<div id="company_add" title="添加公司" style="width: 400px; height: 250px;">
+    <form id="company_form" method="post">
+        <table class="TableStyle">
+            <tr>
+                <th>
+                    <label for="CompanyName">名称:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CompanyName" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CompanyContact">联系人:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CompanyContact" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CompanyPhone">联系电话:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CompanyPhone" data-options="novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CompanyAddress">地址:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CompanyAddress" data-options="novalidate:true" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="company_edit" title="修改用户数据" style="width: 400px; height: 250px;">
+    <form id="company_edit_form" method="post">
+        <input name="Id" type="hidden" />
+        <table class="TableStyle">
+            <tr>
+                <th>
+                    <label for="CompanyName">名称:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CompanyName" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CompanyContact">联系人:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CompanyContact" data-options="required:true,novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CompanyPhone">联系电话:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CompanyPhone" data-options="novalidate:true" />
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    <label for="CompanyAddress">地址:</label>
+                </th>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" type="text" name="CompanyAddress" data-options="novalidate:true" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+<script>
+    $(function () {
+        searchCompanyViewModel = {
+            $datagrid: null,
+
+            init: function () {
+                $('.easyui-textbox').textbox();
+                $('.easyui-numberbox').numberbox();
+                $('.autoSearchKey input').keypress(function (event) {
+                    if (event.keyCode == 13) {
+                        searchCompanyViewModel.search();
+                    }
+                })
+                $("#company_add").dialog({
+                    modal: true,
+                    closed: true,
+                    buttons: [{
+                        text: '保存继续录入',
+                        handler: function () {
+                            searchCompanyViewModel.company_add();
+                        }
+                    }, {
+                        text: '保存并关闭',
+                        handler: function () {
+                            searchCompanyViewModel.company_add(true);
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#company_add').dialog('close')
+                        }
+                    }]
+                });
+                $("#company_edit").dialog({
+                    modal: true,
+                    closed: true,
+                    buttons: [{
+                        text: '保存',
+                        handler: function () {
+                            searchCompanyViewModel.company_edit();
+                        }
+                    }, {
+                        text: '关闭',
+                        handler: function () {
+                            $('#company_edit').dialog('close');
+                        }
+                    }]
+                });
+
+                searchCompanyViewModel.$datagrid = $("#company_dg").datagrid({
+                    fit: true,
+                    //fitColumns:true,
+                    singleSelect: true,
+                    toolbar: '#company_tb',
+                    pagination: true,
+                    pageSize: 10,
+                    loader: function (param, sucess) {
+                        var json = $('#company_tb_form').form('serialize');
+                        cashbag.services.post('@Url.Action("List")', {
+                            queryCond: {
+                                PageNo: param.page,
+                                PageSize: param.rows,
+                                QueryDto: json
+                            }
+                        }, sucess, {nuload:true});
+                    }
+                });
+
+                $("#company_tb_add").click(function () {
+                    $('#company_form').form('reset');
+                    $('#company_add').window('open');
+                });
+                $("#company_tb_edit").click(function () {
+                    $('#company_edit_form').form('reset');
+                    var row = searchCompanyViewModel.$datagrid.datagrid("getSelected");
+                    if (!row) {
+                        $.messager.alert('提示', '请选择一条数据');
+                        return;
+                    }
+                    cashbag.services.post('@Url.Action("GetById")', { id: row.Id }, function (data) {
+                        $("#company_edit_form").form('loadData', data);
+                        $('#company_edit').window('open');
+                    });
+                });
+                $("#company_tb_delete").click(function () {
+                    var row = searchCompanyViewModel.$datagrid.datagrid("getSelected");
+                    if (!row) {
+                        $.messager.alert('提示', '请选择一条数据');
+                        return;
+                    }
+                    $.messager.confirm('确认', '您确认想要删除记录吗？', function (r) {
+                        if (r) {
+                            cashbag.services.post('@Url.Action("Delete")', { id: row.Id }, function (data) {
+                                searchCompanyViewModel.search();
+                            });
+                        }
+                    });
+                })
+                $("#company_tb_form_search").click(function () {
+                    searchCompanyViewModel.search();
+                });
+                $("#company_tb_form_clear").click(function () {
+                    $('#company_tb_form').form('reset');
+                    searchCompanyViewModel.search();
+                });
+                $('.easyui-validatebox').bind('blur', function () {
+                    $(this).validatebox('enableValidation').validatebox('validate');
+                });
+            },
+            search: function () {
+                this.$datagrid.datagrid("load");
+            },
+            company_add: function (c) {
+                $('#company_form').form('submitData', {
+                    url: '@Url.Action("Add")',
+                    success: function (data) {
+                        searchCompanyViewModel.search();
+                        $('#company_form').form('reset');
+                        if (c) {
+                            $('#company_add').dialog('close')
+                        }
+                    }
+                });
+            },
+            company_edit: function () {
+                $('#company_edit_form').form('submitData', {
+                    url: '@Url.Action("Edit")',
+                    success: function (data) {
+                        searchCompanyViewModel.search();
+                        $('#company_edit').dialog('close')
+                    }
+                });
+            }
+
+        }
+        searchCompanyViewModel.init();
+    })
+</script>

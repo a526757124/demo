@@ -43,8 +43,13 @@
     <Compile Include="Data\GuidHelper.cs" />
     <Compile Include="Data\OperationResult.cs" />
     <Compile Include="Data\OperationResultType.cs" />
+    <Compile Include="DEncrypt\DecryptEncrypt.cs" />
+    <Compile Include="DEncrypt\Encrypt.cs" />
+    <Compile Include="Exceptions\BusinessException.cs" />
+    <Compile Include="Paged\PagedParam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -19,6 +19,7 @@ namespace ETVS.Framework.Entity.Core
         {
             IsDeleted = false;
             CreatedTime = DateTime.Now;
+            RowVersion = CreatedTime;
             //Timestamp = DateTime.Now.AddMilliseconds(DateTime.Now.Millisecond);
         }
 
