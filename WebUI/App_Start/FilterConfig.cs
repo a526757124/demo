@@ -10,6 +10,7 @@ namespace WebUI
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new ExceptionFilter());
+            filters.Add(new AuthorizationFilter());
         }
     }
 }

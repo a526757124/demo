@@ -152,6 +152,7 @@
     <Compile Include="Common\BaseController.cs" />
     <Compile Include="Controllers\CompanyManagementController.cs" />
     <Compile Include="Controllers\SubjectManagementController.cs" />
+    <Compile Include="Filter\AuthorizationFilter.cs" />
     <Compile Include="Filter\ExceptionFilter.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UserManagementController.cs" />
@@ -220,6 +221,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="Areas\VoucherManagement\Views\Web.config" />
     <Content Include="Areas\VoucherManagement\Views\Voucher\Index.cshtml" />
+    <Content Include="Areas\VoucherManagement\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\VoucherManagement\Views\Voucher\AddVoucherDetail.cshtml" />
+    <Content Include="Areas\VoucherManagement\Views\Shared\_Layout.cshtml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Scripts\easyui.form.extend.load.js" />
     <Content Include="Scripts\easyui.form.extend.submit.js" />
@@ -253,6 +257,7 @@
     <Content Include="Scripts\jquery-easyui-1.4.1\extension\jquery-easyui-portal\datagrid_data.json" />
     <Content Include="Scripts\jquery-easyui-1.4.1\extension\jquery-easyui-rtl\datagrid_data1.json" />
     <Content Include="Scripts\jquery-easyui-1.4.1\extension\jquery-easyui-rtl\tree_data1.json" />
+    <Content Include="Scripts\jquery-easyui-1.4.2\datagrid-detailview.js" />
     <Content Include="Scripts\jquery-easyui-1.4.2\demo\accordion\datagrid_data1.json" />
     <Content Include="Scripts\jquery-easyui-1.4.2\demo\combobox\combobox_data1.json" />
     <Content Include="Scripts\jquery-easyui-1.4.2\demo\combobox\combobox_data2.json" />
@@ -2565,7 +2570,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\VoucherManagement\Models\" />
-    <Folder Include="Areas\VoucherManagement\Views\Shared\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

@@ -11,8 +11,8 @@ namespace Repositories.Configuration
     {
         public VoucherMap()
         {
-            this.Ignore(p => p.CreditTotalAmount);
-            this.Ignore(p => p.DebtorTotalAmount);
+            //this.Ignore(p => p.CreditTotalAmount);
+            //this.Ignore(p => p.DebtorTotalAmount);
             this.Property(p => p.VoucherCode).HasMaxLength(20);
             this.HasMany(p => p.VoucherDetails).WithRequired();
             this.HasRequired(p => p.BelongCompany).WithMany();

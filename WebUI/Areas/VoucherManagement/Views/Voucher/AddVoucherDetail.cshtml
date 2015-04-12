@@ -1,0 +1,261 @@
+﻿<table id="voucherDetail_dg"></table>
+<div id="addVoucherDetail_tb" style="height:auto">
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="append()">添加</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="removeit()">删除</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="accept()">保存</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="reject()">还原</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" data-options="plain:true" onclick="getChanges()">GetChanges</a>
+    <br />
+    <form id="voucherDetail_tb_form" class="autoSearchKey" method="post" style="background:#fff">
+        <input name="Id" type="hidden" />
+        <table>
+            <tr>
+                <td>
+                    <label for="VoucherDate">凭证时间:</label>
+                </td>
+                <td>
+                    <input class="Wdate" type="text" name="VoucherDate" style="width:100px;" value="@DateTime.Now.ToString("yyyy-MM-dd")" onclick="WdatePicker({ dateFmt: 'yyyy-MM-dd' })">
+                </td>
+                <td>
+                    <label for="Word">字:</label>
+                </td>
+                <td>
+                    <select class="easyui-validatebox" style="width:50px;" id="Word" name="Word" data-options="required:true,novalidate:true"></select>
+                </td>
+                <td>
+                    <label for="VoucherCode">号:</label>
+                </td>
+                <td>
+                    <input class="easyui-validatebox easyui-textbox" style="width:35px;" type="text" name="VoucherCode" data-options="required:true,novalidate:true" />
+                </td>
+
+            </tr>
+        </table>
+    </form>
+</div>
+<script type="text/javascript">
+    $(function () {
+        cashbag.services.post('@Url.Action("GetVoucherWordComboboxList")', {}, function (data) {
+            $("#voucherDetail_tb_form [name='Word']").combobox({
+                data: data,
+                panelHeight: 40,
+                valueField: 'id',
+                textField: 'text',
+                editable: false
+            });
+        }, { nuload: true });
+    })
+    function initdg(data) {
+        $('#voucherDetail_dg').datagrid({
+            data: data,
+            fit: true,
+            singleSelect: true,
+            //onClickCell: onClickCell,
+            onDblClickCell: onDblClickCell,
+            toolbar: '#addVoucherDetail_tb',
+            fit: true,
+            columns: [[
+                { field: 'Id', title: '编号', hidden: true },
+                {
+                    field: 'Digest', title: '摘要', editor: {
+                        type: 'textbox',
+                        options: {
+                            multiline: true,
+                            required: true,
+                            height: 40
+                        }
+                    }, width: 200
+                },
+                {
+                    field: 'SubjectId', title: '会计科目', editor: {
+                        type: 'combobox',
+                        options: {
+                            url: '@Url.Action("GetSubjectComboboxList")',
+                            valueField: 'Id',
+                            textField: 'Name',
+                            panelHeight: 80,
+                            required: true,
+                            @*onChange: function (newValue, oldValue) {
+                                var self = this;
+                                cashbag.services.post('@Url.Action("GetSubjectComboboxList")', { query: newValue }, function (data) {
+                                    $(self).combobox('loadData', data);
+                                }, { nuload: true });
+                            },*@
+                            //formatter: function (row) {
+                            //    var s = '<span style="color:blue">' + row.Code + '</span> | ' +
+                            //            '<span style="color:#888">' + row.Name + '</span>';
+                            //    return s;
+                            //}
+                        }
+                    }, width: 150,
+                    formatter: function (value, rowData, rowIndex) {
+                        if (rowData) {
+                            if (rowData.Subject) {
+                                return rowData.Subject.Name;
+                            }
+                        }
+
+                    }
+                },
+    {
+        field: 'DebtorAmount', title: '借方金额', editor: {
+            type: 'numberbox',
+            options: {
+                required: true,
+                novalidate: true,
+                precision: 2,
+                groupSeparator: ',',
+                decimalSeparator: '.',
+                prefix: '￥',
+                onChange: function () {
+
+                }
+            }
+        }, width: 100
+    },
+    {
+        field: 'CreditAmount', title: '贷方金额', editor: {
+            type: 'numberbox',
+            options: {
+                required: true,
+                novalidate: true,
+                precision: 2,
+                groupSeparator: ',',
+                decimalSeparator: '.',
+                prefix: '￥'
+            }
+        }, width: 100
+    }
+            ]]
+        })
+    }
+    function initEditdg(id) {
+        editIndex = undefined;
+        $("#Word").combobox("setValue", 1);
+        if (id) {
+            cashbag.services.post('@Url.Action("GetVoucherDetailsList")', { id: id }, function (data) {
+                $("#voucherDetail_tb_form [name='id']").val(id);
+                initdg(data);
+            });
+        }
+        else {
+            initdg({ rows: [], total: 0 });
+        }
+
+    }
+    var editIndex = undefined;
+    function endEditing() {
+        if (editIndex == undefined) { return true }
+        if ($('#voucherDetail_dg').datagrid('validateRow', editIndex)) {
+            var ed = $('#voucherDetail_dg').datagrid('getEditor', { index: editIndex, field: 'SubjectId' });
+            //$(ed.target).combobox('setValue', $(ed.target).combobox('getValue'));
+            if ($('#voucherDetail_dg').datagrid('getRows')[editIndex]['Subject']) {
+                $('#voucherDetail_dg').datagrid('getRows')[editIndex]['Subject'].Id = $(ed.target).combobox('getValue');
+                $('#voucherDetail_dg').datagrid('getRows')[editIndex]['Subject'].Name = $(ed.target).combobox('getText');
+            }
+            
+            var ed1 = $('#voucherDetail_dg').datagrid('getEditor', { index: editIndex, field: 'DebtorAmount' });
+            var debtoramount = parseFloat($(ed1.target).numberbox('getValue'));
+            var ed2 = $('#voucherDetail_dg').datagrid('getEditor', { index: editIndex, field: 'CreditAmount' });
+            var creditamount = parseFloat($(ed2.target).numberbox('getValue'));
+            if (!debtoramount && !creditamount) {
+                $.messager.alert('提示', '借方与贷方金额必须只能填写一个');
+                return;
+            }
+            if (debtoramount && creditamount) {
+                $.messager.alert('提示', '借方与贷方金额必须只能填写一个');
+                return;
+            }
+            $('#voucherDetail_dg').datagrid('endEdit', editIndex);
+            editIndex = undefined;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function onDblClickCell(index, field, value) {
+        if (editIndex != index) {
+            if (endEditing()) {
+                $('#voucherDetail_dg').datagrid('selectRow', index)
+                        .datagrid('beginEdit', index);
+                var ed2 = $('#voucherDetail_dg').datagrid('getEditor', { index: index, field: 'SubjectId' });
+                $(ed2.target).combobox('setText', $('#voucherDetail_dg').datagrid('getRows')[index]['Subject'].Name);
+                $(ed2.target).combobox('setValue', $('#voucherDetail_dg').datagrid('getRows')[index]['Subject'].Id);
+
+                var ed1 = $('#voucherDetail_dg').datagrid('getEditor', { index: index, field: field });
+                ($(ed1.target).data('textbox') ? $(ed1.target).textbox('textbox') : $(ed1.target)).focus();
+                editIndex = index;
+            } else {
+                $('#voucherDetail_dg').datagrid('selectRow', editIndex);
+            }
+        }
+    }
+    function append() {
+        if (endEditing()) {
+            $('#voucherDetail_dg').datagrid('appendRow', {
+                Subject: {
+                    Id: 0,
+                    Name: ''
+                }
+            });
+            editIndex = $('#voucherDetail_dg').datagrid('getRows').length - 1;
+            $('#voucherDetail_dg').datagrid('selectRow', editIndex)
+                    .datagrid('beginEdit', editIndex);
+            //synchCategory(editIndex, {});
+        }
+    }
+    function removeit() {
+        if (editIndex == undefined) { return }
+        $('#voucherDetail_dg').datagrid('cancelEdit', editIndex)
+                .datagrid('deleteRow', editIndex);
+        editIndex = undefined;
+    }
+    function accept() {
+        var isValid = $("#voucherDetail_tb_form").form('enableValidation').form('validate');
+        if (!isValid) {
+            return;
+        }
+        if (endEditing()) {
+            var rows = $('#voucherDetail_dg').datagrid('getRows');
+            var json = $("#voucherDetail_tb_form").form('serialize');
+            console.log(json);
+            console.log(rows);
+            var data = {
+                Id: json.Id,
+                Word: {
+                    Id: json.Word
+                },
+                VoucherCode: json.VoucherCode,
+                VoucherDate: json.VoucherDate,
+                VoucherDetails: rows
+            }
+            var de = 0;
+            var cr = 0;
+            for (var i = 0; i < rows.length; i++) {
+                var d = parseFloat(rows[i].DebtorAmount)
+                de += d || 0;
+                var c = parseFloat(rows[i].CreditAmount);
+                cr += c || 0;
+            }
+            //if (de === cr) {
+                cashbag.services.post('@Url.Action("AddUpdate")', { model: data }, function (data) {
+                    //$('#voucherDetail_dg').datagrid('acceptChanges');
+                    voucherViewModel.search();
+                    $('#voucher_add').dialog('close');
+                });
+            //} else {
+            //    $.messager.alert('提示', '借贷金额不平衡');
+            //}
+
+        }
+    }
+    function reject() {
+        $('#voucherDetail_dg').datagrid('rejectChanges');
+        editIndex = undefined;
+    }
+    function getChanges() {
+        var rows = $('#voucherDetail_dg').datagrid('getChanges');
+        alert(rows.length + ' rows are changed!');
+    }
+
+</script>

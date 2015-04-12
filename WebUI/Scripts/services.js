@@ -35,6 +35,12 @@ cashbag.services = cashbag.services || {
                     $.messager.alert('提示', data.Content, 'info');
                     success(data);
                 }
+                if (data.Type == "NoLogin") {
+                    $.messager.alert('提示', data.Content, 'info', function () {
+                        top.loginOpen();
+                    });
+                    success(data);
+                }
             },
             error: error || this._functions.error
         });
@@ -46,12 +52,18 @@ cashbag.services = cashbag.services || {
         },
         beforeCall: function (arg) {
             if (!arg.nuload) {
-                $.messager.progress();	// 显示进度条
+                $.messager.progress({
+                    onClose: function(){}
+                });	// 显示进度条
             }
         },
         afterCall: function (arg, data) {
             if (!arg.nuload) {
-                $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                try {
+                    $.messager.progress('close');
+                } catch (e) {
+                    $.messager.alert('错误', e, 'error');
+                }	// 如果提交成功则隐藏进度条
             }
             if (typeof data === "object" && data.RedirectTo)
                 location.href = data.RedirectTo;

@@ -60,6 +60,19 @@ namespace DomainService
                 return express.OrderByDescending(p => p.CreatedTime).ToPagedList(queryCond.PageNo, queryCond.PageSize);
             }
         }
+        public dynamic GetComboboxList()
+        {
+            using (ETVSContext context = new ETVSContext())
+            {
+                var express = context.Companys
+                        .Where(p => !p.IsDeleted);
+                return express.Select(s =>new 
+                {
+                    s.Id,
+                    s.CompanyName
+                }).ToList();
+            }
+        }
         #endregion
 
     }

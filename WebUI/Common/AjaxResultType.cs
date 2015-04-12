@@ -18,6 +18,7 @@ namespace WebUI.Common
         /// <summary>
         /// 错误
         /// </summary>
-        Error
+        Error,
+        NoLogin
     }
 }

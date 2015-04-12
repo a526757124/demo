@@ -49,12 +49,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseService.cs" />
     <Compile Include="CompanyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubjectCategoryService.cs" />
     <Compile Include="SubjectService.cs" />
     <Compile Include="SubjectTypeService.cs" />
     <Compile Include="UserService.cs" />
+    <Compile Include="VoucherService.cs" />
+    <Compile Include="VoucherWordService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DomainModels\DomainModels.csproj">

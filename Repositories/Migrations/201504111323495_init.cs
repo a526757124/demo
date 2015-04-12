@@ -97,6 +97,7 @@ namespace Repositories.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         BillsTotal = c.Int(nullable: false),
                         VoucherCode = c.String(maxLength: 20, storeType: "nvarchar"),
+                        VoucherDate = c.DateTime(nullable: false, precision: 0),
                         Remark = c.String(maxLength: 200, storeType: "nvarchar"),
                         IsDeleted = c.Boolean(nullable: false),
                         CreatedTime = c.DateTime(nullable: false, precision: 0),

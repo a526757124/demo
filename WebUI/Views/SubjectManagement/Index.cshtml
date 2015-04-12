@@ -148,11 +148,7 @@
                     }
                 };
                 cashbag.services.post('@Url.Action("GetSubjectTypeTreeList")', {}, function (data) {
-                    var treeObj = $.fn.zTree.init($("#ztree_subjecttype"), setting, data);
-                    //var nodes = treeObj.getNodes();
-                    //if (nodes.length > 0) {
-                    //    treeObj.selectNode(nodes[0]);
-                    //}
+                    $.fn.zTree.init($("#ztree_subjecttype"), setting, data);
                 });
 
                 $('#subject_tg').treegrid({
@@ -304,12 +300,13 @@
             },
             subject_add: function (c) {
                 $('#subject_form').form('submitData', {
+                    successAlert: false,
                     url: '@Url.Action("Add")',
                     success: function (data) {
                         searchSubjectViewModel.search();
                         $('#subject_form').form('reset');
                         if (c) {
-                            $('#subject_form').dialog('close')
+                            $('#subject_form').dialog('close');
                         }
                     }
                 });

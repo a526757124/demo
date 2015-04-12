@@ -1,3 +1,222 @@
 ﻿@{
     ViewBag.Title = "Index";
 }
+<script src="~/Scripts/jquery-easyui-1.4.2/datagrid-detailview.js"></script>
+<table id="voucher_dg">
+    <thead>
+        <tr>
+            <th data-options="field:'VoucherDate',width:150,formatter:com.DateFormatter">凭证时间</th>
+            <th field="VoucherCode" width="100" formatter="voucherViewModel.voucherCodeColumnFormatter">凭证号</th>
+            <th field="DebtorTotalAmount" align="right" width="80">借方合计</th>
+            <th field="CreditTotalAmount" align="right" width="80">贷方合计</th>
+            <th data-options="field:'CreateUser',width:80,formatter:voucherViewModel.createUserColumnFormatter">录入人</th>
+        </tr>
+    </thead>
+</table>
+<div id="voucher_tb">
+    <a href="#" id="voucher_tb_add" class="easyui-linkbutton" data-options="plain:true">添加凭证</a>
+    <a href="#" id="voucher_tb_edit" class="easyui-linkbutton" data-options="plain:true">修改凭证</a>
+    <a href="#" id="voucher_tb_delete" class="easyui-linkbutton" data-options="plain:true">删除凭证</a>
+    <br />
+    <form id="voucher_tb_form" class="autoSearchKey" method="post" style="background:#fff">
+        <table>
+            <tr>
+                <td style="padding-left:10px;">
+                    <label for="CreatedTimeStart">凭证时间:</label>
+                </td>
+                <td>
+                    <input class="Wdate" type="text" name="VoucherDateStart" style="width:85px;" onclick="WdatePicker()">
+                    -
+                    <input class="Wdate" type="text" name="VoucherDateEnd" style="width:85px;" onclick="WdatePicker()">
+                </td>
+                <td style="padding-left:10px;">
+                    <label for="LoginName">录入人:</label>
+                    <input class=" easyui-textbox" type="text" style="width:110px;" name="LoginName" />
+                </td>
+                <td style="padding-left:10px;">
+                    <a href="#" id="voucher_tb_form_search" class="easyui-linkbutton">查&nbsp;&nbsp;询</a>
+                    <a href="#" id="voucher_tb_form_clear" class="easyui-linkbutton">清&nbsp;&nbsp;空</a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<div id="voucher_add" title="添加凭证" style="width: 600px; height: 400px;">
+    @Html.Partial("AddVoucherDetail")
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        voucherViewModel = {
+            init: function () {
+                $('#voucher_dg').datagrid({
+                    fit: true,
+                    fitColumns: true,
+                    singleSelect: true,
+                    toolbar: '#voucher_tb',
+                    pagination: true,
+                    pageSize: 10,
+                    loader: function (param, sucess) {
+                        var json = $('#voucher_tb_form').form('serialize');
+                        cashbag.services.post('@Url.Action("List")', {
+                            queryCond: {
+                                PageNo: param.page,
+                                PageSize: param.rows,
+                                QueryDto: json
+                            }
+                        }, sucess, { nuload: true });
+                    },
+                    view: detailview,
+                    detailFormatter: function (index, row) {
+                        return '<div style="padding:2px"><table class="ddv"></table></div>';
+                    },
+                    onExpandRow: function (index, row) {
+                        var ddv = $(this).datagrid('getRowDetail', index).find('table.ddv');
+                        ddv.datagrid({
+                            //data: row.VoucherDetails,
+                            fitColumns: true,
+                            singleSelect: true,
+                            rownumbers: true,
+                            loadMsg: '加载中。。。',
+                            height: 'auto',
+                            columns: [[
+                                { field: 'Digest', title: '摘要', width: 280 },
+                                { field: 'Subject', title: '会计科目', formatter: voucherViewModel.SubjectNameColumnFormatter, width: 180, align: 'left' },
+                                { field: 'DebtorAmount', title: '借方金额', width: 100, align: 'right' },
+                                { field: 'CreditAmount', title: '贷方金额', width: 100, align: 'right' }
+                            ]],
+                            loader: function (param, sucess) {
+                                cashbag.services.post('@Url.Action("GetVoucherDetailsList")', {id:row.Id}, sucess, { nuload: true });
+                            },
+                            onResize: function () {
+                                $('#voucher_dg').datagrid('fixDetailRowHeight', index);
+                            },
+                            onLoadSuccess: function () {
+                                setTimeout(function () {
+                                    $('#voucher_dg').datagrid('fixDetailRowHeight', index);
+                                }, 0);
+                            }
+                        });
+                        $('#voucher_dg').datagrid('fixDetailRowHeight', index);
+                    }
+                });
+                voucherViewModel.initAdd(12);
+
+                voucherViewModel.initTool();
+            },
+            search: function () {
+                $('#voucher_dg').datagrid("load");
+            },
+            initTool: function () {
+                $("#voucher_tb_add").click(function () {
+                    voucherViewModel.addOpen();
+                });
+                $("#voucher_tb_edit").click(function () {
+                    voucherViewModel.initEdit();
+                    var row = $('#voucher_dg').datagrid("getSelected");
+                    if (!row) {
+                        $.messager.alert('提示', '请选择一条数据');
+                        return;
+                    }
+                    voucherViewModel.editOpen(row.Id);
+                });
+                $("#voucher_tb_delete").click(function () {
+                    var row = $('#voucher_dg').datagrid("getSelected");
+                    if (!row) {
+                        $.messager.alert('提示', '请选择一条数据');
+                        return;
+                    }
+                    $.messager.confirm('确认', '您确认想要删除记录吗？', function (r) {
+                        if (r) {
+                            cashbag.services.post('@Url.Action("Delete")', { id: row.Id }, function (data) {
+                                voucherViewModel.search();
+                            });
+                        }
+                    });
+                })
+                $("#voucher_tb_form_search").click(function () {
+                    voucherViewModel.search();
+                })
+                $("#voucher_tb_form_clear").click(function () {
+                    $('#voucher_tb_form').form('clear');
+                    voucherViewModel.search();
+                })
+            },
+            voucherCodeColumnFormatter: function (value, rowData, rowIndex) {
+                if (rowData.Word)
+                    return rowData.Word.Name + " " + rowData.VoucherCode;
+                return "";
+            },
+            createUserColumnFormatter: function (value, rowData, rowIndex) {
+                if (rowData.CreateUser)
+                    return rowData.CreateUser.UserName;
+                return "";
+            },
+            SubjectNameColumnFormatter: function (value, rowData, rowIndex) {
+                if (rowData.Subject)
+                    return rowData.Subject.Name;
+                return "";
+            },
+            initAdd: function (winid) {
+                $("#voucher_add").dialog({
+                    modal: true,
+                    closed: true,
+                    buttons: [{
+                        text: '关闭',
+                        handler: function () {
+                            $('#voucher_add').dialog('close')
+                        }
+                    }]
+                });
+                //var win = window.top.document.createElement("div");
+                //win.id="open_window"+winid;
+                //win.style = "padding:0px;";
+                //var title = "添加";
+                //var width = 100;
+                //var height = 100;
+                //var modal = true;
+                //var nextWinId = 1;
+                //window.top.document.body.appendChild(win);
+                //window.top.$(win).window({
+                //    title: title,
+                //    width: 600,
+                //    modal: true,
+                //    shadow: false,
+                //    closed: true,
+                //    height: 400,
+                //    draggable: false,
+                //    zIndex: 999 + nextWinId,
+                //    inline: true,
+                //    content: $("#voucher_add").html(),
+                //    onClose: function () {
+                //        window.setTimeout(function () { $(win).window('destroy', false) }, 0);
+                //    }
+                //})
+                //window.top.$(win).window('open');
+            },
+            addOpen: function () {
+                $('#voucherDetail_tb_form').form('reset');
+                initEditdg();
+                $('#voucher_add').window('open');
+
+                //window.top.$(win).window('open');
+            },
+            initEdit: function () {
+                $("#voucher_add").dialog("setTitle", "修改凭证");
+            },
+            editOpen: function (id) {
+                cashbag.services.post('@Url.Action("GetVoucherById")', { id: id }, function (data) {
+                    $("#voucherDetail_tb_form").form('loadData', data);
+                    $("#voucherDetail_tb_form [name='Word']", data.Word.Name);
+                    initEditdg(id);
+                    $('#voucher_add').window('open');
+                });
+
+
+            }
+        }
+        voucherViewModel.init();
+    });
+
+</script>

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Framework.Service
+namespace Framework.Enums
 {
-    public partial class BaseService<T>
+    public enum SessionEnum
     {
+        LoginUser,
+        OperateCompany
     }
 }

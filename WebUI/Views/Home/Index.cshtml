@@ -2,8 +2,12 @@
     ViewBag.Title = "Index";
 }
 <body class="easyui-layout">
-    <div data-options="region:'north',split:true" style="height:100px; background:#0b9196;vertical-align:middle;">
-        <h1>欢迎使用ETVS系统</h1>
+    <div data-options="region:'north',split:true" style="height:50px; background:#0b9196;vertical-align:middle;">
+
+        <div style="float:left;"><h1>欢迎使用ETVS系统</h1></div>
+        <div style="float:right; margin-right:15px;color:#ff6a00">
+            <h3> 欢迎XX使用本系统,</h3>
+        </div>
     </div>
     <div data-options="region:'south',split:true" style="height:50px;">
     </div>
@@ -23,6 +27,24 @@
     <div data-options="region:'center',title:'欢迎使用CTS系统'" style="padding:0px;background:#eee;">
         <div id="globalTabsNav" class="easyui-tabs" fit="true">
         </div>
+    </div>
+    <div id="winLogin" title="登录" style="width:400px;padding:30px 70px 20px 70px">
+        <form id="login_form" style="padding:10px 20px 10px 40px;" method="post">
+            <div style="margin-bottom:10px">
+                <input name="LoginName" class="easyui-textbox easyui-validatebox" style="width:100%;height:40px;padding:12px" data-options="prompt:'Username',iconCls:'icon-man',iconWidth:38,required:true,missingMessage:'用户名不能为空'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input name="PassWord" class="easyui-textbox easyui-validatebox" type="password" style="width:100%;height:40px;padding:12px" data-options="prompt:'Password',iconCls:'icon-lock',iconWidth:38,required:true,missingMessage:'密码不能为空'">
+            </div>
+            <div style="margin-bottom:20px">
+                <input id="company" name="companyId" class="easyui-validatebox" style="width:100%;height:40px;padding:12px">
+            </div>
+            <div>
+                <a href="#" id="btn_login" class="easyui-linkbutton" data-options="iconCls:'icon-ok'" style="padding:5px 0px;width:100%;">
+                    <span style="font-size:14px;">Login</span>
+                </a>
+            </div>
+        </form>
     </div>
     <script>
         $(function () {
@@ -96,7 +118,47 @@
                 href: "Home/Default"
 
             });
-        });
+            $('#winLogin').dialog({
+                closed: true,
+                cache: false,
+                modal: true,
+                onClose: function () {
 
+                }
+            });
+            $('#company').combobox({
+                missingMessage: '公司不能为空',
+                required: true,
+                valueField: 'Id',
+                panelHeight: '80',
+                textField: 'CompanyName',
+                url: '@Url.Action("GetComboboxList")'
+            });
+            cashbag.services.post('@Url.Action("IsLogin")', {}, function (data) {
+                if (data === -1) {
+                    $('#winLogin').dialog("open");
+                }
+            }, { nuload: true, });
+
+            $("#btn_login").click(function () {
+                $('#login_form').form('submitData', {
+                    url: '@Url.Action("Login")',
+                    success: function (data) {
+                        $('#winLogin').dialog("close");
+                        var tab = $('#globalTabsNav').tabs('getSelected');
+                        $('#globalTabsNav').tabs('update', {
+                            tab: tab,
+                            options: {
+                                href: tab.href  // the new content URL
+                            }
+                        });
+                    }
+                });
+            })
+
+        });
+        function loginOpen(e) {
+            $('#winLogin').dialog("open");
+        }
     </script>
 </body>

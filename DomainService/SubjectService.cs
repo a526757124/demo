@@ -55,8 +55,8 @@ namespace DomainService
             using (ETVSContext context = new ETVSContext())
             {
                 return context.Subjects
-                    .Include(p=>p.ParentSubject)
-                    .Include(p=>p.Category)
+                    .Include(p => p.ParentSubject)
+                    .Include(p => p.Category)
                     .FirstOrDefault(p => p.Id == Id);
             }
         }
@@ -75,10 +75,38 @@ namespace DomainService
                         s.Code,
                         s.MnemonicCode,
                         s.Name,
-                        _parentId =s.ParentSubject==null?0: s.ParentSubject.Id,
+                        _parentId = s.ParentSubject == null ? 0 : s.ParentSubject.Id,
                         s.BalanceDirection,
                         CategoryName = s.Category.Name
                     }).ToList();
+            }
+        }
+        public dynamic GetComboboxList(string query)
+        {
+            using (ETVSContext context = new ETVSContext())
+            {
+                if (string.IsNullOrEmpty(query))
+                {
+                    var express1 = context.Subjects
+                        .Where(p => !p.IsDeleted);
+                    return express1.Select(p => new
+                    {
+                        p.Name,
+                        p.Id,
+                        p.Code
+                    }).ToList();
+                }
+                var express = context.Subjects
+                        .Where(p => !p.IsDeleted && (
+                            p.MnemonicCode.Contains(query) || 
+                            p.Code.Contains(query) || 
+                            p.Name.Contains(query)));
+                return express.Select(p => new
+                {
+                    p.Name,
+                    p.Id,
+                    p.Code
+                }).ToList();
             }
         }
         public IPagedList<Subject> List(PagedParam<SubjectQuery> queryCond)
@@ -87,7 +115,7 @@ namespace DomainService
             {
                 var express = context.Subjects
                         .Where(p => !p.IsDeleted);
-                return express.OrderByDescending(p => p.CreatedTime).ToPagedList(queryCond.PageNo, queryCond.PageSize);
+                return express.OrderByDescending(p => p.Code).ToPagedList(queryCond.PageNo, queryCond.PageSize);
             }
         }
         #endregion

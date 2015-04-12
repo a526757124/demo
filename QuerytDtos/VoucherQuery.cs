@@ -8,5 +8,8 @@ namespace QuerytDtos
 {
     public class VoucherQuery
     {
+        public DateTime? VoucherDateStart { get; set; }
+        public DateTime? VoucherDateEnd { get; set; }
+        public string LoginName { get; set; }
     }
 }

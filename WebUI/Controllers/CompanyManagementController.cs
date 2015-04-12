@@ -37,6 +37,7 @@ namespace WebUI.Controllers
             var result = new CompanyService().List(queryCond);
             return Json(new AjaxResult("查询成功", AjaxResultType.Success, new { rows = result, total = result.TotalItemCount }));
         }
+        
 
         public ActionResult GetById(int id)
         {

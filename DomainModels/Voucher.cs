@@ -20,36 +20,13 @@ namespace DomainModels
         /// <summary>
         /// 借方合计
         /// </summary>
-        public decimal DebtorTotalAmount
-        {
-            get
-            {
-                return _debtorTotalAmount;
-            }
-            set
-            {
-                if (VoucherDetails != null)
-                    _debtorTotalAmount = VoucherDetails.Sum(p => p.DebtorAmount);
-                _debtorTotalAmount = 0;
-            }
-        }
+        public decimal DebtorTotalAmount { get; set; }
+        
         private decimal _creditTotalAmount;
         /// <summary>
         /// 贷方合计
         /// </summary>
-        public decimal CreditTotalAmount
-        {
-            get
-            {
-                return _creditTotalAmount;
-            }
-            set
-            {
-                if (VoucherDetails != null)
-                    _creditTotalAmount = VoucherDetails.Sum(p => p.CreditAmount);
-                _creditTotalAmount = 0;
-            }
-        }
+        public decimal CreditTotalAmount { get; set; }
         /// <summary>
         /// 附单据数量
         /// </summary>
@@ -73,6 +50,10 @@ namespace DomainModels
         /// 凭证编号
         /// </summary>
         public string VoucherCode { get; set; }
+        /// <summary>
+        /// 凭证时间
+        /// </summary>
+        public DateTime VoucherDate { get; set; }
         /// <summary>
         /// 录入人
         /// </summary>

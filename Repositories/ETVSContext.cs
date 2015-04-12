@@ -16,8 +16,9 @@ namespace Repositories
         public ETVSContext()
             : base("MySqlConnectionString")
         {
-            //Configuration.LazyLoadingEnabled = false;
-            //Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.ProxyCreationEnabled = false;
+            Database.SetInitializer<ETVSContext>(new CreateDatabaseIfNotExists<ETVSContext>());
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Company> Companys { get; set; }
@@ -25,6 +26,7 @@ namespace Repositories
         public DbSet<SubjectCategory> SubjectCategorys { get; set; }
         public DbSet<SubjectType> SubjectTypes { get; set; }
         public DbSet<Voucher> Vouchers { get; set; }
+        public DbSet<VoucherDetail> VoucherDetails { get; set; }
         public DbSet<VoucherWord> VoucherWords { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
