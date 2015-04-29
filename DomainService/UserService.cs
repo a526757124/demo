@@ -7,6 +7,7 @@ using QuerytDtos;
 using Repositories;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using Utility.DEncrypt;
@@ -18,7 +19,7 @@ namespace DomainService
     public class UserService : BaseService<User>
     {
         #region 增删改查
-        public void Login(string LoginName, string PassWord, int companyId)
+        public User Login(string LoginName, string PassWord, int companyId)
         {
             using (ETVSContext context = new ETVSContext())
             {
@@ -33,6 +34,7 @@ namespace DomainService
                 {
                     throw new BusinessException("登录失败，用户名或者密码错误！");
                 }
+                return user;
             }
         }
         public void Add(User model)

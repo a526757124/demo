@@ -27,7 +27,7 @@
                 }
                 if (jsonData.Type == "Error") {
                     $.messager.alert('提示', jsonData.Content, 'error');
-                    arg.success(jsonData);
+                    //arg.success(jsonData);
                 }
             }
         });

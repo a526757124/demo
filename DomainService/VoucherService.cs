@@ -10,6 +10,7 @@ using PagedList;
 using Utility.Paged;
 using QuerytDtos;
 using Utility.Exceptions;
+using MFS.Common;
 
 namespace DomainService
 {
@@ -48,7 +49,7 @@ namespace DomainService
                 else
                 {
                     var temp = context.Vouchers
-                        .Include(p => p.VoucherDetails.Select(s => s.Subject))
+                        //.Include(p => p.VoucherDetails.Select(s => s.Subject))
                         .FirstOrDefault(p => p.Id == model.Id);
                     temp.ModifUser = context.Users.FirstOrDefault(p => p.Id == CurrentUser.Id);
                     temp.BillsTotal = model.BillsTotal;
@@ -57,39 +58,49 @@ namespace DomainService
                     temp.VoucherDate = model.VoucherDate;
                     temp.Word = context.VoucherWords.FirstOrDefault(p => p.Id == model.Word.Id);
 
+                    var VoucherDetails = context.VoucherDetails.Where(p => p.Voucher.Id == temp.Id && !p.IsDeleted).ToList();
+
                     foreach (var item in model.VoucherDetails)
                     {
-                        var dt = temp.VoucherDetails.FirstOrDefault(p => p.Id == item.Id);
+                        var dt = VoucherDetails.FirstOrDefault(p => p.Id == item.Id);
                         if (dt == null || dt.Id <= 0)
                         {
                             item.Subject = context.Subjects.Include(p => p.Category).FirstOrDefault(p => p.Id == item.Subject.Id);
-                            temp.VoucherDetails.Add(item);
+                            item.Voucher = temp;
+                            VoucherDetails.Add(item);
                         }
                         else
                         {
                             dt.Digest = item.Digest;
                             dt.CreditAmount = item.CreditAmount;
                             dt.DebtorAmount = item.DebtorAmount;
-                            dt.Subject = context.Subjects.Include(p=>p.Category).FirstOrDefault(p => p.Id == item.Subject.Id);
+                            dt.Subject = context.Subjects.Include(p => p.Category).FirstOrDefault(p => p.Id == item.Subject.Id);
                         }
                     }
-                    foreach (var item in model.VoucherDetails.Where(p=>!p.IsDeleted))
+                    foreach (var item in model.VoucherDetails.Where(p => !p.IsDeleted))
                     {
                         if (!model.VoucherDetails.Any(p => p.Id == item.Id))
                         {
                             item.IsDeleted = true;
                         }
                     }
-                    if (temp.VoucherDetails.Count(p=>!p.IsDeleted) <= 0)
+                    if (VoucherDetails.Count(p => !p.IsDeleted) <= 0)
                         throw new BusinessException("请添加凭证明细");
-                    temp.CreditTotalAmount = temp.VoucherDetails.Where(p => !p.IsDeleted).Sum(p => p.CreditAmount);
-                    temp.DebtorTotalAmount = temp.VoucherDetails.Where(p => !p.IsDeleted).Sum(p => p.DebtorAmount);
+                    temp.CreditTotalAmount = VoucherDetails.Where(p => !p.IsDeleted).Sum(p => p.CreditAmount);
+                    temp.DebtorTotalAmount = VoucherDetails.Where(p => !p.IsDeleted).Sum(p => p.DebtorAmount);
                     if (temp.CreditTotalAmount != temp.DebtorTotalAmount)
                     {
                         throw new BusinessException("借贷金额不平衡");
                     }
+                    foreach (var item in VoucherDetails)
+                    {
+                        if (item.Id <= 0)
+                        {
+                            context.VoucherDetails.Add(item);
+                        }
+                    }
                 }
-
+                
                 context.SaveChanges();
             }
         }
@@ -132,10 +143,13 @@ namespace DomainService
         {
             using (ETVSContext context = new ETVSContext())
             {
-               var result=  context.Vouchers
-                    .Include(p => p.VoucherDetails.Select(s => s.Subject))
-                    .Include(p => p.Word).FirstOrDefault(p => p.Id == Id);
-               return result.VoucherDetails.Where(p=>!p.IsDeleted).ToList();
+                //var result=  context.Vouchers
+                //     .Include(p => p.VoucherDetails.Select(s => s.Subject))
+                //     .Include(p => p.Word).FirstOrDefault(p => p.Id == Id);
+                //return result.VoucherDetails.Where(p=>!p.IsDeleted).ToList();
+                return context.VoucherDetails
+                    .Include(p=>p.Subject)
+                    .Where(p => !p.IsDeleted && p.Voucher.Id == Id).ToList();
             }
         }
         public IPagedList<Voucher> List(PagedParam<VoucherQuery> queryCond)
@@ -145,13 +159,13 @@ namespace DomainService
                 //.Include(p => p.VoucherDetails.Select(s => s.Subject))
                 .Include(p => p.CreateUser)
                 .Include(p => p.Word)
-                .Where(p => !p.IsDeleted &&p.BelongCompany.Id == CurrentCompany.Id);
+                .Where(p => !p.IsDeleted && p.BelongCompany.Id == CurrentCompany.Id);
             if (queryCond.QueryDto != null)
             {
                 if (queryCond.QueryDto.VoucherDateStart.HasValue)
                 {
                     var start = queryCond.QueryDto.VoucherDateStart.Value.Date;
-                    express=express.Where(p=>p.VoucherDate>=start);
+                    express = express.Where(p => p.VoucherDate >= start);
                 }
                 if (queryCond.QueryDto.VoucherDateStart.HasValue)
                 {

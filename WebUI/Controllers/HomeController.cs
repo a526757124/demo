@@ -26,8 +26,13 @@ namespace WebUI.Controllers
         }
         public ActionResult Login(string LoginName, string PassWord, int companyId)
         {
-            new UserService().Login(LoginName, PassWord, companyId);
-            return Json(new AjaxResult("登录成功", AjaxResultType.Success, null));
+            var user= new UserService().Login(LoginName, PassWord, companyId);
+            return Json(new AjaxResult("登录成功", AjaxResultType.Success, user.LoginName));
+        }
+        public ActionResult LoginOut()
+        {
+            SessionHelper.ClearSession();
+            return Json(new AjaxResult("退出成功", AjaxResultType.Success));
         }
         public ActionResult IsLogin()
         {

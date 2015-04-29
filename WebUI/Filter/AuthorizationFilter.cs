@@ -20,7 +20,7 @@ namespace WebUI.Filter
         {
             var controller = filterContext.RouteData.Values["controller"].ToString();
             var action = filterContext.RouteData.Values["action"].ToString();
-            if (controller.Equals("Home")) return;
+            if (controller.Equals("Home")||controller.Equals("Test")) return;
             if (new UserService().CurrentUser == null || new UserService().CurrentCompany == null)
             {
                 if (filterContext.HttpContext.Request.IsAjaxRequest())

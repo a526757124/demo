@@ -7,8 +7,8 @@
         <tr>
             <th data-options="field:'VoucherDate',width:150,formatter:com.DateFormatter">凭证时间</th>
             <th field="VoucherCode" width="100" formatter="voucherViewModel.voucherCodeColumnFormatter">凭证号</th>
-            <th field="DebtorTotalAmount" align="right" width="80">借方合计</th>
-            <th field="CreditTotalAmount" align="right" width="80">贷方合计</th>
+            <th field="Digest" width="100" formatter="voucherViewModel.digestColumnFormatter">摘要</th>
+            <th field="DebtorTotalAmount" align="right" width="80">发生额</th>
             <th data-options="field:'CreateUser',width:80,formatter:voucherViewModel.createUserColumnFormatter">录入人</th>
         </tr>
     </thead>
@@ -142,6 +142,13 @@
                     $('#voucher_tb_form').form('clear');
                     voucherViewModel.search();
                 })
+            },
+            digestColumnFormatter: function (value, rowData, rowIndex) {
+                if (rowData.VoucherDetails) {
+                    if (rowData.VoucherDetails.length > 0)
+                        return rowData.VoucherDetails[0].Digest;
+                    return "";
+                }
             },
             voucherCodeColumnFormatter: function (value, rowData, rowIndex) {
                 if (rowData.Word)

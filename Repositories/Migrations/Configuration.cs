@@ -31,7 +31,7 @@ namespace Repositories.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
-
+            DatabaseInitializer.Seed(context);
             
             base.Seed(context);
         }

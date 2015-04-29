@@ -19,27 +19,36 @@ cashbag.services = cashbag.services || {
                     if (data.Data||data.Data===0) {
                         success(data.Data);
                     } else {
-                        $.messager.alert('提示', data.Content);
-                        success(data);
+                        $.messager.alert('提示', data.Content, 'info', function () {
+                            success(data);
+                        });
+                        
                     }
                 }
                 if (data.Type == "Error") {
-                    $.messager.alert('提示', data.Content, 'error');
-                    success(data);
+                    $.messager.alert('提示', data.Content, 'error', function () {
+                        success(data);
+                    });
+                    
                 }
                 if (data.Type == "Warning") {
-                    $.messager.alert('提示', data.Content, 'warning');
-                    success(data);
+                    $.messager.alert('提示', data.Content, 'warning', function () {
+                        success(data);
+                    });
+                    
                 }
                 if (data.Type == "Info") {
-                    $.messager.alert('提示', data.Content, 'info');
-                    success(data);
+                    $.messager.alert('提示', data.Content, 'info', function () {
+                        success(data);
+                    });
+                    
                 }
                 if (data.Type == "NoLogin") {
                     $.messager.alert('提示', data.Content, 'info', function () {
                         top.loginOpen();
+                        success(data);
                     });
-                    success(data);
+                    
                 }
             },
             error: error || this._functions.error

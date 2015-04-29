@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MFS.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -22,6 +23,14 @@ namespace WebUI
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            Init();
+        }
+        private void Init()
+        {
+            //启动日志
+            LogManagerHelper.Init();
+            LogManagerHelper.Info(string.Format("网站启动:{0}", DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")));
+            //创建上传文件夹
         }
     }
 }

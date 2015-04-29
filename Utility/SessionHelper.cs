@@ -31,6 +31,10 @@ namespace Core.WebHelper
         {
             return HttpContext.Current.Session[name];
         }
+        public static void ClearSession()
+        {
+            HttpContext.Current.Session.Clear();
+        }
         /// <summary>
         /// 设置session
         /// </summary>

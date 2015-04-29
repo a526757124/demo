@@ -64,13 +64,9 @@
     <Compile Include="EntityConfigurationBase.cs" />
     <Compile Include="ETVSContext.cs" />
     <Compile Include="IEntityMapper.cs" />
-    <Compile Include="Migrations\201504111323495_init.cs" />
-    <Compile Include="Migrations\201504111323495_init.Designer.cs">
-      <DependentUpon>201504111323495_init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201504120324194_1.cs" />
-    <Compile Include="Migrations\201504120324194_1.Designer.cs">
-      <DependentUpon>201504120324194_1.cs</DependentUpon>
+    <Compile Include="Migrations\201504191539246_init.cs" />
+    <Compile Include="Migrations\201504191539246_init.Designer.cs">
+      <DependentUpon>201504191539246_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,11 +90,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201504111323495_init.resx">
-      <DependentUpon>201504111323495_init.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201504120324194_1.resx">
-      <DependentUpon>201504120324194_1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201504191539246_init.resx">
+      <DependentUpon>201504191539246_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -91,10 +91,33 @@ namespace Repositories.Migrations
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
+                "dbo.VoucherDetail",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Digest = c.String(maxLength: 200, storeType: "nvarchar"),
+                        DebtorAmount = c.Decimal(nullable: false, precision: 18, scale: 4),
+                        CreditAmount = c.Decimal(nullable: false, precision: 18, scale: 4),
+                        Remark = c.String(maxLength: 200, storeType: "nvarchar"),
+                        IsDeleted = c.Boolean(nullable: false),
+                        CreatedTime = c.DateTime(nullable: false, precision: 0),
+                        RowVersion = c.DateTime(nullable: false, precision: 0),
+                        Subject_Id = c.Int(nullable: false),
+                        Voucher_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Subject", t => t.Subject_Id)
+                .ForeignKey("dbo.Voucher", t => t.Voucher_Id)
+                .Index(t => t.Subject_Id)
+                .Index(t => t.Voucher_Id);
+            
+            CreateTable(
                 "dbo.Voucher",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        DebtorTotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
+                        CreditTotalAmount = c.Decimal(nullable: false, precision: 18, scale: 2),
                         BillsTotal = c.Int(nullable: false),
                         VoucherCode = c.String(maxLength: 20, storeType: "nvarchar"),
                         VoucherDate = c.DateTime(nullable: false, precision: 0),
@@ -118,27 +141,6 @@ namespace Repositories.Migrations
                 .Index(t => t.Word_Id);
             
             CreateTable(
-                "dbo.VoucherDetail",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        Digest = c.String(maxLength: 200, storeType: "nvarchar"),
-                        DebtorAmount = c.Decimal(nullable: false, precision: 18, scale: 4),
-                        CreditAmount = c.Decimal(nullable: false, precision: 18, scale: 4),
-                        Remark = c.String(maxLength: 200, storeType: "nvarchar"),
-                        IsDeleted = c.Boolean(nullable: false),
-                        CreatedTime = c.DateTime(nullable: false, precision: 0),
-                        RowVersion = c.DateTime(nullable: false, precision: 0),
-                        Subject_Id = c.Int(nullable: false),
-                        Voucher_Id = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Subject", t => t.Subject_Id)
-                .ForeignKey("dbo.Voucher", t => t.Voucher_Id)
-                .Index(t => t.Subject_Id)
-                .Index(t => t.Voucher_Id);
-            
-            CreateTable(
                 "dbo.VoucherWord",
                 c => new
                     {
@@ -157,25 +159,25 @@ namespace Repositories.Migrations
         {
             DropForeignKey("dbo.Voucher", "Word_Id", "dbo.VoucherWord");
             DropForeignKey("dbo.VoucherDetail", "Voucher_Id", "dbo.Voucher");
-            DropForeignKey("dbo.VoucherDetail", "Subject_Id", "dbo.Subject");
             DropForeignKey("dbo.Voucher", "ModifUser_Id", "dbo.User");
             DropForeignKey("dbo.Voucher", "CreateUser_Id", "dbo.User");
             DropForeignKey("dbo.Voucher", "BelongCompany_Id", "dbo.Company");
+            DropForeignKey("dbo.VoucherDetail", "Subject_Id", "dbo.Subject");
             DropForeignKey("dbo.Subject", "Type_Id", "dbo.SubjectType");
             DropForeignKey("dbo.Subject", "ParentSubject_Id", "dbo.Subject");
             DropForeignKey("dbo.Subject", "Category_Id", "dbo.SubjectCategory");
-            DropIndex("dbo.VoucherDetail", new[] { "Voucher_Id" });
-            DropIndex("dbo.VoucherDetail", new[] { "Subject_Id" });
             DropIndex("dbo.Voucher", new[] { "Word_Id" });
             DropIndex("dbo.Voucher", new[] { "ModifUser_Id" });
             DropIndex("dbo.Voucher", new[] { "CreateUser_Id" });
             DropIndex("dbo.Voucher", new[] { "BelongCompany_Id" });
+            DropIndex("dbo.VoucherDetail", new[] { "Voucher_Id" });
+            DropIndex("dbo.VoucherDetail", new[] { "Subject_Id" });
             DropIndex("dbo.Subject", new[] { "Type_Id" });
             DropIndex("dbo.Subject", new[] { "ParentSubject_Id" });
             DropIndex("dbo.Subject", new[] { "Category_Id" });
             DropTable("dbo.VoucherWord");
-            DropTable("dbo.VoucherDetail");
             DropTable("dbo.Voucher");
+            DropTable("dbo.VoucherDetail");
             DropTable("dbo.User");
             DropTable("dbo.SubjectType");
             DropTable("dbo.Subject");

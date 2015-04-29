@@ -11,6 +11,10 @@ namespace DomainModels
     /// </summary>
     public class VoucherDetail : EntityBase<int>
     {
+        /// <summary>
+        /// 
+        /// </summary>
+        public Voucher Voucher { get; set; }
         private string _digest;
         /// <summary>
         /// 摘要

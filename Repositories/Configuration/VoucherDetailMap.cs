@@ -15,6 +15,7 @@ namespace Repositories.Configuration
             this.Property(p => p.DebtorAmount).HasPrecision(18, 4);
             this.Property(p => p.Digest).HasMaxLength(200);
             this.HasRequired(p => p.Subject).WithMany();
+            //this.HasRequired(p => p.Voucher).WithMany();
         }
     }
 }
